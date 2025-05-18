@@ -1,0 +1,32 @@
+<ion-content class="ion-padding">
+  <div id="map" style="height: 80vh; width: 100%;"></div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="goToAddLocation()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+<br>
+<form (ngSubmit)="onSubmit()" style="padding: 10px;">
+  <input
+  id="search-input"
+  type="text"
+  [(ngModel)]="searchQuery"
+  name="searchQuery"
+  placeholder="Search for a place"
+  required
+  style="width: 80%; padding: 8px;"
+/>
+
+  <button type="submit" style="padding: 8px;">Search</button>
+</form>
+
+<div id="map" style="height: 75vh; width: 100%;"></div>
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="goToAddLocation()">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+</ion-content>

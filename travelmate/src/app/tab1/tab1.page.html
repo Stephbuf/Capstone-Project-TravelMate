@@ -1,0 +1,20 @@
+<div class="container">
+  <div class="cover">
+    <h2>Discover what's out there 📍</h2>
+    <br />
+    <form class="flex-form" (submit)="onSubmit($event)" #searchForm="ngForm">
+      <label for="search-input">
+        <i class="ion-location"></i>
+      </label>
+      <input
+        type="text"
+        id="search-input"
+        name="searchQuery"
+        [(ngModel)]="searchQuery"
+        placeholder="Where do you want to go?"
+        required
+      />
+      <input type="submit" value="search" [disabled]="!searchForm.form.valid" />
+    </form>
+  </div>
+</div>

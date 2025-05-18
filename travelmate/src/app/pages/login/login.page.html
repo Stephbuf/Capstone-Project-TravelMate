@@ -1,0 +1,76 @@
+<ion-content [fullscreen]="true" class="login-content">
+  <!-- Gradient Header -->
+  <div class="login-header">
+    <div class="login-header-row">
+      <span class="header-question">Don’t have an account?</span>
+      <ion-button fill="clear" class="get-started" size="small" (click)="goToSignup()">
+        Get Started
+      </ion-button>
+      
+    </div>
+    <h1 class="app-title">Travel Mate</h1>
+  </div>
+
+  <!-- Login Card -->
+  <div class="login-card">
+    <h2>Welcome To Travel Mate</h2>
+    <p>Enter your details below to login</p>
+
+    <form [formGroup]="loginForm">
+      <!-- Email -->
+      <ion-item lines="none">
+    
+        <ion-input type="email" placeholder="Enter email" formControlName="email"></ion-input>
+      </ion-item>
+      <div *ngIf="email?.touched && email?.invalid" class="error-msg">
+        <small *ngIf="email?.errors?.['required']">Email is required.</small>
+        <small *ngIf="email?.errors?.['email']">Enter a valid email.</small>
+      </div>
+
+      <!-- Password with show/hide -->
+<ion-item lines="none">
+  <ion-input
+    [type]="showPassword ? 'text' : 'password'"
+    placeholder="Enter password"
+    formControlName="password"
+  ></ion-input>
+  <ion-icon
+    slot="end"
+    [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+    (click)="togglePasswordVisibility()"
+  ></ion-icon>
+</ion-item>
+<div *ngIf="password?.touched && password?.invalid" class="error-msg">
+  <small *ngIf="password?.errors?.['required']">Password is required.</small>
+  <small *ngIf="password?.errors?.['minlength']">Minimum 6 characters.</small>
+  <small *ngIf="password?.errors?.['pattern']">Must include 1 capital letter & 1 symbol.</small>
+</div>
+      <!-- Sign In Button -->
+      <ion-button expand="block" class="gradient-button" (click)="login()">
+        Sign in
+      </ion-button>
+    </form>
+
+    <!-- Forgot Password -->
+    <div class="forgot-password">
+      <a href="#">Forgot your password?</a>
+    </div>
+
+    <!-- Divider -->
+    <div class="or-divider">
+      <span>Or sign in with</span>
+    </div>
+
+    <!-- Social Login Buttons -->
+    <div class="social-buttons">
+      <ion-button fill="outline">
+        <ion-icon slot="start" name="logo-google"></ion-icon>
+        Google
+      </ion-button>
+      <ion-button fill="outline">
+        <ion-icon slot="start" name="logo-facebook"></ion-icon>
+        Facebook
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

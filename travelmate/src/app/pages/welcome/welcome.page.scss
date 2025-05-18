@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+$number-of-text: 8;
+$number-of-particle: 12;
+$width: 40px;
+$height: 40px;
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: #FFF;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  overflow: hidden;
+}
+
+.center-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  gap: 40px;
+}
+
+// Center "Welcome" animation
+.criterion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: $height;
+}
+
+// Welcome Animation
+@for $i from 0 through ($number-of-text - 1) {
+  .text#{$i} {
+    position: absolute;
+    width: $width;
+    line-height: $height;
+    opacity: 0;
+    overflow: hidden;
+    left: calc((#{$width} * (#{$i} - #{$number-of-text / 2})) + 50%);
+    transform: translateX(-50%);
+    top: 0;
+    animation: text-animation-#{$i} 1s ease-in-out 1s + ($i * 200ms) 1 forwards,
+               text2-animation-#{$i} 2s ease-in-out 5s 1 forwards;
+
+    &::after {
+      z-index: -1;
+      content: '';
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: $height;
+      animation: text-after-animation-#{$i} 2s ease-in-out 3s 1 forwards;
+      background-color: #D17856;
+    }
+  }
+
+  .frame#{$i} {
+    position: absolute;
+    width: $width;
+    height: $height;
+    border-radius: 50%;
+    opacity: 0;
+    left: calc((#{$width} * (#{$i} - #{$number-of-text / 2})) + 50%);
+    transform: translateX(-50%);
+    top: 0;
+    animation: frame-animation-#{$i} 1s ease-in-out ($i * 200ms) 1 forwards;
+    background-color: #F49C8D;
+  }
+
+  @keyframes frame-animation-#{$i} {
+    0% { transform: translateY(-1000px); opacity: 1; }
+    50% { opacity: 0.8; }
+    100% { transform: translateY(0); opacity: 0; }
+  }
+
+  @keyframes text-animation-#{$i} {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(3); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes text-after-animation-#{$i} {
+    0% { width: 0; opacity: 1; }
+    50% { width: $width; opacity: 1; }
+    100% { left: $width; opacity: 0; }
+  }
+
+  @keyframes text2-animation-#{$i} {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  @for $j from 0 through ($number-of-particle - 1) {
+    .particle#{$i}#{$j} {
+      position: absolute;
+      width: $width;
+      height: $height;
+      border-radius: 50%;
+      left: calc((#{$width} * (#{$i} - #{$number-of-text / 2})) + 50%);
+      transform: translateX(-50%);
+      opacity: 0;
+      background-color: #F0E1D2;
+      animation: particle-animation-#{$i}-#{$j} 1s ease-in-out 1s + ($i * 200ms) 1 forwards;
+    }
+
+    @keyframes particle-animation-#{$i}-#{$j} {
+      0% {
+        top: 0;
+        opacity: 0;
+        transform: scale(1);
+      }
+      100% {
+        top: calc(sin($j * 360 / $number-of-particle) * 100px);
+        left: calc(50% + cos($j * 360 / $number-of-particle) * 100px);
+        opacity: 1;
+        transform: scale(0);
+      }
+    }
+  }
+}
+
+// SVG Scene
+figure {
+  width: 80%;
+  max-width: 90vh;
+  margin: 0 auto;
+
+  #sea   { fill: #9BC4EB; }
+  #hi    { fill: rgba(255,255,255,0.2); }
+  #light { fill: white; }
+  #shad  { fill: rgba(0,0,0,0.05); }
+
+  #land {
+    fill: #8B9C52;
+    animation: spin 10s linear infinite forwards;
+  }
+
+  .vehicles use {
+    fill: #F0FBFC;
+    animation: orbit 15s linear infinite;
+    transform-origin: center center;
+  }
+
+  #boat1 {
+    transform: translateX(40px) translateY(-80px);
+    use { animation-duration: 30s; }
+  }
+
+  #plane1 {
+    transform: translateX(-10px) translateY(170px);
+  }
+
+  #plane2 {
+    transform: translateX(170px) translateY(150px);
+    use { animation-delay: 7.5s; }
+  }
+
+  #plane3 {
+    transform: translateX(140px) translateY(-50px);
+    use {
+      animation-delay: 1.25s;
+      animation-duration: 12s;
+    }
+  }
+
+  #bike1 {
+    transform: translateX(50px) translateY(190px);
+    use { animation-duration: 25s; }
+  }
+
+  @keyframes orbit {
+    from { transform: rotate(0deg) translateX(-160px); }
+    to   { transform: rotate(360deg) translateX(-160px); }
+  }
+
+  @keyframes spin {
+    from { transform: translateX(-300px); }
+    to   { transform: translateX(0); }
+  }
+}
