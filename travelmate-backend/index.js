@@ -8,7 +8,7 @@ const PORT = 3000;
 
 // Import routes
 const usersRoutes = require('./routes/users');
-const locationsRoutes = require('./routes/locations'); // ✅ added
+const locationsRoutes = require('./routes/locations'); 
 
 // Middleware
 app.use(cors({
@@ -21,7 +21,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Register routes
 app.use('/users', usersRoutes);
-app.use('/locations', locationsRoutes); // ✅ added
+app.use('/locations', locationsRoutes); 
+app.use('/itinerary', require('./routes/itinerary'));
+app.use('/wishlist', require('./routes/wishlist'));
+
+
 
 // Base endpoint
 app.get('/', (req, res) => {

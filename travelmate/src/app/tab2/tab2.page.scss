@@ -1,0 +1,26 @@
+.toggle-switch {
+  display: flex;
+  background-color: #337aff93; 
+  border-radius: 999px;
+  padding: 6px;
+  width: fit-content;
+  margin: 1rem auto;
+  gap: 4px;
+}
+
+.toggle-option {
+  border: none;
+  background-color: transparent;
+  color: white;
+  padding: 10px 20px;  
+  border-radius: 999px;
+  font-weight: 500;
+   font-size: 1.1rem;  
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.toggle-option.active {
+  background-color: white;
+  color: #337aff93; 
+}

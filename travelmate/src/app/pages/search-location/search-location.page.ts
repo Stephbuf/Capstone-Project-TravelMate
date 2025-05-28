@@ -28,10 +28,10 @@ export class SearchLocationPage implements AfterViewInit {
       addIcons({ add });
   }
 
-  ngAfterViewInit(): void {
+ async ngAfterViewInit(): Promise<void> {
     // Wait for DOM and query params before initializing
     setTimeout(() => {
-      this.inputElement = document.getElementById('search-input') as HTMLInputElement;
+      this.inputElement = document.getElementById('search-input-location') as HTMLInputElement;
       this.initializeAutocomplete();
     }, 0);
 
@@ -43,10 +43,10 @@ export class SearchLocationPage implements AfterViewInit {
     });
   }
 
-  initializeAutocomplete(): void {
+  async initializeAutocomplete(): Promise<void> {
     if (!this.inputElement) return;
 
-    this.autocomplete = new google.maps.places.Autocomplete(this.inputElement, {
+   this.autocomplete = new google.maps.places.Autocomplete(this.inputElement, {
       types: ['establishment'],
       fields: ['formatted_address', 'geometry', 'name', 'place_id']
     });
@@ -65,7 +65,8 @@ export class SearchLocationPage implements AfterViewInit {
     });
   }
 
-  loadMap(): void {
+
+ async loadMap(): Promise<void> {
     const mapElement = document.getElementById('map') as HTMLElement;
     if (!mapElement) {
       console.error('Map element not found');

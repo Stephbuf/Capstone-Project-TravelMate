@@ -1,4 +1,4 @@
-<!-- add-location.page.html -->
+
 <ion-content class="ion-padding">
   <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
     <ion-item>
@@ -20,13 +20,22 @@
 
     <ion-item *ngIf="showCustomCategory">
       <ion-label position="floating">New Category</ion-label>
-      <ion-input formControlName="customCategory" required></ion-input>
+      <ion-input formControlName="custom_category" required></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label position="floating">Address</ion-label>
       <ion-input formControlName="address" required></ion-input>
     </ion-item>
+
+<ion-item>
+  <ion-label position="floating">Tag</ion-label>
+  <ion-select formControlName="tag" required interface="action-sheet">
+    <ion-select-option value="wishlist">Wishlist</ion-select-option>
+    <ion-select-option value="itinerary">Itinerary</ion-select-option>
+  </ion-select>
+</ion-item>
+
 
     <ion-button expand="full" type="submit" [disabled]="locationForm.invalid || isSubmitting">
       Save Location
