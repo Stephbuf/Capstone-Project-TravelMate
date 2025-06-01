@@ -1,67 +1,99 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonCard,
-  IonCardContent,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonSearchbar
-} from '@ionic/angular/standalone';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-   
-    IonList,
-    IonItem,
-    IonLabel,
-    IonSearchbar
-  ]
+  imports: [CommonModule, HttpClientModule, IonicModule]
 })
 export class Tab2Page implements OnInit {
-  countries: any[] = [];
-  selectedCountry: string | null = null;
-  cities: any[] = [];
-  filteredCities: any[] = [];
+  allData: any[] = [];
+  wishlistData: any[] = [];
+  expandedCountry: string | null = null;
   currentFilter: 'wishlist' | 'itinerary' = 'wishlist';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  ngOnInit(): void {
-    this.http.get<any[]>('http://localhost:3000/locations/countries').subscribe(data => {
-      this.countries = data;
-    });
+  ngOnInit() {
+    this.fetchData();
   }
 
-  selectCountry(country: string): void {
-    this.selectedCountry = country;
-    this.http.get<any[]>(`http://localhost:3000/locations/by-country/${country}`).subscribe(data => {
-      this.cities = data;
-      this.applyFilter();
-    });
-  }
+  fetchData() {
+    const userEmail = localStorage.getItem('email');
 
-  setFilter(filter: 'wishlist' | 'itinerary'): void {
-    this.currentFilter = filter;
-    this.applyFilter();
+    this.http
+      .get<any[]>(`http://localhost:3000/locations/user/${userEmail}?tag=${this.currentFilter}`)
+      .subscribe((data) => {
+        this.allData = data;
+        this.applyFilter();
+      });
   }
 
   applyFilter(): void {
-    this.filteredCities = this.cities.filter(
-      city => city.tag === this.currentFilter
-    );
+    const grouped = new Map<string, any[]>();
+    this.allData.forEach((item) => {
+      if (!grouped.has(item.country)) {
+        grouped.set(item.country, []);
+      }
+      grouped.get(item.country)!.push(item);
+    });
+
+    this.wishlistData = Array.from(grouped.entries()).map(([country, entries]) => ({
+      country,
+      entries
+    }));
   }
+
+  setFilter(filter: 'wishlist' | 'itinerary'): void {
+    if (filter !== this.currentFilter) {
+      this.currentFilter = filter;
+      this.expandedCountry = null;
+      this.fetchData();
+    }
+  }
+
+  toggleCountry(country: string): void {
+    this.expandedCountry = this.expandedCountry === country ? null : country;
+  }
+
+  getUniqueCities(entries: any[]): string[] {
+    const citySet = new Set<string>();
+    entries.forEach(entry => citySet.add(entry.city));
+    return Array.from(citySet);
+  }
+
+goToCityPage(city: string): void {
+  const match = this.allData.find(entry => entry.city === city);
+
+  if (!match || !match.address) {
+    console.warn('No valid entry found for city:', city, match);
+    return;
+  }
+
+  const geocoder = new google.maps.Geocoder();
+  geocoder.geocode({ address: match.address }, (results, status) => {
+    if (status === 'OK' && results && results[0]) {
+      const location = results[0].geometry.location;
+
+      this.router.navigate(['/itinerary'], {
+        queryParams: {
+          name: match.name,
+          city: match.city,
+          address: match.address,
+          category: match.category,
+          lat: location.lat(),
+          lng: location.lng(),
+        },
+      });
+    } else {
+      console.error('Geocoding failed:', status);
+    }
+  });
+}
+
 }

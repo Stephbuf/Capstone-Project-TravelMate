@@ -1,44 +1,50 @@
-
 <ion-content class="ion-padding">
-  <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
-    <ion-item>
-      <ion-label position="floating">Country</ion-label>
-      <ion-input formControlName="country" required></ion-input>
-    </ion-item>
+  <div class="form-wrapper">
+    <ion-card class="form-card">
+      <ion-card-header>
+        <ion-card-title>Add a New Location</ion-card-title>
+      </ion-card-header>
 
-    <ion-item>
-      <ion-label position="floating">City</ion-label>
-      <ion-input formControlName="city" required></ion-input>
-    </ion-item>
+      <ion-card-content>
+        <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
+          <ion-item lines="full">
+            <ion-label position="floating">Country</ion-label>
+            <ion-input formControlName="country" required></ion-input>
+          </ion-item>
 
-    <ion-item>
-      <ion-label>Category</ion-label>
-      <ion-select formControlName="category" (ionChange)="onCategoryChange($event)">
-        <ion-select-option *ngFor="let cat of categories" [value]="cat">{{ cat }}</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item *ngIf="showCustomCategory">
-      <ion-label position="floating">New Category</ion-label>
-      <ion-input formControlName="custom_category" required></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Address</ion-label>
-      <ion-input formControlName="address" required></ion-input>
-    </ion-item>
-
-<ion-item>
-  <ion-label position="floating">Tag</ion-label>
-  <ion-select formControlName="tag" required interface="action-sheet">
-    <ion-select-option value="wishlist">Wishlist</ion-select-option>
-    <ion-select-option value="itinerary">Itinerary</ion-select-option>
+          <ion-item lines="full">
+            <ion-label position="floating">City</ion-label>
+            <ion-input formControlName="city" required></ion-input>
+          </ion-item>
+<ion-item lines="full">
+  <ion-label>Category</ion-label>
+  <ion-select formControlName="category" interface="action-sheet">
+    <ion-select-option *ngFor="let cat of categories" [value]="cat">
+      {{ cat }}
+    </ion-select-option>
   </ion-select>
 </ion-item>
 
+   
 
-    <ion-button expand="full" type="submit" [disabled]="locationForm.invalid || isSubmitting">
-      Save Location
-    </ion-button>
-  </form>
+          <ion-item lines="full">
+            <ion-label position="floating">Address</ion-label>
+            <ion-input formControlName="address" required></ion-input>
+          </ion-item>
+
+          <ion-item lines="full">
+            <ion-label position="floating">Tag</ion-label>
+            <ion-select formControlName="tag" interface="action-sheet" required>
+              <ion-select-option value="wishlist">Wishlist</ion-select-option>
+              <ion-select-option value="itinerary">Itinerary</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-button expand="block" type="submit" [disabled]="locationForm.invalid || isSubmitting">
+            Save Location
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

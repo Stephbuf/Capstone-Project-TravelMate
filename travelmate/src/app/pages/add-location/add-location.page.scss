@@ -1,7 +1,43 @@
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30px;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+}
+
+ion-card-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+}
+
 ion-item {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 ion-button {
-  margin-top: 20px;
+  margin-top: 24px;
+  --background: #4a90e2;
+  --border-radius: 8px;
+  font-weight: bold;
+}
+
+::ng-deep ion-select .select-icon,
+::ng-deep ion-select .select-icon-inner {
+  right: 12px !important;
+  left: auto !important;
+  position: absolute !important;
+}
+
+::ng-deep ion-select {
+  text-align: start;
+  --padding-start: 12px;
+  --padding-end: 12px;
 }

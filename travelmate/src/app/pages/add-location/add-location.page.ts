@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -9,7 +9,11 @@ import {
   IonSelect,
   IonSelectOption,
   IonButton,
-  IonInput
+  IonInput,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent
 } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 
@@ -19,6 +23,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./add-location.page.scss'],
   standalone: true,
   imports: [
+    IonCardContent, IonCardTitle, IonCardHeader, IonCard,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -33,15 +38,13 @@ import { CommonModule } from '@angular/common';
 })
 export class AddLocationPage implements OnInit {
   locationForm!: FormGroup;
-  categories = ['Restaurant', 'Bar', 'Shopping', 'Museum', 'Sight Seeing', 'Beach', 'Club', 'Add Category'];
-  showCustomCategory = false;
+  categories = ['Restaurant', 'Bar', 'Shopping', 'Museum', 'Sightseeing', 'Beach', 'Club', 'Airport', 'Hotel', 'Gallery', 'Coffee Shop', 'Bakery', 'Landmark'];
   isSubmitting = false;
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private router: Router,
-    private cdr: ChangeDetectorRef
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -49,31 +52,16 @@ export class AddLocationPage implements OnInit {
     const parsed = stored ? JSON.parse(stored) : {};
 
     const address = parsed.address || '';
-    const components = parsed.components || [];
-    const city = this.extractComponent(components, 'locality') || '';
-    const country = this.extractComponent(components, 'country') || '';
+    const city = parsed.city || '';
+    const country = parsed.country || '';
 
- this.locationForm = this.fb.group({
-  country: [parsed.country || country, Validators.required],
-  city: [parsed.city || city, Validators.required],
-  address: [parsed.address || address, Validators.required],
-  category: ['', Validators.required],
-  custom_category: ['']
-});
-
-  }
-
-  extractComponent(components: any[], type: string): string | null {
-    const match = components.find(c => c.types.includes(type));
-    return match ? match.long_name : null;
-  }
-
-  onCategoryChange(event: any): void {
-    this.showCustomCategory = event.detail.value === 'Add Category';
-    if (!this.showCustomCategory) {
-      this.locationForm.patchValue({ customCategory: '' });
-    }
-    this.cdr.detectChanges();
+    this.locationForm = this.fb.group({
+      country: [country, Validators.required],
+      city: [city, Validators.required],
+      address: [address, Validators.required],
+      category: ['', Validators.required],
+      tag: ['wishlist', Validators.required]
+    });
   }
 
  onSubmit(): void {
@@ -81,26 +69,23 @@ export class AddLocationPage implements OnInit {
 
   this.isSubmitting = true;
 
-  const { country, city, address, category, custom_category } = this.locationForm.value;
-
-  const trimmedCountry = country?.trim() || '';
-  const trimmedCity = city?.trim() || '';
-  const trimmedAddress = address?.trim() || '';
-  const trimmedCategory = category?.trim() || '';
-  const trimmedCustom = custom_category?.trim() || null;
+  const { country, city, address, category, tag } = this.locationForm.value;
 
   const payload = {
-    country: trimmedCountry,
-    city: trimmedCity,
-    address: trimmedAddress,
-    category: this.showCustomCategory ? trimmedCustom : trimmedCategory,
-    custom_category: this.showCustomCategory ? trimmedCustom : null
+    country: country.trim(),
+    city: city.trim(),
+    address: address.trim(),
+    category: category.trim(),
+    tag,
+    wishlist: tag === 'wishlist',
+    name: `${city.trim()} ${category.trim()}`,
+    userEmail: localStorage.getItem('email'), // ✅ fixed key
   };
 
   this.http.post('http://localhost:3000/locations', payload).subscribe({
     next: () => {
       alert('Location added!');
-      this.router.navigate(['/tabs/tab1']);
+      this.router.navigate(['/tabs/tab2']);
       this.isSubmitting = false;
     },
     error: (err) => {
@@ -110,4 +95,5 @@ export class AddLocationPage implements OnInit {
     }
   });
 }
+
 }

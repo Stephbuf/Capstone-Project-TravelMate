@@ -1,70 +1,58 @@
-<section class="places">
-  <br>
-  <header class="places__filter">
-    <div class="toggle-switch">
-      <button
-        type="button"
-        class="toggle-option"
-        [class.active]="currentFilter === 'wishlist'"
-        (click)="setFilter('wishlist')">
-        Wishlist
-      </button>
 
-      <button
-        type="button"
-        class="toggle-option"
-        [class.active]="currentFilter === 'itinerary'"
-        (click)="setFilter('itinerary')">
-        Itinerary
-      </button>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>My {{ currentFilter === 'wishlist' ? 'Wishlist' : 'Itinerary' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="wishlist-content">
+  <section class="places">
+
+    <!-- Toggle Buttons -->
+    <div class="places__filter">
+      <div class="toggle-switch">
+        <button
+          type="button"
+          class="toggle-option"
+          [class.active]="currentFilter === 'wishlist'"
+          (click)="setFilter('wishlist')">
+          Wishlist
+        </button>
+        <button
+          type="button"
+          class="toggle-option"
+          [class.active]="currentFilter === 'itinerary'"
+          (click)="setFilter('itinerary')">
+          Itinerary
+        </button>
+      </div>
     </div>
-  </header>
 
-  <ion-searchbar></ion-searchbar>
+    <!-- MTree Itinerary -->
+    <ul class="mtree jet">
+      <li *ngFor="let group of wishlistData"
+          [ngClass]="{
+            'mtree-node': group.entries?.length > 0,
+            'mtree-open': expandedCountry === group.country,
+            'mtree-closed': expandedCountry !== group.country && group.entries?.length > 0
+          }">
+        
+        <!-- Country Toggle -->
+        <a href="#" (click)="$event.preventDefault(); toggleCountry(group.country)">
+          {{ group.country }}
+        </a>
 
-  <ion-list *ngIf="filteredCities.length > 0">
-    <ion-item *ngFor="let city of filteredCities">
-      <ion-label>{{ city.name }}</ion-label>
-    </ion-item>
-  </ion-list>
-
-  <!-- <p *ngIf="filteredCities.length === 0" style="text-align: center; margin-top: 1rem;">
-    No items found.
-  </p> -->
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- <!-- <ion-grid *ngIf="!selectedCountry">
-  <ion-row>
-    <ion-col size="6" *ngFor="let item of countries">
-      <ion-card (click)="selectCountry(item.country)">
-        <ion-card-content>
-          <h2>{{ item.country }}</h2>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-  </ion-row>
-</ion-grid>
-
-<ion-list *ngIf="selectedCountry">
-  <ion-item button (click)="selectedCountry = null">
-    <ion-label>← Back to Countries</ion-label>
-  </ion-item>
-  <ion-item *ngFor="let city of cities">
-    <ion-label>{{ city.city }} — {{ city.category }}</ion-label>
-  </ion-item>
-</ion-list> -->
+        <!-- City List -->
+        <ul *ngIf="expandedCountry === group.country" class="mtree-level-1">
+          <li *ngFor="let city of getUniqueCities(group.entries)">
+            <a href="#" (click)="$event.preventDefault(); goToCityPage(city)">
+              {{ city }}
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    
+  </section>
+</ion-content>

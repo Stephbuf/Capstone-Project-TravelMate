@@ -1,12 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface LocationData {
-  country: string;
-  category: string;
-  address: string;
-}
+import { LocationData } from '../interfaces/locationdata'; 
 
 @Injectable({
   providedIn: 'root'
@@ -23,4 +18,8 @@ export class LocationsService {
   getAllLocations(): Observable<LocationData[]> {
     return this.http.get<LocationData[]>(this.apiUrl);
   }
+  getUserWishlist(email: string): Observable<LocationData[]> {
+  return this.http.get<LocationData[]>(`${this.apiUrl}/user/${email}?wishlist=true`);
+}
+
 }

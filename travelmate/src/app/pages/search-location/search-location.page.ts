@@ -25,11 +25,10 @@ export class SearchLocationPage implements AfterViewInit {
   searchQuery: string = '';
 
   constructor(private route: ActivatedRoute, private router: Router) {
-      addIcons({ add });
+    addIcons({ add });
   }
 
- async ngAfterViewInit(): Promise<void> {
-    // Wait for DOM and query params before initializing
+  async ngAfterViewInit(): Promise<void> {
     setTimeout(() => {
       this.inputElement = document.getElementById('search-input-location') as HTMLInputElement;
       this.initializeAutocomplete();
@@ -43,30 +42,40 @@ export class SearchLocationPage implements AfterViewInit {
     });
   }
 
-  async initializeAutocomplete(): Promise<void> {
+  initializeAutocomplete(): void {
     if (!this.inputElement) return;
 
-   this.autocomplete = new google.maps.places.Autocomplete(this.inputElement, {
+    this.autocomplete = new google.maps.places.Autocomplete(this.inputElement, {
       types: ['establishment'],
-      fields: ['formatted_address', 'geometry', 'name', 'place_id']
+      fields: ['formatted_address', 'geometry', 'name', 'place_id', 'address_components']
     });
 
     this.autocomplete.addListener('place_changed', () => {
       const place = this.autocomplete.getPlace();
       if (place && place.geometry && place.place_id) {
+        const addressComponents = place.address_components || [];
+
+        const getComponent = (type: string) => {
+          const match = addressComponents.find(c => c.types.includes(type));
+          return match ? match.long_name : '';
+        };
+
         this.searchQuery = place.formatted_address || place.name || '';
+
         localStorage.setItem('selectedPlace', JSON.stringify({
           name: place.name,
           address: place.formatted_address,
-          placeId: place.place_id
+          placeId: place.place_id,
+          city: getComponent('locality'),
+          country: getComponent('country')
         }));
-        this.loadMap(); // Show new result
+
+        this.loadMap();
       }
     });
   }
 
-
- async loadMap(): Promise<void> {
+  async loadMap(): Promise<void> {
     const mapElement = document.getElementById('map') as HTMLElement;
     if (!mapElement) {
       console.error('Map element not found');

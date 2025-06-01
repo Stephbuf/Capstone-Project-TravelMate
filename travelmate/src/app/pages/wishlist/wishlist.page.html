@@ -1,13 +1,14 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>wishlist</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">wishlist</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <div *ngFor="let item of wishlistItems" class="wishlist-card">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ item.name || item.category }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ item.address }}</p>
+        <p><strong>{{ item.city }}, {{ item.country }}</strong></p>
+        <p class="tag">{{ item.tag }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

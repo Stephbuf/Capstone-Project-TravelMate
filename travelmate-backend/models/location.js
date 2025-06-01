@@ -1,38 +1,19 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../db_config');
+const db = require('../db_config');
 
-const Location = sequelize.define('Location', {
-  country: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  city: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  category: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  custom_category: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  address: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  place_id: {
-    type: DataTypes.STRING,
-    allowNull: true // 
-  },
-  tag:{
-    type:DataTypes.STRING,
-    allowNull: false
-
-  }
+const Location = db.define('Location', {
+  id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+  country: DataTypes.STRING,
+  city: DataTypes.STRING,
+  category: DataTypes.STRING,
+  name: DataTypes.STRING,
+  address: DataTypes.TEXT,
+  userEmail: DataTypes.STRING,
+  wishlist: DataTypes.BOOLEAN,
+  place_id: DataTypes.STRING,
+  tag: DataTypes.STRING,
 }, {
-  timestamps: false, 
+  timestamps: false,
   tableName: 'locations'
 });
 
