@@ -60,16 +60,17 @@ export class AddLocationPage implements OnInit {
       city: [city, Validators.required],
       address: [address, Validators.required],
       category: ['', Validators.required],
-      tag: ['wishlist', Validators.required]
+      tag: ['wishlist', Validators.required],
+       location_name: ['', Validators.required] 
     });
   }
 
- onSubmit(): void {
+onSubmit(): void {
   if (this.locationForm.invalid) return;
 
   this.isSubmitting = true;
 
-  const { country, city, address, category, tag } = this.locationForm.value;
+  const { country, city, address, category, tag, location_name } = this.locationForm.value;
 
   const payload = {
     country: country.trim(),
@@ -78,9 +79,11 @@ export class AddLocationPage implements OnInit {
     category: category.trim(),
     tag,
     wishlist: tag === 'wishlist',
-    name: `${city.trim()} ${category.trim()}`,
-    userEmail: localStorage.getItem('email'), // ✅ fixed key
+    location_name: location_name.trim(),
+    userEmail: localStorage.getItem('email'),
   };
+
+console.log('🚀 Payload being sent:', payload);
 
   this.http.post('http://localhost:3000/locations', payload).subscribe({
     next: () => {
@@ -95,5 +98,6 @@ export class AddLocationPage implements OnInit {
     }
   });
 }
+
 
 }

@@ -1,13 +1,7 @@
 <ion-content [fullscreen]="true" class="login-content">
   <!-- Gradient Header -->
   <div class="login-header">
-    <div class="login-header-row">
-      <span class="header-question">Don’t have an account?</span>
-      <ion-button fill="clear" class="get-started" size="small" (click)="goToSignup()">
-        Get Started
-      </ion-button>
-      
-    </div>
+   
     <h1 class="app-title">Travel Mate</h1>
   </div>
 
@@ -57,20 +51,16 @@
     </div>
 
     <!-- Divider -->
-    <div class="or-divider">
-      <span>Or sign in with</span>
-    </div>
+     <br>
+   <div class="login-header-row">
+  <span class="signup-text">
+    Don’t have an account?
+    <a (click)="goToSignup()">Get Started</a>
+  </span>
+</div>
 
-    <!-- Social Login Buttons -->
-    <div class="social-buttons">
-      <ion-button fill="outline">
-        <ion-icon slot="start" name="logo-google"></ion-icon>
-        Google
-      </ion-button>
-      <ion-button fill="outline">
-        <ion-icon slot="start" name="logo-facebook"></ion-icon>
-        Facebook
-      </ion-button>
-    </div>
+
+   
+  
   </div>
 </ion-content>

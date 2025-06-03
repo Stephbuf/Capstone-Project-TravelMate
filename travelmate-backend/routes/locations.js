@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
       country,
       city,
       category,
-      name,
+      location_name,
       address,
       userEmail,
       wishlist,
@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
       country,
       city,
       category,
-      name,
+      location_name,
       address,
       userEmail,
       wishlist,
@@ -101,7 +101,7 @@ router.put('/:id', async (req, res) => {
       address,
       place_id,
       userEmail,
-      name,
+      location_name,
       wishlist,
     } = req.body;
 
@@ -113,7 +113,7 @@ router.put('/:id', async (req, res) => {
         address,
         place_id,
         userEmail,
-        name,
+        location_name,
         wishlist,
       },
       { where: { id: req.params.id } }

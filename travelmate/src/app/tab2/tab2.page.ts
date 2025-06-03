@@ -80,7 +80,9 @@ goToCityPage(city: string): void {
     if (status === 'OK' && results && results[0]) {
       const location = results[0].geometry.location;
 
-      this.router.navigate(['/itinerary'], {
+      const route = this.currentFilter === 'wishlist' ? '/wishlistcategories' : '/itinerarycategories';
+
+      this.router.navigate([route], {
         queryParams: {
           name: match.name,
           city: match.city,
@@ -95,5 +97,6 @@ goToCityPage(city: string): void {
     }
   });
 }
+
 
 }

@@ -75,37 +75,39 @@ export class SearchLocationPage implements AfterViewInit {
     });
   }
 
-  async loadMap(): Promise<void> {
-    const mapElement = document.getElementById('map') as HTMLElement;
-    if (!mapElement) {
-      console.error('Map element not found');
-      return;
-    }
-
-    this.map = new google.maps.Map(mapElement, {
-      center: { lat: 0, lng: 0 },
-      zoom: 14,
-    });
-
-    const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ address: this.searchQuery }, (results, status) => {
-      if (status === 'OK' && results && results[0]) {
-        const location = results[0].geometry.location;
-        if (location) {
-          this.map.setCenter(location);
-
-          new google.maps.Marker({
-            map: this.map,
-            position: location,
-            title: this.searchQuery,
-          });
-        }
-      } else {
-        alert('Location not found.');
-        console.error('Geocode error:', status);
-      }
-    });
+async loadMap(): Promise<void> {
+  const mapElement = document.getElementById('map') as HTMLElement;
+  if (!mapElement) {
+    console.error('Map element not found');
+    return;
   }
+
+  this.map = new google.maps.Map(mapElement, {
+    center: { lat: 0, lng: 0 },
+    zoom: 14,
+    mapId: 'DEMO_MAP_ID' // You can replace this with your actual map ID
+  });
+
+  const geocoder = new google.maps.Geocoder();
+  geocoder.geocode({ address: this.searchQuery }, (results, status) => {
+    if (status === 'OK' && results && results[0]) {
+      const location = results[0].geometry.location;
+      if (location) {
+        this.map.setCenter(location);
+
+        // ✅ Use AdvancedMarkerElement instead of legacy Marker
+        const marker = new google.maps.marker.AdvancedMarkerElement({
+          map: this.map,
+          position: location,
+          title: this.searchQuery,
+        });
+      }
+    } else {
+      alert('Location not found.');
+      console.error('Geocode error:', status);
+    }
+  });
+}
 
   goToAddLocation(): void {
     this.router.navigate(['/add-location']);

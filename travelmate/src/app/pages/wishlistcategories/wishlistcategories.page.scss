@@ -1,0 +1,54 @@
+.wishlist-categories-content {
+  --background: #fdfdfd;
+  padding: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.beautiful-header {
+  text-align: center;
+  padding: 1rem 0;
+     background-color: #496faa34;
+
+  color: white;
+//   border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.category-list {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  padding: 0.5rem;
+}
+
+.category-toggle {
+  --background: #f5f5f5;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.category-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.chevron-icon {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.place-item {
+  --background: #fafafa;
+  margin-left: 1rem;
+  border-left: 3px solid #496faa34;
+  padding-left: 1rem;
+  margin-bottom: 0.4rem;
+  border-radius: 6px;
+}
+
+.place-label {
+  font-size: 0.95rem;
+  color: #333;
+  font-style: italic;
+}

@@ -45,4 +45,12 @@ export const routes: Routes = [
     path: 'itinerary',
     loadComponent: () => import('./pages/itinerary/itinerary.page').then( m => m.ItineraryPage)
   },
+  {
+    path: 'itinerarycategories',
+    loadComponent: () => import('./pages/itinerarycategories/itinerarycategories.page').then( m => m.ItineraryCategoriesPage)
+  },
+  {
+    path: 'wishlistcategories',
+    loadComponent: () => import('./pages/wishlistcategories/wishlistcategories.page').then( m => m.WishlistCategoriesPage)
+  },
 ];

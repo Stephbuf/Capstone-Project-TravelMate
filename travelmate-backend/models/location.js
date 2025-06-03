@@ -6,12 +6,13 @@ const Location = db.define('Location', {
   country: DataTypes.STRING,
   city: DataTypes.STRING,
   category: DataTypes.STRING,
-  name: DataTypes.STRING,
+  location_name: DataTypes.STRING,
   address: DataTypes.TEXT,
   userEmail: DataTypes.STRING,
   wishlist: DataTypes.BOOLEAN,
   place_id: DataTypes.STRING,
-  tag: DataTypes.STRING,
+  tag: DataTypes.STRING, 
+  
 }, {
   timestamps: false,
   tableName: 'locations'

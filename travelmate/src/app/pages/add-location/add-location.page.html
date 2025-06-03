@@ -16,16 +16,20 @@
             <ion-label position="floating">City</ion-label>
             <ion-input formControlName="city" required></ion-input>
           </ion-item>
-<ion-item lines="full">
-  <ion-label>Category</ion-label>
-  <ion-select formControlName="category" interface="action-sheet">
-    <ion-select-option *ngFor="let cat of categories" [value]="cat">
-      {{ cat }}
-    </ion-select-option>
-  </ion-select>
-</ion-item>
 
-   
+          <ion-item lines="full">
+            <ion-label>Category</ion-label>
+            <ion-select formControlName="category" interface="action-sheet">
+              <ion-select-option *ngFor="let cat of categories" [value]="cat">
+                {{ cat }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item lines="full">
+            <ion-label position="floating">Name of Location</ion-label>
+            <ion-input formControlName="location_name" required></ion-input>
+          </ion-item>
 
           <ion-item lines="full">
             <ion-label position="floating">Address</ion-label>

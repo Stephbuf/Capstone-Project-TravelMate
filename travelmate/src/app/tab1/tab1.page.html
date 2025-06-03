@@ -7,14 +7,16 @@
       <label for="search-input">
         <i class="ion-location"></i>
       </label>
-      <input
-        type="text"
-        id="search-input-tab1"
-        name="searchQuery"
-        [(ngModel)]="searchQuery"
-        placeholder="Where do you want to go?"
-        required
-      />
+     <input
+  type="text"
+  id="search-input-tab1"
+  #inputRef
+  name="searchQuery"
+  [(ngModel)]="searchQuery"
+  placeholder="Where do you want to go?"
+  required
+/>
+
       <input type="submit" value="search" [disabled]="!searchForm.form.valid" />
     </form>
   </div>

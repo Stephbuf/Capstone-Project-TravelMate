@@ -28,7 +28,7 @@ const locationsRoutes = require('./routes/locations');
 
 // ✅ Middleware
 app.use(cors({
-  origin: 'http://localhost:8100',
+    origin: ['http://localhost:8100', 'http://localhost:8101'],
   credentials: true
 }));
 
