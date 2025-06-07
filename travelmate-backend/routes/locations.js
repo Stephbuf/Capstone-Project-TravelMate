@@ -3,7 +3,7 @@ const router = express.Router();
 const { Sequelize } = require('sequelize');
 const Location = require('../models/location');
 
-// ✅ Create new location (wishlist or itinerary)
+// Create new location (wishlist or itinerary)
 router.post('/', async (req, res) => {
   try {
     const {
@@ -37,17 +37,17 @@ router.post('/', async (req, res) => {
   }
 });
 
-// ✅ Get all locations
+// Get all locations
 router.get('/', async (req, res) => {
   try {
     const locations = await Location.findAll();
     res.status(200).json(locations);
   } catch (err) {
-    res.status(500).json({ message: 'Failed to fetch locations', error: err.message });
+    res.status(500).json({ message: 'Failed to get locations', error: err.message });
   }
 });
 
-// ✅ Get distinct countries
+// Get countries
 router.get('/countries', async (req, res) => {
   try {
     const countries = await Location.findAll({
@@ -59,7 +59,7 @@ router.get('/countries', async (req, res) => {
   }
 });
 
-// ✅ Get locations by user and wishlist status
+//Get locations by user and wishlist status
 router.get('/user/:userEmail', async (req, res) => {
   try {
     const { userEmail } = req.params;
@@ -70,16 +70,16 @@ router.get('/user/:userEmail', async (req, res) => {
       whereClause.tag = tag;
     }
 
-    console.log('📦 Fetching with:', whereClause); // ✅ Add this
+    console.log('📦 Fetching with:', whereClause); 
     const entries = await Location.findAll({ where: whereClause });
 
-    console.log('🎯 Found entries:', entries); // ✅ And this
+    console.log('🎯 Found entries:', entries); 
     res.status(200).json(entries);
   } catch (err) {
     res.status(500).json({ message: 'Failed to fetch user locations', error: err.message });
   }
 });
-// ✅ Get single location by ID
+// Get single location by ID
 router.get('/:id', async (req, res) => {
   try {
     const location = await Location.findByPk(req.params.id);
@@ -90,7 +90,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// ✅ Update location
+// Update location
 router.put('/:id', async (req, res) => {
   try {
     const {
@@ -126,7 +126,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// ✅ Delete location
+// Delete location
 router.delete('/:id', async (req, res) => {
   try {
     const deleted = await Location.destroy({ where: { id: req.params.id } });

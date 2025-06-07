@@ -10,7 +10,7 @@
   }
   
   .login-header {
-    height: 150px;
+    height: 300px;
     // background: linear-gradient(145deg, #5c33cf, #9b4dff);
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
@@ -61,6 +61,7 @@
     border-radius: 20px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     text-align: center;
+    
   
     h2 {
       margin-bottom: 6px;
@@ -91,16 +92,17 @@
   
     ion-input {
       padding: 8px 0;
+        --background: #e8f0fe;  
     }
   
-    .gradient-button {
-      background: linear-gradient(90deg, #5c33cf, #9b4dff);
-      color: white;
-      margin-top: 20px;
-      border-radius: 10px;
-      text-transform: none;
-      font-weight: 500;
-    }
+    // .gradient-button {
+    //   background: linear-gradient(90deg, #5c33cf, #9b4dff);
+    //   color: white;
+    //   margin-top: 20px;
+    //   border-radius: 10px;
+    //   text-transform: none;
+    //   font-weight: 500;
+    // }
   
     .forgot-password {
       margin-top: 12px;

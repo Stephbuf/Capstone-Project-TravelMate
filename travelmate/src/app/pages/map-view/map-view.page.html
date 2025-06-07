@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-title>Map View</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="map" class="half-map"></div>
+
+  <ion-searchbar
+    placeholder="Search saved places"
+    [(ngModel)]="searchTerm"
+    (ionInput)="filterLocations()"
+  ></ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let location of filteredLocations" lines="full">
+      <ion-label>{{ location.name }}</ion-label>
+      <span class="plus-icon" (click)="addMarker(location)">+</span>
+    </ion-item>
+  </ion-list>
+  
+</ion-content>
+<div class="back-button-bar" >
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="/" style="color: black;"></ion-back-button>
+  </ion-buttons>
+</div>

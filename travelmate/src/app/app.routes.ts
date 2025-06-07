@@ -53,4 +53,8 @@ export const routes: Routes = [
     path: 'wishlistcategories',
     loadComponent: () => import('./pages/wishlistcategories/wishlistcategories.page').then( m => m.WishlistCategoriesPage)
   },
+  {
+    path: 'map-view',
+    loadComponent: () => import('./pages/map-view/map-view.page').then( m => m.MapViewPage)
+  },
 ];

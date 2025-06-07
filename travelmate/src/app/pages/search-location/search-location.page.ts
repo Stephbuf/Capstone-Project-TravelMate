@@ -85,7 +85,7 @@ async loadMap(): Promise<void> {
   this.map = new google.maps.Map(mapElement, {
     center: { lat: 0, lng: 0 },
     zoom: 14,
-    mapId: 'DEMO_MAP_ID' // You can replace this with your actual map ID
+    mapId: 'DEMO_MAP_ID' 
   });
 
   const geocoder = new google.maps.Geocoder();
@@ -95,7 +95,7 @@ async loadMap(): Promise<void> {
       if (location) {
         this.map.setCenter(location);
 
-        // ✅ Use AdvancedMarkerElement instead of legacy Marker
+        
         const marker = new google.maps.marker.AdvancedMarkerElement({
           map: this.map,
           position: location,

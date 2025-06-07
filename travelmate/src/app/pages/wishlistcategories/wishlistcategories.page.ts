@@ -6,16 +6,16 @@ import {
   IonList,
   IonItem,
   IonLabel,
-  IonIcon, IonHeader } from '@ionic/angular/standalone';
+  IonIcon, IonButtons, IonBackButton } from '@ionic/angular/standalone';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-wishlistcategories',
   templateUrl: './wishlistcategories.page.html',
   styleUrls: ['./wishlistcategories.page.scss'],
   standalone: true,
-  imports: [ 
+  imports: [IonBackButton, IonButtons, 
     IonIcon,
     IonLabel,
     IonItem,
@@ -29,19 +29,27 @@ export class WishlistCategoriesPage implements OnInit {
   city: string = '';
   categories: { name: string; places: any[] }[] = [];
   expandedCategory: string | null = null;
+  allPlaces: any[] = [];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
       this.city = params['city'];
       const userEmail = localStorage.getItem('email');
 
+      if (!userEmail || !this.city) return;
+
       this.http
         .get<any[]>(`http://localhost:3000/locations/user/${userEmail}?tag=wishlist`)
         .subscribe((data) => {
           const filtered = data.filter((entry) => entry.city === this.city);
           const categoryMap = new Map<string, any[]>();
+          const allEntries: any[] = [];
 
           filtered.forEach((entry) => {
             const displayName = entry.location_name?.trim()
@@ -49,6 +57,7 @@ export class WishlistCategoriesPage implements OnInit {
               : this.getLabelFromAddress(entry.address);
 
             const entryWithName = { ...entry, name: displayName };
+            allEntries.push(entryWithName);
 
             if (!categoryMap.has(entry.category)) {
               categoryMap.set(entry.category, []);
@@ -61,17 +70,60 @@ export class WishlistCategoriesPage implements OnInit {
             name,
             places
           }));
+
+          this.allPlaces = allEntries;
         });
     });
   }
 
   toggleCategory(categoryName: string): void {
-    this.expandedCategory =
-      this.expandedCategory === categoryName ? null : categoryName;
+    this.expandedCategory = this.expandedCategory === categoryName ? null : categoryName;
   }
 
   getLabelFromAddress(address: string): string {
-    if (!address) return '';
-    return address.split(',')[0];
+    return address ? address.split(',')[0] : '';
+  }
+
+  goToMap(place: any) {
+    const name = place.name;
+    const address = place.address;
+
+    // Exclude the current place from the list
+    const allOtherPlaces = this.categories.reduce((acc: any[], cat: { name: string; places: any[] }) => {
+      const filtered = cat.places.filter(p => p.name !== name);
+      return acc.concat(filtered);
+    }, []);
+
+    const others = JSON.stringify(allOtherPlaces);
+
+    if (place.lat && place.lng && !isNaN(place.lat) && !isNaN(place.lng)) {
+      this.router.navigate(['/map-view'], {
+        queryParams: { lat: place.lat, lng: place.lng, name, others }
+      });
+    } else if (address) {
+      const query = encodeURIComponent(address);
+      fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${query}&key=AIzaSyC1h8HyptSYlslcFi6bYYzEqE1FI-7qe1g`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === 'OK' && data.results.length > 0) {
+            const location = data.results[0].geometry.location;
+            this.router.navigate(['/map-view'], {
+              queryParams: {
+                lat: location.lat,
+                lng: location.lng,
+                name,
+                others
+              }
+            });
+          } else {
+            console.error('Geocoding failed:', data.status, data.error_message || '');
+          }
+        })
+        .catch(err => {
+          console.error('Geocoding request error:', err);
+        });
+    } else {
+      console.error('No address or coordinates available for this place.');
+    }
   }
 }

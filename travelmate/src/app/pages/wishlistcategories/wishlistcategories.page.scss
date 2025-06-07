@@ -18,7 +18,7 @@
   background-color: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-  padding: 0.5rem;
+  padding: 1.5rem;
 }
 
 .category-toggle {
@@ -51,4 +51,13 @@
   font-size: 0.95rem;
   color: #333;
   font-style: italic;
+}
+
+.back-button-bar {
+  background-color: #496faa34;
+  padding: 10px 16px;
+  height: 50px; 
+  display: flex;
+  align-items: center;
+
 }

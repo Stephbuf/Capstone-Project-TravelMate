@@ -32,6 +32,7 @@ body {
   position: relative;
   width: 100%;
   height: $height;
+  
 }
 
 // Welcome Animation
@@ -58,7 +59,7 @@ body {
       width: 0;
       height: $height;
       animation: text-after-animation-#{$i} 2s ease-in-out 3s 1 forwards;
-      background-color: #D17856;
+      background-color: #496faa34;
     }
   }
 
@@ -72,7 +73,7 @@ body {
     transform: translateX(-50%);
     top: 0;
     animation: frame-animation-#{$i} 1s ease-in-out ($i * 200ms) 1 forwards;
-    background-color: #F49C8D;
+    background-color: #496faa34;
   }
 
   @keyframes frame-animation-#{$i} {

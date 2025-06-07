@@ -1,9 +1,11 @@
 <ion-header [translucent]="true"></ion-header>
 
 <ion-content [fullscreen]="true">
+
     <div class="center-container">
   <!-- "Welcome" animation -->
-  <div class="criterion">
+   
+  <div class="criterion" style="text-align: center;">
     <div *ngFor="let text of texts; let i = index" [ngClass]="'text' + i" class="text">
       {{ text }}
     </div>

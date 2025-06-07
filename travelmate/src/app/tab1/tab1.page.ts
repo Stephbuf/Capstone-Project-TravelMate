@@ -3,13 +3,14 @@ import { Component, AfterViewInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GoogleMapsLoaderService } from '../services/google-maps-loader.service';
+import { IonContent } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-tab1',
   templateUrl: './tab1.page.html',
   styleUrls: ['./tab1.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule]
+  imports: [IonContent, CommonModule, FormsModule]
 })
 export class Tab1Page implements AfterViewInit {
   searchQuery: string = '';

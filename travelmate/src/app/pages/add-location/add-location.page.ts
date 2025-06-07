@@ -17,6 +17,7 @@ import {
 } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 
+
 @Component({
   selector: 'app-add-location',
   templateUrl: './add-location.page.html',
@@ -33,8 +34,9 @@ import { CommonModule } from '@angular/common';
     IonInput,
     IonContent,
     IonSelect,
-    IonSelectOption
-  ]
+    IonSelectOption,
+
+]
 })
 export class AddLocationPage implements OnInit {
   locationForm!: FormGroup;
