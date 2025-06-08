@@ -149,3 +149,49 @@ ul.mtree {
     margin-bottom: 0.5rem;
   }
 }
+
+ion-menu::part(backdrop) {
+  background-color:  #337aff25;
+}
+
+ion-menu::part(container) {
+  border-radius: 0 20px 20px 0;
+
+  box-shadow: 4px 0px 16px #eaf2ff;
+}
+.expand-menu {
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    background: #6c63ff;
+    transition: width 0.5s;
+    width: 0%;
+}
+
+.expand-menu .nav-link{
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom: 20px;
+    color:#dddce5;
+    font-size:1.5rem;
+    display: none;
+    opacity: 0;
+    transition: all 0.5s;
+}
+
+.expand-menu .nav-link.animate{
+    display: block;
+}
+
+.expand-menu .nav-link.animate-show{
+    opacity:1;
+}
+
+.expand-menu .nav-link.active{
+    color:#fff;
+}
+
+.expand-menu.animate{
+    width : 100%;
+}
