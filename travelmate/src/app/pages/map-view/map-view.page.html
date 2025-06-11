@@ -16,8 +16,10 @@
 
   <ion-list>
     <ion-item *ngFor="let location of filteredLocations" lines="full">
-      <ion-label>{{ location.name }}</ion-label>
-      <span class="plus-icon" (click)="addMarker(location)">+</span>
+ <ion-label>{{ location.name || location.location_name }}</ion-label>
+<span class="plus-icon" (click)="toggleMarker(location)">+</span>
+
+
     </ion-item>
   </ion-list>
   

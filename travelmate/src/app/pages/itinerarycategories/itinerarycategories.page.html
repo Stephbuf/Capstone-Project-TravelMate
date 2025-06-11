@@ -1,5 +1,5 @@
-<ion-content class="itinerary-categories-content">
-  <div class="city-header beautiful-header">
+<ion-content class="itinerary-categories-content"> <!-- keeps itinerary class -->
+  <div class="beautiful-header">
     <h1>{{ city }}</h1>
   </div>
 
@@ -15,12 +15,16 @@
       </ion-item>
 
       <ng-container *ngIf="expandedCategory === category.name">
-        <ion-item *ngFor="let place of category.places" class="place-item">
-          <ion-label class="place-label">
-            {{ place.location_name || getLabelFromAddress(place.address) }}
-          </ion-label>
+        <ion-item button detail="false" *ngFor="let place of category.places" (click)="goToMap(place)">
+          <ion-label class="place-label">{{ place.location_name || getLabelFromAddress(place.address) }}</ion-label>
         </ion-item>
       </ng-container>
     </ng-container>
   </ion-list>
 </ion-content>
+
+<div class="back-button-bar">
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="/" style="color: black;"></ion-back-button>
+  </ion-buttons>
+</div>

@@ -5,8 +5,7 @@ import {
   IonContent,
   IonFab,
   IonFabButton,
-  IonIcon
-} from '@ionic/angular/standalone';
+  IonIcon, IonBackButton, IonButtons } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { add } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
@@ -16,7 +15,7 @@ import { addIcons } from 'ionicons';
   templateUrl: './search-location.page.html',
   styleUrls: ['./search-location.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, IonFab, IonFabButton, IonIcon]
+  imports: [IonButtons, IonBackButton, IonContent, CommonModule, FormsModule, IonFab, IonFabButton, IonIcon]
 })
 export class SearchLocationPage implements AfterViewInit {
   map!: google.maps.Map;

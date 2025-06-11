@@ -13,8 +13,7 @@ import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
-  IonCardContent
-} from "@ionic/angular/standalone";
+  IonCardContent, IonApp } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 
 
@@ -23,7 +22,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './add-location.page.html',
   styleUrls: ['./add-location.page.scss'],
   standalone: true,
-  imports: [
+  imports: [ 
     IonCardContent, IonCardTitle, IonCardHeader, IonCard,
     CommonModule,
     FormsModule,
@@ -34,9 +33,7 @@ import { CommonModule } from '@angular/common';
     IonInput,
     IonContent,
     IonSelect,
-    IonSelectOption,
-
-]
+    IonSelectOption]
 })
 export class AddLocationPage implements OnInit {
   locationForm!: FormGroup;
@@ -93,11 +90,15 @@ console.log('🚀 Payload being sent:', payload);
       this.router.navigate(['/tabs/tab2']);
       this.isSubmitting = false;
     },
-    error: (err) => {
-      console.error('Error saving location:', err);
-      alert('Failed to save location.');
-      this.isSubmitting = false;
-    }
+   error: (err) => {
+  if (err.status === 400 && err.error?.message) {
+    alert(err.error.message); // or use presentToast()
+  } else {
+    alert('Failed to save location.');
+  }
+  this.isSubmitting = false;
+}
+
   });
 }
 

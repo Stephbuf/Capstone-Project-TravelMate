@@ -2,9 +2,23 @@ ion-fab-button {
   display: flex;
   align-items: center;
   justify-content: center;
+  
 }
 
 ion-icon {
   font-size: 24px;
-  color: white; // ensure it's visible against the FAB background
+  color: white; 
+ 
+}
+.back-button-bar {
+  background-color: #496faa34;
+  padding: 10px 16px;
+  height: 50px; 
+  display: flex;
+  align-items: center;
+
+}
+icon-inner {
+  color: #496faa34;
+
 }

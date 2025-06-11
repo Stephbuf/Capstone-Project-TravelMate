@@ -17,9 +17,10 @@
             <ion-input formControlName="city" required></ion-input>
           </ion-item>
 
+          <!-- Category Dropdown with pop-out interface -->
           <ion-item lines="full">
             <ion-label>Category</ion-label>
-            <ion-select formControlName="category" interface="action-sheet">
+            <ion-select formControlName="category" interface="action-sheet" placeholder="Select Category">
               <ion-select-option *ngFor="let cat of categories" [value]="cat">
                 {{ cat }}
               </ion-select-option>
@@ -51,6 +52,4 @@
       </ion-card-content>
     </ion-card>
   </div>
-
-
 </ion-content>

@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular'; // make sure these are imported
 
 @Component({
   selector: 'app-tab2',
@@ -17,15 +18,14 @@ export class Tab2Page implements OnInit {
   expandedCountry: string | null = null;
   currentFilter: 'wishlist' | 'itinerary' = 'wishlist';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private toastController: ToastController, private alertController: AlertController) {}
 
-  ngOnInit() {
+   ngOnInit() {
     this.fetchData();
   }
 
   fetchData() {
     const userEmail = localStorage.getItem('email');
-
     this.http
       .get<any[]>(`http://localhost:3000/locations/user/${userEmail}?tag=${this.currentFilter}`)
       .subscribe((data) => {
@@ -67,36 +67,145 @@ export class Tab2Page implements OnInit {
     return Array.from(citySet);
   }
 
-goToCityPage(city: string): void {
-  const match = this.allData.find(entry => entry.city === city);
+  goToCityPage(city: string): void {
+    const match = this.allData.find(entry => entry.city === city);
 
-  if (!match || !match.address) {
-    console.warn('No valid entry found for city:', city, match);
-    return;
+    if (!match || !match.address) {
+      console.warn('No valid entry found for city:', city, match);
+      return;
+    }
+
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address: match.address }, (results, status) => {
+      if (status === 'OK' && results && results[0]) {
+        const location = results[0].geometry.location;
+        const route = this.currentFilter === 'wishlist' ? '/wishlistcategories' : '/itinerarycategories';
+
+        this.router.navigate([route], {
+          queryParams: {
+            name: match.name,
+            city: match.city,
+            address: match.address,
+            category: match.category,
+            lat: location.lat(),
+            lng: location.lng(),
+          },
+        });
+      } else {
+        console.error('Geocoding failed:', status);
+      }
+    });
   }
 
-  const geocoder = new google.maps.Geocoder();
-  geocoder.geocode({ address: match.address }, (results, status) => {
-    if (status === 'OK' && results && results[0]) {
-      const location = results[0].geometry.location;
+  async editLocation(name: string, type: 'city' | 'country') {
+  const alert = await this.alertController.create({
+    header: `Edit ${type === 'city' ? 'City' : 'Country'} Name`,
+    inputs: [
+      {
+        name: 'name',
+        type: 'text',
+        placeholder: `${type} Name`,
+        value: name
+      }
+    ],
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel'
+      },
+      {
+        text: 'Save',
+        handler: (data) => {
+          if (data.name && data.name.trim() !== '') {
+            const newName = data.name.trim();
+            const userEmail = localStorage.getItem('email');  // Fetch email from localStorage
 
-      const route = this.currentFilter === 'wishlist' ? '/wishlistcategories' : '/itinerarycategories';
-
-      this.router.navigate([route], {
-        queryParams: {
-          name: match.name,
-          city: match.city,
-          address: match.address,
-          category: match.category,
-          lat: location.lat(),
-          lng: location.lng(),
-        },
-      });
-    } else {
-      console.error('Geocoding failed:', status);
-    }
+            if (userEmail) {
+              // Send PUT request to backend with the new name, userEmail, and the type (city/country)
+              this.http.put(`http://localhost:3000/locations/editLocation/${type}/${encodeURIComponent(name)}`, { newName, userEmail })
+                .subscribe({
+                  next: () => {
+                    this.presentToast(`${type === 'city' ? 'City' : 'Country'} name updated.`);
+                    this.fetchData();  // Re-fetch data after update to reflect changes
+                  },
+                  error: (err) => {
+                    console.error(`Error updating ${type}:`, err);
+                    this.presentToast(`Error updating ${type}`);
+                  }
+                });
+            } else {
+              console.error('User email not found');
+              this.presentToast('Error: User email not found');
+            }
+          }
+        }
+      }
+    ]
   });
+
+  await alert.present();
 }
 
 
+  async deleteCity(city: string) {
+    const userEmail = localStorage.getItem('email');
+    this.http.delete(`http://localhost:3000/locations/city/${city}`)
+      .subscribe({
+        next: () => {
+          this.presentToast('City deleted.');
+          this.fetchData();  // Re-fetch data after deletion
+        },
+        error: (err) => {
+          console.error('Error deleting city:', err);
+          this.presentToast('Error deleting city');
+        }
+      });
+  }
+
+  async deleteCountry(country: string) {
+    const userEmail = localStorage.getItem('email');
+    this.http.delete(`http://localhost:3000/locations/country/${country}`)
+      .subscribe({
+        next: () => {
+          this.presentToast(`Deleted all entries for ${country}`);
+          this.fetchData();  // Re-fetch data after deletion
+        },
+        error: (err) => {
+          console.error('Error deleting country:', err);
+          this.presentToast(`Error deleting ${country}`);
+        }
+      });
+  }
+
+  // Move a country from Wishlist to Itinerary or vice versa
+  moveCountry(country: string) {
+    const email = localStorage.getItem('email'); // Get the user email
+
+    const url = this.currentFilter === 'wishlist' ? 'move-country' : 'move-country-back'; // Decide endpoint dynamically
+
+    this.http.put(`http://localhost:3000/locations/${url}`, {
+      email,
+      country,
+      currentTag: this.currentFilter
+    }).subscribe({
+      next: (response) => {
+        const moveMessage = this.currentFilter === 'wishlist' ? `${country} moved to itinerary` : `${country} moved back to wishlist`;
+        this.presentToast(moveMessage);
+        this.fetchData(); // Refresh the data to reflect the move
+      },
+      error: (err) => {
+        console.error('Error moving country:', err);
+        this.presentToast('Error moving country');
+      }
+    });
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 1500,
+      position: 'bottom'
+    });
+    toast.present();
+  }
 }
