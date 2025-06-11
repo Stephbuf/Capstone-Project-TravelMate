@@ -178,27 +178,33 @@ export class Tab2Page implements OnInit {
   }
 
   // Move a country from Wishlist to Itinerary or vice versa
-  moveCountry(country: string) {
-    const email = localStorage.getItem('email'); // Get the user email
+moveCountry(country: string) {
+  const email = localStorage.getItem('email');
 
-    const url = this.currentFilter === 'wishlist' ? 'move-country' : 'move-country-back'; // Decide endpoint dynamically
+  // 🔍 Debug log to verify payload before sending the request
+  console.log('⏩ Moving country with:', {
+    email,
+    country,
+    currentTag: this.currentFilter
+  });
 
-    this.http.put(`http://localhost:3000/locations/${url}`, {
-      email,
-      country,
-      currentTag: this.currentFilter
-    }).subscribe({
-      next: (response) => {
-        const moveMessage = this.currentFilter === 'wishlist' ? `${country} moved to itinerary` : `${country} moved back to wishlist`;
-        this.presentToast(moveMessage);
-        this.fetchData(); // Refresh the data to reflect the move
-      },
-      error: (err) => {
-        console.error('Error moving country:', err);
-        this.presentToast('Error moving country');
-      }
-    });
-  }
+  this.http.put('http://localhost:3000/locations/move-country', {
+    email,
+    country,
+    currentTag: this.currentFilter
+  }).subscribe({
+    next: (response) => {
+      const newTag = this.currentFilter === 'wishlist' ? 'itinerary' : 'wishlist';
+      this.presentToast(`${country} moved to ${newTag}`);
+      this.fetchData();
+    },
+    error: (err) => {
+      console.error('Error moving country:', err);
+      this.presentToast('Error moving country');
+    }
+  });
+}
+
 
   async presentToast(message: string) {
     const toast = await this.toastController.create({
@@ -208,4 +214,25 @@ export class Tab2Page implements OnInit {
     });
     toast.present();
   }
+  goToProfile() {
+  // Replace this with your actual navigation logic
+  console.log('Navigating to Profile...');
+  // this.router.navigate(['/profile']); // example route
+}
+
+goToSettings() {
+  console.log('Navigating to Settings...');
+  // this.router.navigate(['/settings']);
+}
+
+goToGeneral() {
+  console.log('Navigating to General...');
+  // this.router.navigate(['/general']);
+}
+
+  logout() {
+  localStorage.removeItem('email');  // Clear user session
+  this.router.navigate(['/login']);  // Redirect to login page
+}
+
 }

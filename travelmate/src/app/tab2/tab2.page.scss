@@ -3,7 +3,7 @@
 // ===========================
 .toggle-switch {
   display: flex;
-  background-color: #496faa34;
+  background-color: #337aff25;
   border-radius: 999px;
   padding: 6px;
   width: fit-content;
@@ -150,15 +150,29 @@ ul.mtree {
   }
 }
 
-ion-menu::part(backdrop) {
-  background-color:  #337aff25;
+ion-menu {
+  ion-item.menu-item::part(native) {
+    --background: transparent !important;
+    --ion-item-background: transparent !important;
+    --ripple-color: #337aff25;
+    transition: background 0.15s ease-in-out;
+  }
+
+  ion-item.menu-item:active::part(native) {
+    --background: #337aff25 !important;
+  }
+
+  ion-item.menu-item.activated::part(native) {
+    --background: transparent !important;
+  }
+
+  // Remove highlight sticking after click
+  ion-item.menu-item {
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
-ion-menu::part(container) {
-  border-radius: 0 20px 20px 0;
-
-  box-shadow: 4px 0px 16px #eaf2ff;
-}
 .expand-menu {
     position: absolute;
     z-index: 1;
@@ -194,4 +208,31 @@ ion-menu::part(container) {
 
 .expand-menu.animate{
     width : 100%;
+}
+
+.menu-button {
+  --background: transparent;
+  --background-hover: #337aff25;
+  --background-focused: #337aff25;
+  transition: background 0.2s ease-in-out;
+
+
+
+  &:active {
+    --background: #337aff25 !important;
+  }
+}
+
+
+.menu-item::part(native) {
+  --background: transparent;
+  --background-hover: #337aff25;
+  --background-focused: #337aff25;
+  transition: background 0.3s ease;
+}
+
+
+.menu-item:active::part(native),
+.menu-item.activated::part(native) {
+  --background: #337aff25;
 }
