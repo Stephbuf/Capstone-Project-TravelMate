@@ -16,10 +16,44 @@ const User = db.define('User', {
   tableName: 'users'
 });
 
-// ✅ Sync table
+// Sync table
 User.sync();
 
-// ✅ POST new user (Signup)
+
+//  POST new user (Signup) — prevent duplicate emails
+router.post('/', async (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
+
+  try {
+    // 🔍 Check for duplicate email
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email already in use' });
+    }
+
+    // 🔐 Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword
+    });
+
+    res.json({
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email
+    });
+  } catch (err) {
+    console.error('❌ Error creating user:', err);
+    res.status(500).json({ message: 'Server error. Please try again later.' });
+  }
+});
+
+// POST new user (Signup)
 router.post('/', async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
@@ -44,7 +78,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// ✅ POST login (Authenticate)
+//  POST login (Authenticate)
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -72,7 +106,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// ✅ Other routes (Get by ID, Email, Delete, etc.)
+// Other routes (Get by ID, Email, Delete, etc.)
 router.get('/', async (req, res) => {
   try {
     const users = await User.findAll();

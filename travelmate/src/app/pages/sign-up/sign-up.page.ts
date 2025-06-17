@@ -70,34 +70,40 @@ export class SignUpPage implements OnInit {
   }
 
   onSubmit() {
-    this.errorMessage = '';
-    this.successMessage = '';
+  this.errorMessage = '';
+  this.successMessage = '';
 
-    if (this.signupForm.invalid) {
-      this.signupForm.markAllAsTouched();
-      this.errorMessage = 'Please fill in all fields correctly.';
-      return;
-    }
+  if (this.signupForm.invalid) {
+    this.signupForm.markAllAsTouched();
+    this.errorMessage = 'Please fill in all fields correctly.';
+    return;
+  }
 
-    const { firstName, lastName, email, password } = this.signupForm.value;
-    const payload = { firstName, lastName, email, password };
+  const { firstName, lastName, email, password } = this.signupForm.value;
+  const payload = { firstName, lastName, email, password };
 
-    this.http.post('http://localhost:3000/users', payload).subscribe({
-      next: (res: any) => {
-        localStorage.setItem('user_id', res.id.toString());
-        localStorage.setItem('firstName', res.firstName);
-        localStorage.setItem('lastName', res.lastName);
-        localStorage.setItem('email', res.email);
+  this.http.post('http://localhost:3000/users', payload).subscribe({
+    next: (res: any) => {
+      localStorage.setItem('user_id', res.id.toString());
+      localStorage.setItem('firstName', res.firstName);
+      localStorage.setItem('lastName', res.lastName);
+      localStorage.setItem('email', res.email);
 
-        console.log('Saved user_id:', res.id);
-        this.successMessage = 'Account created successfully!';
-        this.signupForm.reset();
-        this.router.navigate(['/tabs/tab1']);
-      },
-      error: (error: any) => {
-        console.error('Signup failed:', error);
+      console.log('Saved user_id:', res.id);
+      this.successMessage = 'Account created successfully!';
+      this.signupForm.reset();
+      this.router.navigate(['/tabs/tab1']);
+    },
+    error: (error: any) => {
+      console.error('Signup failed:', error);
+
+      if (error.error?.message === 'Email already in use') {
+        this.email?.setErrors({ emailTaken: true });
+      } else {
         this.errorMessage = error.error?.message || 'Signup failed. Please try again.';
       }
-    });
-  }
+    }
+  });
+}
+
 }

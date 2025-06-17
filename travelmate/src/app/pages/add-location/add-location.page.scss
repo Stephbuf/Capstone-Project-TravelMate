@@ -2,33 +2,115 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 30px;
+  padding: 40px 16px;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #fbeaec, #ffffff);
+  font-family: 'Segoe UI', sans-serif;
+  position: relative;
+  overflow: hidden !important;
+  overflow-y: hidden !important;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    // background: url('/assets/bg-blur.jpg') center/cover no-repeat;
+    filter: blur(10px);
+    z-index: -2;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(10px);
+    z-index: -1;
+    height: 100%;
+  }
 }
+
 
 .form-card {
   width: 100%;
-  max-width: 500px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
+  height:75%;
+ max-height: 90vh; /* or try 80vh if you want it even shorter */
+  // overflow-y: auto;  /* allows internal scroll if needed */
+  padding: 32px 24px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  text-align: left;
+  z-index: 1;
+
+  ion-card-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #ef3f5a;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  ion-item {
+    --background: transparent;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    border-bottom: 1.5px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 8px;
+  }
+
+  ion-input,
+  ion-select {
+    font-size: 15px;
+    color: #1f1f1f;
+    --background: transparent;
+
+    &::placeholder {
+      color: #aaa;
+    }
+  }
+
+  ion-button {
+    margin-top: 24px;
+    --background: #ef3f5a;
+    --background-hover: #d93950;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 50px;
+    height: 48px;
+    font-size: 16px;
+    box-shadow: 0 6px 18px rgba(239, 63, 90, 0.3);
+  }
 }
 
-ion-card-title {
-  font-size: 1.4rem;
-  font-weight: 600;
-  text-align: center;
+/* Consistent Category & Tag styling */
+ion-item.category-field,
+ion-item.tag-field {
+  background: #ef3f5a;
+  --background: #ef3f5a;
+  border-radius: 12px;
+  padding-left: 12px;
+  border: none;
+  margin-bottom: 20px;
+
+  ion-label,
+  ion-select,
+  ion-input,
+  ion-icon {
+    color: #fff !important;
+  }
+
+  ::ng-deep ion-select::part(text),
+  ::ng-deep ion-select::part(placeholder) {
+    color: rgba(255, 255, 255, 0.95) !important;
+    font-weight: 500;
+    font-style: italic;
+  }
 }
 
-ion-item {
-  margin-bottom: 12px;
-}
-
-ion-button {
-  margin-top: 24px;
-  --background: #4a90e2;
-  --border-radius: 8px;
-  font-weight: bold;
-}
-
+/* Fix ion-select icon alignment */
 ::ng-deep ion-select .select-icon,
 ::ng-deep ion-select .select-icon-inner {
   right: 12px !important;
@@ -41,4 +123,11 @@ ion-button {
   --padding-start: 12px;
   --padding-end: 12px;
 }
+.back-button-bar {
+  background-color: #ff5f7e;
+  padding: 10px 16px;
+  height: 50px; 
+  display: flex;
+  align-items: center;
 
+}

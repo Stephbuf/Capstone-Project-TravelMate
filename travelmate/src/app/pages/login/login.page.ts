@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit,  } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonInput, IonButton, IonIcon,} from '@ionic/angular/standalone';
+import { IonContent, IonItem, IonInput, IonButton, IonIcon,} from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { eyeOffOutline, eyeOutline, logoFacebook, logoGoogle } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { Keyboard } from '@capacitor/keyboard';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
@@ -12,17 +13,22 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonContent, IonItem, IonInput, IonButton, IonIcon, CommonModule, ReactiveFormsModule, RouterModule, HttpClientModule]
+  imports: [IonContent, IonItem, IonInput, IonButton, IonIcon, CommonModule, ReactiveFormsModule, RouterModule, HttpClientModule, FormsModule]
 })
 export class LoginPage implements OnInit {
   loginForm!: FormGroup;
   showPassword = false;
+    showPlane = false;
 
   constructor(private fb: FormBuilder, private router: Router, private http: HttpClient) {
     addIcons({ logoGoogle, logoFacebook, eyeOutline, eyeOffOutline });
   }
 
   ngOnInit() {
+     setTimeout(() => {
+    this.showPlane = true;
+  });
+
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [

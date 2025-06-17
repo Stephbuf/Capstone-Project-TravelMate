@@ -1,182 +1,182 @@
 .login-content {
-    --background: #f2f2f7;
+  --background: transparent;
+  font-family: 'Segoe UI', sans-serif;
+  color: #1f1f1f;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    // background: url('/assets/bg-blur.jpg') center/cover no-repeat;
+    filter: blur(10px);
+    z-index: -2;
   }
-  
-  .error-msg {
-    color: #e53935;
-    font-size: 13px;
-    margin: -10px 0 10px 8px;
-    text-align: left;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(10px);
+    z-index: -1;
   }
-  
-  .login-header {
-    height: 220px;
-    // background: linear-gradient(145deg, #5c33cf, #9b4dff);
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
-    color: #fff;
-    padding-top: 40px;
-    text-align: center;
-    position: relative;
-  
-    .login-header-row {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-    }
-  
-    .header-question {
-      color: #fff;
-      opacity: 0.9;
-      font-weight: 400;
-    }
-  
-    .get-started {
-      --color: white;
-      font-weight: 500;
-      font-size: 13px;
-      padding: 4px 10px;
-      height: 28px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      text-transform: none;
-    }
-  
-    .app-title {
-      margin-top: 60px;
-      font-size: 30px;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-  }
-  
-  .login-card {
-    background: white;
-    margin: -60px 20px 20px;
-    padding: 30px 20px;
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    text-align: center;
-    
-  
-    h2 {
-      margin-bottom: 6px;
-      font-size: 22px;
-      font-weight: 600;
-    }
-  
-    p {
-      color: #777;
-      font-size: 14px;
-      margin-bottom: 20px;
-    }
-  
-    ion-item {
-      margin-bottom: 16px;
-      --background: #f4f4f4;
-      border-radius: 12px;
-      --padding-start: 10px;
-      --inner-padding-end: 10px;
-      --highlight-color-focused: transparent;
-    }
-  
-    ion-label {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 4px;
-    }
-  
-    ion-input {
-      padding: 8px 0;
-        --background: #e8f0fe;  
-    }
-  
-    // .gradient-button {
-    //   background: linear-gradient(90deg, #5c33cf, #9b4dff);
-    //   color: white;
-    //   margin-top: 20px;
-    //   border-radius: 10px;
-    //   text-transform: none;
-    //   font-weight: 500;
-    // }
-  
-    .forgot-password {
-      margin-top: 12px;
-  
-      a {
-        font-size: 13px;
-        color: #5c33cf;
-        text-decoration: none;
-      }
-    }
-  
-    .or-divider {
-      display: flex;
-      align-items: center;
-      margin: 25px 0;
-      color: #aaa;
-      font-size: 13px;
-  
-      &::before,
-      &::after {
-        content: '';
-        flex: 1;
-        height: 1px;
-        background: #e0e0e0;
-        margin: 0 10px;
-      }
-    }
-  
-    .social-buttons {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-  
-      ion-button {
-        flex: 1;
-        border-radius: 10px;
-        --border-color: #ddd;
-        --background: #fff;
-        --color: #444;
-        font-size: 14px;
-        font-weight: 500;
-      }
-  
-      ion-icon {
-        font-size: 18px;
-      }
-    }
-  }
-  .icon-img {
-    width: 18px;
-    height: 18px;
-    margin-right: 8px;
-  }
-  
-  .login-header-row {
+}
+
+/* Plane header */
+.login-header {
+  height: 100px;
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 20px;
-  font-size: 14px;
-  color: #444;
+  overflow: hidden;
+margin-top: 40px;
+
+  .plane-svg {
+    width: 175%;
+    height: 90%;
+    max-height: 180px;
+    transform: scale(1.20);
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.25));
+  }
+}
+
+/* Elevated glass login card */
+.login-card {
+  margin: 10px 30px 0;
+  padding: 36px 24px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: left;
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  p {
+    font-size: 15px;
+    color: #444;
+    margin-bottom: 24px;
+  }
+
+  ion-item {
+    --background: transparent;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    padding-left: 0;
+    border-bottom: 1.5px solid #ddd;
+    margin-bottom: 24px;
+    transition: border-color 0.3s ease;
+
+    &:focus-within {
+      border-color: #ef3f5a;
+    }
+  }
+
+  ion-label {
+    font-size: 13px;
+    color: #777;
+    padding-left: 2px;
+  }
+
+  ion-input {
+    font-size: 16px;
+    padding: 6px 0;
+    --background: transparent;
+    color: #1f1f1f;
+    border: none;
+
+    &::placeholder {
+      color: #aaa;
+      font-weight: 400;
+      font-size: 14px;
+    }
+  }
+
+  ion-icon {
+    font-size: 20px;
+    color: #999;
+  }
+
+  ion-button.gradient-button {
+    --background: #ef3f5a;
+    --background-hover: #d93950;
+    --color: #fff;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 50px;
+    margin-top: 12px;
+    box-shadow: 0 6px 18px rgba(239, 63, 90, 0.3);
+    transition: background 0.3s ease;
+    text-transform: none;
+  }
+
+  .forgot-password {
+    text-align: right;
+    font-size: 13px;
+    color: #b32f44;
+    margin-top: 14px;
+
+    a {
+      text-decoration: underline;
+      font-weight: 500;
+    }
+  }
+}
+
+/* Signup row */
+.login-header-row {
+  margin-top: 32px;
+  text-align: center;
 }
 
 .signup-text {
+  font-size: 14px;
+  color: #444;
+
   a {
     margin-left: 4px;
-    color: #5c33cf;
-    font-weight: 500;
-    text-decoration: none;
-    cursor: pointer;
-    transition: color 0.2s;
+    font-weight: 600;
+    color: #ef3f5a;
+    text-decoration: underline;
 
     &:hover {
-      color: #8a57ff;
-      text-decoration: underline;
+      color: #d93950;
     }
   }
+}
+
+/* Error messages */
+.error-msg {
+  color: #ef3f5a;
+  font-size: 13px;
+  margin: -10px 0 10px 8px;
+  text-align: left;
+}
+
+.planePath {
+  stroke: #ef3f5a;
+  stroke-width: .1%;
+  stroke-width: .5%;
+  stroke-dasharray: 1% 2%;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.fil1 {
+  fill: #ef3f5a;
+}
+.fil2 {
+  fill: #e76b7b;
+}
+.fil3 {
+  fill: #d93950;
+}
+.fil4 {
+  fill: #b32f44;
 }

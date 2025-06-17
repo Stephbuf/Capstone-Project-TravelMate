@@ -1,76 +1,159 @@
 .signup-content {
-    --background: #f2f2f7;
-     overflow: hidden !important;
+  --background: transparent;
+  font-family: 'Segoe UI', sans-serif;
+  color: #1f1f1f;
+  position: relative;
+  overflow: hidden !important;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    // background: url('/assets/bg-blur.jpg') center/cover no-repeat;
+    filter: blur(10px);
+    z-index: -2;
   }
-  
-  .error-msg {
-    color: #e53935;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(10px);
+    z-index: -1;
+  }
+}
+
+/* Plane animation header */
+.signup-header {
+ height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+margin-top: 40px;
+
+  .plane-svg {
+    width: 200%;
+    height: 90%;
+    max-height: 180px;
+    transform: scale(1.20);
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.25));
+  }
+}
+
+/* Glassmorphism signup card */
+.signup-card {
+ margin: 10px 30px 0;
+  padding: 30px 24px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: left;
+
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  p {
+    font-size: 15px;
+    color: #444;
+    margin-bottom: 24px;
+  }
+
+  ion-item {
+    --background: transparent;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    padding-left: 0;
+    border-bottom: 1.5px solid #ddd;
+    margin-bottom: 24px;
+    transition: border-color 0.3s ease;
+
+    &:focus-within {
+      border-color: #ef3f5a;
+    }
+  }
+
+  ion-label {
     font-size: 13px;
-    margin: -10px 0 10px 8px;
-    text-align: left;
+    color: #777;
+    padding-left: 2px;
   }
-  
+
+  ion-input {
+    font-size: 16px;
+    padding: 6px 0;
+    --background: transparent;
+    color: #1f1f1f;
+    border: none;
+
+    &::placeholder {
+      color: #aaa;
+      font-weight: 400;
+      font-size: 14px;
+    }
+  }
+
+  ion-icon {
+    font-size: 20px;
+    color: #999;
+  }
+
+  ion-button.gradient-button {
+    --background: #ef3f5a;
+    --background-hover: #d93950;
+    --color: #fff;
+    height: 48px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 50px;
+    margin-top: 12px;
+    box-shadow: 0 6px 18px rgba(239, 63, 90, 0.3);
+    transition: background 0.3s ease;
+    text-transform: none;
+  }
+
   .success-msg {
     color: #28a745;
     font-size: 13px;
     margin-top: 10px;
     text-align: center;
   }
-  
-  .signup-card {
-    background: white;
-    margin: 150px 20px;
-    padding: 30px 20px;
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    text-align: center;
-  
-    h2 {
-      margin-bottom: 6px;
-      font-size: 22px;
-      font-weight: 600;
+
+  .error-msg {
+    color: #ef3f5a;
+    font-size: 13px;
+    margin: -10px 0 10px 8px;
+    text-align: left;
+
+    small {
+      display: block;
     }
-  
-    p {
-      color: #777;
-      font-size: 14px;
-      margin-bottom: 20px;
-    }
-  
-    ion-item {
-      margin-bottom: 16px;
-      --background: #f4f4f4;
-      border-radius: 12px;
-      --padding-start: 10px;
-      --inner-padding-end: 10px;
-      --highlight-color-focused: transparent;
-    }
-  
-    ion-input {
-      padding: 8px 0;
-    }
-  
-    .gradient-button {
-      background: linear-gradient(90deg, #5c33cf, #9b4dff);
-      color: white;
-      margin-top: 20px;
-      border-radius: 10px;
-      text-transform: none;
-      font-weight: 500;
-    }
-  
-    ion-icon {
-      font-size: 20px;
-      color: #888;
-    }
-    html, body, ion-app, ion-content {
-        overscroll-behavior: none;
-        touch-action: none;
-      }
-      body.keyboard-is-open {
-        position: fixed;
-        width: 100%;
-        overflow: hidden;
-      }
   }
-  
+}
+
+/* Plane visual theme (same as login) */
+.planePath {
+  stroke: #ef3f5a;
+  stroke-width: 0.4%;
+  stroke-dasharray: 1% 2%;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.fil1 {
+  fill: #ef3f5a;
+}
+.fil2 {
+  fill: #e76b7b;
+}
+.fil3 {
+  fill: #d93950;
+}
+.fil4 {
+  fill: #b32f44;
+}

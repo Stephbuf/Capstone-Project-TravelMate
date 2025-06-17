@@ -2,6 +2,8 @@ ion-fab-button {
   display: flex;
   align-items: center;
   justify-content: center;
+  --background: #ff5f7e;
+  
   
 }
 
@@ -11,14 +13,104 @@ ion-icon {
  
 }
 .back-button-bar {
-  background-color: #496faa34;
+  background-color: #ff5f7e;
   padding: 10px 16px;
   height: 50px; 
   display: flex;
   align-items: center;
 
 }
-icon-inner {
-  color: #496faa34;
+.no-scroll {
+  --overflow: hidden;
+}
 
+
+.add-fab {
+  margin-bottom: 80px; 
+  
+  ion-fab-button {
+    --background: #ff5f7e;   
+    // --background-activated: #2a5fdc;
+    // --box-shadow: 0 4px 12px rgba(51, 122, 255, 0.3);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    // transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  ion-icon {
+    font-size: 26px;
+    color: white;
+  }
+}
+
+.location-search-form {
+  padding: 0 10px;
+  margin-top: 12px;
+  
+
+
+
+  .search-bar-container {
+    background: #ffffff;
+    border-radius: 999px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .search-input {
+    flex: 1;
+    font-size: 1rem;
+    padding: 8px;
+    --padding-start: 12px;
+    --background: transparent;
+    --color: #333;
+  }
+
+  .search-button {
+    --background: #ef3f5a;
+    --color: white;
+    --box-shadow: 0 2px 8px rgba(51, 122, 255, 0.2);
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+  }
+
+  ion-icon {
+    font-size: 20px;
+  }
+}
+
+// .map-page-container {
+//   display: flex;
+//   flex-direction: column;
+//   height: 100vh;
+//   overflow: hidden;
+//   position: relative;
+// }
+ion-content {
+  --keyboard-offset: 0px;
+  // --overflow: hidden;
+  height: 70vh;
+  contain: layout size style;
+  position: relative;
+  // overflow: hidden; // ✅ Add this
+}
+
+.location-search-form {
+  // 👇 This makes it "sticky" and won't push content
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white;
 }

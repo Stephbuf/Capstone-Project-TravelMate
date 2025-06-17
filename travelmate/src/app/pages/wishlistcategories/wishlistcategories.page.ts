@@ -6,7 +6,8 @@ import {
   IonList,
   IonItem,
   IonLabel,
-  IonIcon, IonButtons, IonBackButton } from '@ionic/angular/standalone';
+  IonIcon, IonButtons, IonBackButton, IonHeader, IonToolbar, IonTitle, 
+  IonMenu} from '@ionic/angular/standalone';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -15,21 +16,38 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './wishlistcategories.page.html',
   styleUrls: ['./wishlistcategories.page.scss'],
   standalone: true,
-  imports: [IonBackButton, IonButtons, 
+  imports: [IonBackButton, IonButtons,
     IonIcon,
     IonLabel,
     IonItem,
-    IonList,
-    IonContent,
+    
     CommonModule,
-    FormsModule
-  ]
+    FormsModule,
+    IonContent]
 })
 export class WishlistCategoriesPage implements OnInit {
   city: string = '';
   categories: { name: string; places: any[] }[] = [];
   expandedCategory: string | null = null;
   allPlaces: any[] = [];
+  getCategoryEmoji(name: string): string {
+  const emojiMap: { [key: string]: string } = {
+    'Restaurant': '🍽️',
+    'Bar': '🍻',
+    'Shopping': '🛍️',
+    'Museum': '🏛️',
+    'Sightseeing': '📸',
+    'Beach': '🏖️',
+    'Club': '💃',
+    'Airport': '✈️',
+    'Hotel': '🏨',
+    'Gallery': '🖼️',
+    'Coffee Shop': '☕',
+    'Bakery': '🥐',
+    'Landmark': '📍'
+  };
+  return emojiMap[name] || '📍';
+}
 
   constructor(
     private route: ActivatedRoute,

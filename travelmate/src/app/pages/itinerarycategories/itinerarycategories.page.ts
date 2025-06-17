@@ -32,6 +32,28 @@ export class ItineraryCategoriesPage implements OnInit {
   city: string = '';
   categories: { name: string; places: any[] }[] = [];
   expandedCategory: string | null = null;
+  animationTiming = 27; // seconds
+animationDelayFraction = this.animationTiming / this.categories.length;
+
+getCategoryEmoji(name: string): string {
+  const emojiMap: { [key: string]: string } = {
+    'Restaurant': '🍽️',
+    'Bar': '🍻',
+    'Shopping': '🛍️',
+    'Museum': '🏛️',
+    'Sightseeing': '📸',
+    'Beach': '🏖️',
+    'Club': '💃',
+    'Airport': '✈️',
+    'Hotel': '🏨',
+    'Gallery': '🖼️',
+    'Coffee Shop': '☕',
+    'Bakery': '🥐',
+    'Landmark': '📍'
+  };
+  return emojiMap[name] || '📍';
+}
+
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
 

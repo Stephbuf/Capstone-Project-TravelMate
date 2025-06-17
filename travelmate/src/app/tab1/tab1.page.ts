@@ -10,7 +10,7 @@ import { IonContent } from "@ionic/angular/standalone";
   templateUrl: './tab1.page.html',
   styleUrls: ['./tab1.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule]
 })
 export class Tab1Page implements AfterViewInit {
   searchQuery: string = '';

@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { AlertController, ToastController } from '@ionic/angular'; // make sure these are imported
 
+
+
+
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -12,6 +15,8 @@ import { AlertController, ToastController } from '@ionic/angular'; // make sure 
   standalone: true,
   imports: [CommonModule, HttpClientModule, IonicModule]
 })
+
+
 export class Tab2Page implements OnInit {
   allData: any[] = [];
   wishlistData: any[] = [];
@@ -234,5 +239,11 @@ goToGeneral() {
   localStorage.removeItem('email');  // Clear user session
   this.router.navigate(['/login']);  // Redirect to login page
 }
+goToAddLocation() {
+  this.router.navigate(['/tabs/tab1']);
+}
+
+
 
 }
+

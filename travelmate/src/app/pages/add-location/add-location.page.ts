@@ -13,7 +13,7 @@ import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
-  IonCardContent, IonApp } from "@ionic/angular/standalone";
+  IonCardContent, IonApp, IonBackButton, IonButtons } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 
 
@@ -22,7 +22,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './add-location.page.html',
   styleUrls: ['./add-location.page.scss'],
   standalone: true,
-  imports: [ 
+  imports: [IonButtons, IonBackButton,  
     IonCardContent, IonCardTitle, IonCardHeader, IonCard,
     CommonModule,
     FormsModule,
@@ -33,7 +33,7 @@ import { CommonModule } from '@angular/common';
     IonInput,
     IonContent,
     IonSelect,
-    IonSelectOption]
+    IonSelectOption, IonBackButton]
 })
 export class AddLocationPage implements OnInit {
   locationForm!: FormGroup;

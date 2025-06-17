@@ -1,26 +1,75 @@
-<ion-content class="itinerary-categories-content"> <!-- keeps itinerary class -->
+<ion-content class="itinerary-categories-content">
   <div class="beautiful-header">
     <h1>{{ city }}</h1>
   </div>
 
-  <ion-list class="category-list">
-    <ng-container *ngFor="let category of categories">
-      <ion-item button (click)="toggleCategory(category.name)" class="category-toggle">
-        <ion-label class="category-name">{{ category.name }}</ion-label>
-        <ion-icon
-          slot="end"
-          class="chevron-icon"
-          [name]="expandedCategory === category.name ? 'chevron-up' : 'chevron-down'">
-        </ion-icon>
-      </ion-item>
+  <div class="wrapper">
+    <div class="carousel">
+      
+      <!-- 1 CATEGORY: Static, no animation -->
+      <ng-container *ngIf="categories.length === 1">
+        <div class="carousel__item static-item">
+          <div class="carousel__item-head">
+            {{ getCategoryEmoji(categories[0].name) }}
+          </div>
 
-      <ng-container *ngIf="expandedCategory === category.name">
-        <ion-item button detail="false" *ngFor="let place of category.places" (click)="goToMap(place)">
-          <ion-label class="place-label">{{ place.location_name || getLabelFromAddress(place.address) }}</ion-label>
-        </ion-item>
+          <div class="carousel__item-body">
+            <ion-item button (click)="toggleCategory(categories[0].name)" class="category-toggle">
+              <ion-label class="category-name title">{{ categories[0].name }}</ion-label>
+              <ion-icon
+                slot="end"
+                class="chevron-icon"
+                [name]="expandedCategory === categories[0].name ? 'chevron-up' : 'chevron-down'">
+              </ion-icon>
+            </ion-item>
+
+            <ng-container *ngIf="expandedCategory === categories[0].name">
+              <ion-list class="category-list">
+                <ion-item 
+                  button 
+                  detail="false" 
+                  *ngFor="let place of categories[0].places" 
+                  (click)="goToMap(place)">
+                  <ion-label class="place-label" >
+                    {{ place.location_name || getLabelFromAddress(place.address) }}
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </ng-container>
+          </div>
+        </div>
       </ng-container>
-    </ng-container>
-  </ion-list>
+
+      <!-- 2+ CATEGORIES: Animated rotation -->
+     <ng-container *ngIf="categories.length > 1">
+  <ng-container *ngFor="let category of categories">
+    <div class="carousel__item">
+      <div class="carousel__item-head">
+        {{ getCategoryEmoji(category.name) }}
+      </div>
+
+      <div class="carousel__item-body">
+        <ion-item button (click)="toggleCategory(category.name)" class="category-toggle">
+          <ion-label class="category-name title">{{ category.name }}</ion-label>
+          <ion-icon
+            slot="end"
+            class="chevron-icon"
+            [name]="expandedCategory === category.name ? 'chevron-up' : 'chevron-down'">
+          </ion-icon>
+        </ion-item>
+
+        <ng-container *ngIf="expandedCategory === category.name">
+          <ion-item class="place-item" button detail="false" *ngFor="let place of category.places" (click)="goToMap(place)">
+            <ion-label class="place-label">{{ place.name }}</ion-label>
+          </ion-item>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
+
+    </div>
+  </div>
 </ion-content>
 
 <div class="back-button-bar">

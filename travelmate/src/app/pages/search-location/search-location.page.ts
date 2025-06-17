@@ -5,17 +5,33 @@ import {
   IonContent,
   IonFab,
   IonFabButton,
-  IonIcon, IonBackButton, IonButtons } from '@ionic/angular/standalone';
+  IonIcon,
+  IonBackButton,
+  IonButtons,
+  IonItem,
+  IonButton
+} from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
-import { add } from 'ionicons/icons';
+import { add, searchOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { Keyboard } from '@capacitor/keyboard';
+import { Capacitor } from '@capacitor/core';
 
 @Component({
   selector: 'app-search-location',
   templateUrl: './search-location.page.html',
   styleUrls: ['./search-location.page.scss'],
   standalone: true,
-  imports: [IonButtons, IonBackButton, IonContent, CommonModule, FormsModule, IonFab, IonFabButton, IonIcon]
+  imports: [
+    IonButtons,
+    IonBackButton,
+    IonContent,
+    CommonModule,
+    FormsModule,
+    IonFab,
+    IonFabButton,
+    IonIcon
+]
 })
 export class SearchLocationPage implements AfterViewInit {
   map!: google.maps.Map;
@@ -24,7 +40,13 @@ export class SearchLocationPage implements AfterViewInit {
   searchQuery: string = '';
 
   constructor(private route: ActivatedRoute, private router: Router) {
-    addIcons({ add });
+    addIcons({ add, searchOutline });
+  }
+
+  ngOnInit() {
+    if (Capacitor.isNativePlatform()) {
+      Keyboard.setScroll({ isDisabled: true });
+    }
   }
 
   async ngAfterViewInit(): Promise<void> {
@@ -74,39 +96,38 @@ export class SearchLocationPage implements AfterViewInit {
     });
   }
 
-async loadMap(): Promise<void> {
-  const mapElement = document.getElementById('map') as HTMLElement;
-  if (!mapElement) {
-    console.error('Map element not found');
-    return;
-  }
-
-  this.map = new google.maps.Map(mapElement, {
-    center: { lat: 0, lng: 0 },
-    zoom: 14,
-    mapId: 'DEMO_MAP_ID' 
-  });
-
-  const geocoder = new google.maps.Geocoder();
-  geocoder.geocode({ address: this.searchQuery }, (results, status) => {
-    if (status === 'OK' && results && results[0]) {
-      const location = results[0].geometry.location;
-      if (location) {
-        this.map.setCenter(location);
-
-        
-        const marker = new google.maps.marker.AdvancedMarkerElement({
-          map: this.map,
-          position: location,
-          title: this.searchQuery,
-        });
-      }
-    } else {
-      alert('Location not found.');
-      console.error('Geocode error:', status);
+  async loadMap(): Promise<void> {
+    const mapElement = document.getElementById('map') as HTMLElement;
+    if (!mapElement) {
+      console.error('Map element not found');
+      return;
     }
-  });
-}
+
+    this.map = new google.maps.Map(mapElement, {
+      center: { lat: 0, lng: 0 },
+      zoom: 14,
+      mapId: 'DEMO_MAP_ID'
+    });
+
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ address: this.searchQuery }, (results, status) => {
+      if (status === 'OK' && results && results[0]) {
+        const location = results[0].geometry.location;
+        if (location) {
+          this.map.setCenter(location);
+
+          const marker = new google.maps.marker.AdvancedMarkerElement({
+            map: this.map,
+            position: location,
+            title: this.searchQuery
+          });
+        }
+      } else {
+        alert('Location not found.');
+        console.error('Geocode error:', status);
+      }
+    });
+  }
 
   goToAddLocation(): void {
     this.router.navigate(['/add-location']);
@@ -116,7 +137,7 @@ async loadMap(): Promise<void> {
     if (this.searchQuery.trim()) {
       this.router.navigate([], {
         queryParams: { query: this.searchQuery.trim() },
-        queryParamsHandling: 'merge',
+        queryParamsHandling: 'merge'
       });
     }
   }
