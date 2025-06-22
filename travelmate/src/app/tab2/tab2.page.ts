@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { AlertController, ToastController } from '@ionic/angular'; // make sure these are imported
+import { MenuController } from '@ionic/angular';
 
 
 
@@ -23,12 +24,14 @@ export class Tab2Page implements OnInit {
   expandedCountry: string | null = null;
   currentFilter: 'wishlist' | 'itinerary' = 'wishlist';
 
-  constructor(private http: HttpClient, private router: Router, private toastController: ToastController, private alertController: AlertController) {}
-
+  constructor(private http: HttpClient, private router: Router, private toastController: ToastController, private alertController: AlertController, private menuCtrl: MenuController ) {}
+openMenu() {
+  this.menuCtrl.open('mainMenu');
+}
    ngOnInit() {
     this.fetchData();
   }
-
+  
   fetchData() {
     const userEmail = localStorage.getItem('email');
     this.http
@@ -123,15 +126,16 @@ export class Tab2Page implements OnInit {
         handler: (data) => {
           if (data.name && data.name.trim() !== '') {
             const newName = data.name.trim();
-            const userEmail = localStorage.getItem('email');  // Fetch email from localStorage
+            const userEmail = localStorage.getItem('email');  
 
             if (userEmail) {
+
               // Send PUT request to backend with the new name, userEmail, and the type (city/country)
               this.http.put(`http://localhost:3000/locations/editLocation/${type}/${encodeURIComponent(name)}`, { newName, userEmail })
                 .subscribe({
                   next: () => {
                     this.presentToast(`${type === 'city' ? 'City' : 'Country'} name updated.`);
-                    this.fetchData();  // Re-fetch data after update to reflect changes
+                    this.fetchData();  
                   },
                   error: (err) => {
                     console.error(`Error updating ${type}:`, err);
@@ -186,7 +190,6 @@ export class Tab2Page implements OnInit {
 moveCountry(country: string) {
   const email = localStorage.getItem('email');
 
-  // 🔍 Debug log to verify payload before sending the request
   console.log('⏩ Moving country with:', {
     email,
     country,
@@ -220,24 +223,24 @@ moveCountry(country: string) {
     toast.present();
   }
   goToProfile() {
-  // Replace this with your actual navigation logic
+
   console.log('Navigating to Profile...');
-  // this.router.navigate(['/profile']); // example route
+ 
 }
 
 goToSettings() {
   console.log('Navigating to Settings...');
-  // this.router.navigate(['/settings']);
+  
 }
 
 goToGeneral() {
   console.log('Navigating to General...');
-  // this.router.navigate(['/general']);
+  
 }
 
   logout() {
-  localStorage.removeItem('email');  // Clear user session
-  this.router.navigate(['/login']);  // Redirect to login page
+  localStorage.removeItem('email');  
+  this.router.navigate(['/login']);  
 }
 goToAddLocation() {
   this.router.navigate(['/tabs/tab1']);

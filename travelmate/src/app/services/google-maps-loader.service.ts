@@ -6,14 +6,14 @@ export class GoogleMapsLoaderService {
 
  load(): Promise<void> {
   return new Promise((resolve, reject) => {
-    // ✅ Already loaded
+    // Already loaded
     if ((window as any).google && google.maps && google.maps.places) {
       this.apiLoaded = true;
       resolve();
       return;
     }
 
-    // ✅ Already initiated but not finished loading — poll until available
+    // Already initiated but not finished loading — poll until available
     if (this.apiLoaded) {
       const checkInterval = setInterval(() => {
         if ((window as any).google && google.maps && google.maps.places) {
@@ -30,7 +30,7 @@ export class GoogleMapsLoaderService {
       return;
     }
 
-    // ✅ First-time load
+    // First-time load
     const script = document.createElement('script');
     script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyC1h8HyptSYlslcFi6bYYzEqE1FI-7qe1g&libraries=places';
     script.async = true;

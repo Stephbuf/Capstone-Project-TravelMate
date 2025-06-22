@@ -9,7 +9,6 @@
     content: '';
     position: absolute;
     inset: 0;
-    // background: url('/assets/bg-blur.jpg') center/cover no-repeat;
     filter: blur(10px);
     z-index: -2;
   }
@@ -42,7 +41,7 @@ margin-top: 40px;
   }
 }
 
-/* Glassmorphism signup card */
+/*  signup card */
 .signup-card {
  margin: 10px 30px 0;
   padding: 30px 24px;
@@ -136,7 +135,7 @@ margin-top: 40px;
   }
 }
 
-/* Plane visual theme (same as login) */
+/* Plane visual  */
 .planePath {
   stroke: #ef3f5a;
   stroke-width: 0.4%;

@@ -1,5 +1,5 @@
 .itinerary-categories-content {
-  // --background: #fdfdfd;
+ 
   padding: 1rem;
   font-family: 'Segoe UI', sans-serif;
 }
@@ -58,7 +58,6 @@ body {
 .category-card {
   background: white;
   border-radius: 16px;
-  // box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
   padding: 1.2rem 1.5rem;
   transition: box-shadow 0.3s ease;
   border: 1px solid #e0e0e0;
@@ -220,7 +219,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(1); // center exactly like animated one would appear
+  transform: translate(-50%, -50%) scale(1); 
   opacity: 1 !important;
   visibility: visible !important;
   animation: none !important;

@@ -97,7 +97,7 @@ getCategoryEmoji(name: string): string {
 
   getLabelFromAddress(address: string): string {
     if (!address) return '';
-    return address.split(',')[0]; // E.g., "Eiffel Tower" from "Eiffel Tower, Paris, France"
+    return address.split(',')[0]; 
   }
 
   goToMap(place: any) {

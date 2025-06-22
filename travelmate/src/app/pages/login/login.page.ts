@@ -47,7 +47,7 @@ export class LoginPage implements OnInit {
       next: (user) => {
         // Save email to localStorage for use in Tab 1
         localStorage.setItem('email', user.email);
-        localStorage.setItem('user_id', user.id); // If needed for workouts
+        localStorage.setItem('user_id', user.id); 
 
         this.router.navigate(['/tabs/tab1']);
       },

@@ -30,12 +30,10 @@ ion-icon {
   
   ion-fab-button {
     --background: #ff5f7e;   
-    // --background-activated: #2a5fdc;
-    // --box-shadow: 0 4px 12px rgba(51, 122, 255, 0.3);
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    // transition: transform 0.2s ease-in-out;
+ 
 
     &:hover {
       transform: scale(1.05);
@@ -91,24 +89,16 @@ ion-icon {
   }
 }
 
-// .map-page-container {
-//   display: flex;
-//   flex-direction: column;
-//   height: 100vh;
-//   overflow: hidden;
-//   position: relative;
-// }
 ion-content {
   --keyboard-offset: 0px;
-  // --overflow: hidden;
   height: 70vh;
   contain: layout size style;
   position: relative;
-  // overflow: hidden; // ✅ Add this
+
 }
 
 .location-search-form {
-  // 👇 This makes it "sticky" and won't push content
+
   position: sticky;
   top: 0;
   z-index: 10;

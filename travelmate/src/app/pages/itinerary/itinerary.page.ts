@@ -79,7 +79,7 @@ export class ItineraryPage implements AfterViewInit {
           const userLat = position.coords.latitude;
           const userLng = position.coords.longitude;
 
-          // Marker for user's location
+      
           new google.maps.Marker({
             position: { lat: userLat, lng: userLng },
             map,
@@ -94,7 +94,6 @@ export class ItineraryPage implements AfterViewInit {
             },
           });
 
-          // Adjust bounds to show both markers
           const bounds = new google.maps.LatLngBounds();
           bounds.extend(new google.maps.LatLng(lat, lng));
           bounds.extend(new google.maps.LatLng(userLat, userLng));

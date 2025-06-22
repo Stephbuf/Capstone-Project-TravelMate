@@ -13,7 +13,7 @@ import { LocationData } from 'src/app/interfaces/locationdata';
 })
 export class WishlistPage implements OnInit {
   wishlistItems: LocationData[] = [];
-  userEmail: string = ''; // Replace with actual email retrieval logic
+  userEmail: string = ''; 
 
   constructor(private locationsService: LocationsService) {}
 

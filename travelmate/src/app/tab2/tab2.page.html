@@ -32,9 +32,14 @@
   <div class="ion-page" id="main-content">
     <ion-header>
       <ion-toolbar class="toolbar-with-plane">
-        <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
-        </ion-buttons>
+    <ion-menu-button autoHide="false" class="custom-menu-button">
+  <div class="menu-button-content">
+    <span class="menu-icon" >...</span>
+    <span class="menu-label" style="font-size: 12px;">Menu</span>
+  </div>
+</ion-menu-button>
+
+
       </ion-toolbar>
     </ion-header>
 
@@ -120,7 +125,7 @@
           </div>
         
 <div class="social-btns">
-  <button class="btn add-new" (click)="goToAddLocation()">
+    <button class="btn add-new" (click)="goToAddLocation()">
     <i class="fa fa-plus"></i>
   </button>
 </div>

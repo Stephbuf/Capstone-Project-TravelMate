@@ -1,5 +1,5 @@
 // ===========================
-// Elegant Professional Toolbar Styling
+//Toolbar 
 // ===========================
 $primary-color: #ef3f5a;
 $accent-color: #fff5f7;
@@ -17,12 +17,55 @@ ion-toolbar.toolbar-with-plane {
   display: flex;
   align-items: center;
   padding-left: .3rex;
-  
+
+
+
+ion-menu-button {
+  --padding-start: 0;
+  --padding-end: 0;
+  --border-radius: 0;
+  --background: transparent;
+  --box-shadow: none;
+  --ripple-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: transparent !important;
+  }
+
+  ion-icon {
+    font-size: 22px;
+    color: $primary-color;
+  }
+}
+
 
   ion-buttons,
   ion-menu-button {
     color: $primary-color;
-    font-size: 1.4rem;
+    // font-size: 1.4rem;
+    
+    ion-menu-button {
+  --color: #ef3f5a;
+  // font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+
+
+  &:hover {
+    background-color: rgba(239, 63, 90, 0.1) !important;
+  }
+
+  ion-icon {
+    color: #ef3f5a;
+    font-size: 24px;
+  }
+}
+
   }
 
   .menu-title {
@@ -33,19 +76,8 @@ ion-toolbar.toolbar-with-plane {
   padding-left: 1.5rem; 
 }
 
-  ion-menu-button {
-    background: transparent;
-    border: 1px solid rgba(239, 63, 90, 0.3);
-    border-radius: 50%;
-    padding: 8px;
-    transition: all 0.3s ease-in-out;
-    margin-left: 0.5rem;
 
-    &:hover {
-      background-color: rgba(239, 63, 90, 0.1) !important;
-    }
-  }
-
+  //Menu style//
   ion-title {
     flex: 1;
     text-align: center;
@@ -55,6 +87,7 @@ ion-toolbar.toolbar-with-plane {
     letter-spacing: 0.5px;
   }
 
+  // toolbar underline//
   &::after {
     content: '';
     position: absolute;
@@ -69,7 +102,7 @@ ion-toolbar.toolbar-with-plane {
 }
 
 // ===========================
-// Neo-Modern UI Overhaul – Flat, Futuristic, Bold
+// Toggle
 // ===========================
 $primary-color: #ef3f5a;
 $secondary-color: #0f111a;
@@ -252,6 +285,7 @@ $primary-color: #ff5f7e;
   justify-content: center;
   margin-top: -5px;
 
+
   .btn {
     width: $btn-size;
     height: $btn-size;
@@ -298,5 +332,43 @@ $primary-color: #ff5f7e;
       color: #fff;
       transform: scale(1.1);
     }
+  }
+}
+.custom-menu-button {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0;
+  border-radius: 0;
+  width: 60px; 
+  height: auto;
+  margin-left: 12px;
+
+  &::part(native) {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .menu-button-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .menu-icon {
+    font-size: 20px;
+    color: #ef3f5a;
+    line-height: 1;
+  }
+
+  .menu-label {
+    font-size: 14px; 
+    color: #ef3f5a;
+    font-weight: 600;
+    margin-top: 2px;
+    white-space: nowrap; 
+    text-overflow: ellipsis;
   }
 }

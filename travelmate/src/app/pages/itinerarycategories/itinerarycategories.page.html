@@ -6,7 +6,7 @@
   <div class="wrapper">
     <div class="carousel">
       
-      <!-- 1 CATEGORY: Static, no animation -->
+      <!-- 1 Category -->
       <ng-container *ngIf="categories.length === 1">
         <div class="carousel__item static-item">
           <div class="carousel__item-head">
@@ -40,7 +40,7 @@
         </div>
       </ng-container>
 
-      <!-- 2+ CATEGORIES: Animated rotation -->
+      <!-- 2+ Categrories -->
      <ng-container *ngIf="categories.length > 1">
   <ng-container *ngFor="let category of categories">
     <div class="carousel__item">
