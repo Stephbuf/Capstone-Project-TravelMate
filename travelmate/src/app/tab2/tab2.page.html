@@ -8,10 +8,10 @@
     </ion-header>
     <ion-content class="ion-padding">
       <ion-list lines="none">
-        <ion-item button detail="false" class="menu-item" (click)="goToProfile()">
+        <!-- <ion-item button detail="false" class="menu-item" (click)="goToProfile()">
           <ion-icon slot="start" name="person-circle-outline"></ion-icon>
           <ion-label>Profile</ion-label>
-        </ion-item>
+        </ion-item> -->
         <ion-item button detail="false" class="menu-item" (click)="goToSettings()">
           <ion-icon slot="start" name="notifications-outline"></ion-icon>
           <ion-label>Settings</ion-label>
@@ -31,22 +31,34 @@
   <!-- Main Page -->
   <div class="ion-page" id="main-content">
     <ion-header>
-      <ion-toolbar class="toolbar-with-plane">
-    <ion-menu-button autoHide="false" class="custom-menu-button">
-  <div class="menu-button-content">
-    <span class="menu-icon" >...</span>
-    <span class="menu-label" style="font-size: 12px;">Menu</span>
-  </div>
-</ion-menu-button>
+      <ion-toolbar class="toolbar-with-plane" style="position: relative;">
+        <!-- Fixed menu button on left -->
+        <ion-menu-button autoHide="false" class="custom-menu-button" slot="start">
+          <div class="menu-button-content">
+            <span class="menu-icon">...</span>
+            <span class="menu-label" style="font-size: 12px;">Menu</span>
+          </div>
+        </ion-menu-button>
 
-
+        <!-- Absolutely centered dynamic title -->
+        <div style="
+          position: absolute;
+            top: 1rem;
+          left: 50%;
+          transform: translateX(-50%);
+          font-size: 1.5rem;
+          font-weight: 600;
+          color: #ef3f5a;
+        ">
+          {{ currentFilter === 'wishlist' ? 'Wishlist Page' : 'Itinerary Page' }}
+        </div>
       </ion-toolbar>
     </ion-header>
 
     <ion-content class="wishlist-content">
       <section class="places">
-        <div class="places__filter" >
-          <div class="toggle-switch" >
+        <div class="places__filter">
+          <div class="toggle-switch">
             <button
               type="button"
               class="toggle-option"
@@ -123,13 +135,12 @@
 
             </div>
           </div>
-        
-<div class="social-btns">
-    <button class="btn add-new" (click)="goToAddLocation()">
-    <i class="fa fa-plus"></i>
-  </button>
-</div>
 
+          <div class="social-btns">
+            <button class="btn add-new" (click)="goToAddLocation()">
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
         </div>
       </section>
     </ion-content>

@@ -6,8 +6,10 @@ import {
   IonList,
   IonItem,
   IonLabel,
-  IonIcon, IonButtons, IonBackButton, IonHeader, IonToolbar, IonTitle, 
-  IonMenu} from '@ionic/angular/standalone';
+  IonIcon,
+  IonButtons,
+  IonBackButton, IonFooter, 
+  IonToolbar} from '@ionic/angular/standalone';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -16,11 +18,12 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './wishlistcategories.page.html',
   styleUrls: ['./wishlistcategories.page.scss'],
   standalone: true,
-  imports: [IonBackButton, IonButtons,
+  imports: [
+    IonBackButton,
+    IonButtons,
     IonIcon,
     IonLabel,
     IonItem,
-    
     CommonModule,
     FormsModule,
     IonContent]
@@ -30,24 +33,6 @@ export class WishlistCategoriesPage implements OnInit {
   categories: { name: string; places: any[] }[] = [];
   expandedCategory: string | null = null;
   allPlaces: any[] = [];
-  getCategoryEmoji(name: string): string {
-  const emojiMap: { [key: string]: string } = {
-    'Restaurant': '🍽️',
-    'Bar': '🍻',
-    'Shopping': '🛍️',
-    'Museum': '🏛️',
-    'Sightseeing': '📸',
-    'Beach': '🏖️',
-    'Club': '💃',
-    'Airport': '✈️',
-    'Hotel': '🏨',
-    'Gallery': '🖼️',
-    'Coffee Shop': '☕',
-    'Bakery': '🥐',
-    'Landmark': '📍'
-  };
-  return emojiMap[name] || '📍';
-}
 
   constructor(
     private route: ActivatedRoute,
@@ -94,6 +79,30 @@ export class WishlistCategoriesPage implements OnInit {
     });
   }
 
+  getCategoryEmoji(name: string): string {
+    const emojiMap: { [key: string]: string } = {
+      'Restaurant': '🍽️',
+      'Bar': '🍻',
+      'Shopping': '🛍️',
+      'Museum': '🏛️',
+      'Sightseeing': '📸',
+      'Beach': '🏖️',
+      'Club': '💃',
+      'Airport': '✈️',
+      'Hotel': '🏨',
+      'Gallery': '🖼️',
+      'Coffee Shop': '☕',
+      'Bakery': '🥐',
+      'Landmark': '📍',
+      'Downtown': '🏙️',
+      'Hiking Trail': '🏔️',
+      'Theatre': '🎭',
+      'National Park': '🏞️'
+
+    };
+    return emojiMap[name] || '📍';
+  }
+
   toggleCategory(categoryName: string): void {
     this.expandedCategory = this.expandedCategory === categoryName ? null : categoryName;
   }
@@ -106,7 +115,6 @@ export class WishlistCategoriesPage implements OnInit {
     const name = place.name;
     const address = place.address;
 
-    // Exclude the current place from the list
     const allOtherPlaces = this.categories.reduce((acc: any[], cat: { name: string; places: any[] }) => {
       const filtered = cat.places.filter(p => p.name !== name);
       return acc.concat(filtered);

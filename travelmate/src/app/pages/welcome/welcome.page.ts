@@ -9,11 +9,11 @@ import { Router } from '@angular/router';
   templateUrl: './welcome.page.html',
   styleUrls: ['./welcome.page.scss'],
   standalone: true,
-  imports: [ IonContent, IonHeader,  CommonModule, FormsModule,]
+  imports: [CommonModule, FormsModule, IonContent]
 })
 export class WelcomePage implements OnInit {
-  texts = ['W', 'e', 'l', 'c', 'o', 'm', 'e', ''];
-  particleArray = Array.from({ length: 12 }, (_, i) => i);
+  // texts = ['W', 'e', 'l', 'c', 'o', 'm', 'e', ''];
+  // particleArray = Array.from({ length: 12 }, (_, i) => i);
 
   constructor(private router: Router) {}
 

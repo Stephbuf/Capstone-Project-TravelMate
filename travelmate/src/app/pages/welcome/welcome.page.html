@@ -1,10 +1,10 @@
-<ion-header [translucent]="true"></ion-header>
+<!-- <ion-header [translucent]="true"></ion-header>
 
 <ion-content [fullscreen]="true">
 
-    <div class="center-container">
+    <div class="center-container"> -->
   <!-- "Welcome" animation -->
-   
+<!--    
   <div class="criterion" style="text-align: center;">
     <div *ngFor="let text of texts; let i = index" [ngClass]="'text' + i" class="text">
       {{ text }}
@@ -15,10 +15,10 @@
     <ng-container *ngFor="let text of texts; let i = index">
       <div *ngFor="let j of particleArray" [ngClass]="'particle' + i + j" class="particle"></div>
     </ng-container>
-  </div>
+  </div> -->
 
   <!-- SVG Scene Animation -->
-  <figure>
+  <!-- <figure>
   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
    x="0" y="0" viewBox="0 0 136 166" xml:space="preserve">
   <ellipse id="shad" cx="68" cy="150" rx="40" ry="10"/>
@@ -55,7 +55,7 @@
 </svg>
 </figure>
     </div>
-</ion-content>
+</ion-content> -->
 
 
 <!-- <ion-header [translucent]="true">
@@ -77,3 +77,28 @@
     </ng-container>
   </div>
 </ion-content> -->
+
+<!-- welcome.page.html -->
+<ion-content class="full-page-content" scroll="false">
+  <div class="wrapper">
+    <div class="airplane">
+      <div class="shuttle">
+        <div class="nose"></div>
+        <div class="wings"></div>
+        <div class="cockpit"></div>
+      </div>
+
+      <div class="rope"></div>
+
+      <div class="banner">
+        Travel Mate
+        <div class="triangle"></div>
+      </div>
+    </div>
+
+    <div class="cloud-1"></div>
+    <div class="cloud-2"></div>
+    <div class="cloud-3"></div>
+    <div class="hill"></div>
+  </div>
+</ion-content>

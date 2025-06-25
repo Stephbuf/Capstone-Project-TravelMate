@@ -47,7 +47,7 @@ export const routes: Routes = [
   },
   {
     path: 'itinerarycategories',
-    loadComponent: () => import('./pages/itinerarycategories/itinerarycategories.page').then( m => m.ItineraryCategoriesPage)
+    loadComponent: () => import('./pages/itinerarycategories/itinerarycategories.page').then( m => m.ItinerarycategoriesPage)
   },
   {
     path: 'wishlistcategories',
@@ -56,5 +56,13 @@ export const routes: Routes = [
   {
     path: 'map-view',
     loadComponent: () => import('./pages/map-view/map-view.page').then( m => m.MapViewPage)
+  },
+  {
+    path: 'profile',
+    loadComponent: () => import('./pages/profile/profile.page').then( m => m.ProfilePage)
+  },
+  {
+    path: 'settings',
+    loadComponent: () => import('./pages/settings/settings.page').then( m => m.SettingsPage)
   },
 ];

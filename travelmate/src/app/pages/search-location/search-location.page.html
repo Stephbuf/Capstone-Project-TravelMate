@@ -1,45 +1,37 @@
-  <!-- Google Maps API Key  -->
-<!-- <script 
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1h8HyptSYlslcFi6bYYzEqE1FI-7qe1g&libraries=places&loading=async" 
-  async 
-  defer>
-</script> -->
+<ion-content class="no-scroll" scroll-y="false">
 
-<ion-content class="ion-padding">
-  <div id="map" style="height: 80vh; width: 100%;"></div>
+  <!-- Google Map -->
+  <div id="map" class="styled-map"></div>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="goToAddLocation()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-<br>
-<form (ngSubmit)="onSubmit()" style="padding: 10px;">
-  <input
-  id="search-input-location"
-  type="text"
-  [(ngModel)]="searchQuery"
-  name="searchQuery"
-  placeholder="Search for a place"
-  required
-  style="width: 80%; padding: 8px;"
-/>
+  <!-- Search Form -->
+  <form (ngSubmit)="onSubmit()" class="location-search-form">
+    <div class="search-bar-container glassy">
+      <ion-icon name="search" class="search-icon"></ion-icon>
+      <input
+        id="search-input-location"
+        type="text"
+        [(ngModel)]="searchQuery"
+        name="searchQuery"
+        placeholder="Search for a place..."
+        class="search-input"
+        required
+      />
+      <button type="submit" class="search-button">Search</button>
+    </div>
+  </form>
 
-  <button type="submit" style="padding: 8px;">Search</button>
-</form>
-
-<div id="map" style="height: 75vh; width: 100%;"></div>
-
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="goToAddLocation()">
+  <!-- Add Location FAB -->
+<ion-fab class="add-fab" slot="fixed">
+  <ion-fab-button (click)="goToAddLocation()" class="fab-glass">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>
 
+
 </ion-content>
 
-<div class="back-button-bar" >
+<!-- Bottom Back Button -->
+<div class="back-button-bar">
   <ion-buttons slot="start">
-    <ion-back-button defaultHref="/" style="color: white;"></ion-back-button>
+    <ion-back-button defaultHref="/tabs/tab1" style="color: white;"></ion-back-button>
   </ion-buttons>
-</div>

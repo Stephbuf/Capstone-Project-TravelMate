@@ -12,7 +12,7 @@ import {
   IonSearchbar,
   IonList,
   IonItem,
-  IonLabel
+  IonLabel,IonIcon 
 } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 
@@ -45,10 +45,10 @@ let apiLoaded = false;
     IonTitle,
     IonContent,
     IonBackButton,
-    IonSearchbar,
+
     IonList,
     IonItem,
-    IonLabel
+    IonLabel, IonIcon
   ]
 })
 export class MapViewPage implements OnInit {

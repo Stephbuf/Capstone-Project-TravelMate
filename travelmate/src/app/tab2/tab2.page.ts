@@ -2,12 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { AlertController, ToastController } from '@ionic/angular'; // make sure these are imported
-import { MenuController } from '@ionic/angular';
-
-
-
+import { IonicModule, AlertController, ToastController, MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
@@ -16,22 +11,34 @@ import { MenuController } from '@ionic/angular';
   standalone: true,
   imports: [CommonModule, HttpClientModule, IonicModule]
 })
-
-
 export class Tab2Page implements OnInit {
   allData: any[] = [];
   wishlistData: any[] = [];
   expandedCountry: string | null = null;
   currentFilter: 'wishlist' | 'itinerary' = 'wishlist';
+  isWishlist: boolean = true;
 
-  constructor(private http: HttpClient, private router: Router, private toastController: ToastController, private alertController: AlertController, private menuCtrl: MenuController ) {}
-openMenu() {
-  this.menuCtrl.open('mainMenu');
-}
-   ngOnInit() {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private toastController: ToastController,
+    private alertController: AlertController,
+    private menuCtrl: MenuController
+  ) {}
+
+  ngOnInit() {
     this.fetchData();
   }
-  
+
+  toggleView() {
+    this.isWishlist = !this.isWishlist;
+    this.setFilter(this.isWishlist ? 'wishlist' : 'itinerary');
+  }
+
+  openMenu() {
+    this.menuCtrl.open('mainMenu');
+  }
+
   fetchData() {
     const userEmail = localStorage.getItem('email');
     this.http
@@ -106,63 +113,58 @@ openMenu() {
   }
 
   async editLocation(name: string, type: 'city' | 'country') {
-  const alert = await this.alertController.create({
-    header: `Edit ${type === 'city' ? 'City' : 'Country'} Name`,
-    inputs: [
-      {
-        name: 'name',
-        type: 'text',
-        placeholder: `${type} Name`,
-        value: name
-      }
-    ],
-    buttons: [
-      {
-        text: 'Cancel',
-        role: 'cancel'
-      },
-      {
-        text: 'Save',
-        handler: (data) => {
-          if (data.name && data.name.trim() !== '') {
-            const newName = data.name.trim();
-            const userEmail = localStorage.getItem('email');  
+    const alert = await this.alertController.create({
+      header: `Edit ${type === 'city' ? 'City' : 'Country'} Name`,
+      inputs: [
+        {
+          name: 'name',
+          type: 'text',
+          placeholder: `${type} Name`,
+          value: name
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Save',
+          handler: (data) => {
+            if (data.name && data.name.trim() !== '') {
+              const newName = data.name.trim();
+              const userEmail = localStorage.getItem('email');
 
-            if (userEmail) {
-
-              // Send PUT request to backend with the new name, userEmail, and the type (city/country)
-              this.http.put(`http://localhost:3000/locations/editLocation/${type}/${encodeURIComponent(name)}`, { newName, userEmail })
-                .subscribe({
-                  next: () => {
-                    this.presentToast(`${type === 'city' ? 'City' : 'Country'} name updated.`);
-                    this.fetchData();  
-                  },
-                  error: (err) => {
-                    console.error(`Error updating ${type}:`, err);
-                    this.presentToast(`Error updating ${type}`);
-                  }
-                });
-            } else {
-              console.error('User email not found');
-              this.presentToast('Error: User email not found');
+              if (userEmail) {
+                this.http.put(`http://localhost:3000/locations/editLocation/${type}/${encodeURIComponent(name)}`, { newName, userEmail })
+                  .subscribe({
+                    next: () => {
+                      this.presentToast(`${type === 'city' ? 'City' : 'Country'} name updated.`);
+                      this.fetchData();
+                    },
+                    error: (err) => {
+                      console.error(`Error updating ${type}:`, err);
+                      this.presentToast(`Error updating ${type}`);
+                    }
+                  });
+              } else {
+                this.presentToast('Error: User email not found');
+              }
             }
           }
         }
-      }
-    ]
-  });
+      ]
+    });
 
-  await alert.present();
-}
-
+    await alert.present();
+  }
 
   async deleteCity(city: string) {
-    const userEmail = localStorage.getItem('email');
     this.http.delete(`http://localhost:3000/locations/city/${city}`)
       .subscribe({
         next: () => {
           this.presentToast('City deleted.');
-          this.fetchData();  // Re-fetch data after deletion
+          this.fetchData();
         },
         error: (err) => {
           console.error('Error deleting city:', err);
@@ -172,12 +174,11 @@ openMenu() {
   }
 
   async deleteCountry(country: string) {
-    const userEmail = localStorage.getItem('email');
     this.http.delete(`http://localhost:3000/locations/country/${country}`)
       .subscribe({
         next: () => {
           this.presentToast(`Deleted all entries for ${country}`);
-          this.fetchData();  // Re-fetch data after deletion
+          this.fetchData();
         },
         error: (err) => {
           console.error('Error deleting country:', err);
@@ -186,33 +187,24 @@ openMenu() {
       });
   }
 
-  // Move a country from Wishlist to Itinerary or vice versa
-moveCountry(country: string) {
-  const email = localStorage.getItem('email');
-
-  console.log('⏩ Moving country with:', {
-    email,
-    country,
-    currentTag: this.currentFilter
-  });
-
-  this.http.put('http://localhost:3000/locations/move-country', {
-    email,
-    country,
-    currentTag: this.currentFilter
-  }).subscribe({
-    next: (response) => {
-      const newTag = this.currentFilter === 'wishlist' ? 'itinerary' : 'wishlist';
-      this.presentToast(`${country} moved to ${newTag}`);
-      this.fetchData();
-    },
-    error: (err) => {
-      console.error('Error moving country:', err);
-      this.presentToast('Error moving country');
-    }
-  });
-}
-
+  moveCountry(country: string) {
+    const email = localStorage.getItem('email');
+    this.http.put('http://localhost:3000/locations/move-country', {
+      email,
+      country,
+      currentTag: this.currentFilter
+    }).subscribe({
+      next: () => {
+        const newTag = this.currentFilter === 'wishlist' ? 'itinerary' : 'wishlist';
+        this.presentToast(`${country} moved to ${newTag}`);
+        this.fetchData();
+      },
+      error: (err) => {
+        console.error('Error moving country:', err);
+        this.presentToast('Error moving country');
+      }
+    });
+  }
 
   async presentToast(message: string) {
     const toast = await this.toastController.create({
@@ -222,31 +214,26 @@ moveCountry(country: string) {
     });
     toast.present();
   }
+
   goToProfile() {
+    console.log('Navigating to Profile...');
+  }
 
-  console.log('Navigating to Profile...');
- 
+  goToSettings() {
+  this.router.navigate(['/settings']);
 }
 
-goToSettings() {
-  console.log('Navigating to Settings...');
-  
-}
-
-goToGeneral() {
-  console.log('Navigating to General...');
-  
-}
+  goToGeneral() {
+    console.log('Navigating to General...');
+  }
 
   logout() {
-  localStorage.removeItem('email');  
-  this.router.navigate(['/login']);  
+    localStorage.removeItem('email');
+    this.router.navigate(['/login']);
+  }
+
+  goToAddLocation() {
+   this.router.navigate(['/search-location']);
+
+  }
 }
-goToAddLocation() {
-  this.router.navigate(['/tabs/tab1']);
-}
-
-
-
-}
-

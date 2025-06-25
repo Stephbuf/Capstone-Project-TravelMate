@@ -12,7 +12,7 @@ import {
   IonButton
 } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
-import { add, searchOutline } from 'ionicons/icons';
+import { add, search, searchOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { Keyboard } from '@capacitor/keyboard';
 import { Capacitor } from '@capacitor/core';
@@ -40,7 +40,7 @@ export class SearchLocationPage implements AfterViewInit {
   searchQuery: string = '';
 
   constructor(private route: ActivatedRoute, private router: Router) {
-    addIcons({ add, searchOutline });
+    addIcons({search,add,searchOutline});
   }
 
   ngOnInit() {

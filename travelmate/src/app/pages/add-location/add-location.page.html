@@ -2,7 +2,6 @@
   <div class="form-wrapper">
     <ion-card class="form-card">
       <ion-card-header>
-        
         <ion-card-title>Add a New Location</ion-card-title>
       </ion-card-header>
 
@@ -18,10 +17,18 @@
             <ion-input formControlName="city" required></ion-input>
           </ion-item>
 
+          <!-- Emoji-enhanced scrollable Category dropdown -->
           <ion-item lines="none" class="highlight-select">
             <ion-label>Category</ion-label>
-            <ion-select formControlName="category" interface="action-sheet" placeholder="Select Category">
-              <ion-select-option *ngFor="let cat of categories" [value]="cat">{{ cat }}</ion-select-option>
+            <ion-select 
+              formControlName="category" 
+              interface="popover" 
+              placeholder="Select Category"
+              class="emoji-select"
+            >
+              <ion-select-option *ngFor="let cat of categoryKeys()" [value]="cat">
+                {{ categories[cat] }} {{ cat }}
+              </ion-select-option>
             </ion-select>
           </ion-item>
 
@@ -34,25 +41,32 @@
             <ion-label position="floating">Address</ion-label>
             <ion-input formControlName="address" required></ion-input>
           </ion-item>
+<ion-item lines="none" class="highlight-select">
+  <ion-label>Tag</ion-label>
+  <ion-select 
+    formControlName="tag" 
+    interface="popover" 
+    placeholder="Select Tag"
+    class="emoji-select"
+  >
+    <ion-select-option value="wishlist">📌 Wishlist</ion-select-option>
+    <ion-select-option value="itinerary">🗺️ Itinerary</ion-select-option>
+  </ion-select>
+</ion-item>
 
-          <ion-item lines="none" class="highlight-select">
-            <ion-label>Tag</ion-label>
-            <ion-select formControlName="tag" interface="action-sheet" placeholder="Select Tag" required>
-              <ion-select-option value="wishlist">Wishlist</ion-select-option>
-              <ion-select-option value="itinerary">Itinerary</ion-select-option>
-            </ion-select>
-          </ion-item>
-
-          <ion-button expand="block" type="submit" [disabled]="locationForm.invalid || isSubmitting">
-            Save Location
-          </ion-button>
+        <div class="submit-button-wrapper">
+  <ion-button expand="block" type="submit" [disabled]="locationForm.invalid || isSubmitting">
+    Save Location
+  </ion-button>
+</div>
         </form>
       </ion-card-content>
     </ion-card>
   </div>
-  <div class="back-button-bar" >
-  <ion-buttons slot="start">
-    <ion-back-button defaultHref="/" style="color: white;"></ion-back-button>
-  </ion-buttons>
-</div>
+
+  <div class="back-button-bar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/search-location" style="color: white;"></ion-back-button>
+    </ion-buttons>
+  </div>
 </ion-content>

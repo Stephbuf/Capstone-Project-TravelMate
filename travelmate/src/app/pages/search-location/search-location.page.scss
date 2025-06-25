@@ -1,106 +1,166 @@
-ion-fab-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  --background: #ff5f7e;
-  
-  
-}
+$primary: #ef3f5a;
+$accent: #fff5f7;
+$shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
-ion-icon {
-  font-size: 24px;
-  color: white; 
- 
-}
-.back-button-bar {
-  background-color: #ff5f7e;
-  padding: 10px 16px;
-  height: 50px; 
-  display: flex;
-  align-items: center;
-
-}
-.no-scroll {
+ion-content.no-scroll {
   --overflow: hidden;
+  background: #fff;
+  contain: layout size style;
+  position: relative;
 }
 
-
-.add-fab {
-  margin-bottom: 80px; 
-  
-  ion-fab-button {
-    --background: #ff5f7e;   
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
- 
-
-    &:hover {
-      transform: scale(1.05);
-    }
-  }
-
-  ion-icon {
-    font-size: 26px;
-    color: white;
-  }
+// Google Map Styling
+.styled-map {
+  height: 70vh;
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: $shadow;
+  overflow: hidden;
+  margin: 1rem auto;
+  max-width: 92%;
 }
 
+// Search Form
 .location-search-form {
-  padding: 0 10px;
-  margin-top: 12px;
-  
-
-
+  padding: 0 16px;
+  margin: 0 auto 1rem auto;
+  max-width: 92%;
 
   .search-bar-container {
-    background: #ffffff;
-    border-radius: 999px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    padding: 4px 8px;
     display: flex;
     align-items: center;
-    gap: 8px;
-  }
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 999px;
+    box-shadow: $shadow;
+    padding: 10px 16px;
+    gap: 10px;
+    backdrop-filter: blur(6px);
 
-  .search-input {
-    flex: 1;
-    font-size: 1rem;
-    padding: 8px;
-    --padding-start: 12px;
-    --background: transparent;
-    --color: #333;
-  }
+    .search-icon {
+      color: #ff5f7e;
+      font-size: 20px;
+    }
 
-  .search-button {
-    --background: #ef3f5a;
-    --color: white;
-    --box-shadow: 0 2px 8px rgba(51, 122, 255, 0.2);
-    width: 42px;
-    height: 42px;
+    .search-input {
+      flex: 1;
+      font-size: 1rem;
+      border: none;
+      background: transparent;
+      outline: none;
+      color: #333;
+
+      &::placeholder {
+        color: #999;
+      }
+    }
+
+    .search-button {
+      background: #ff5f7e;
+      color: white;
+      font-size: 0.9rem;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: darken($primary, 5%);
+      }
+    }
+  }
+}
+
+// Floating Add Button
+.add-fab {
+  bottom: 24px;
+  right: 20px;
+  z-index: 1000;
+
+  ion-fab-button {
+    --background: linear-gradient(135deg, #ef3f5a, #ff8aa1);
+    --border-radius: 50%;
+    --box-shadow: 0 8px 20px rgba(239, 63, 90, 0.3);
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-    
-  }
+    transition: all 0.2s ease-in-out;
+    animation: pulseGlow 2.5s ease-in-out infinite;
 
-  ion-icon {
-    font-size: 20px;
+    &:hover {
+      transform: scale(1.07);
+      --box-shadow: 0 12px 26px rgba(239, 63, 90, 0.4);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    ion-icon {
+      font-size: 22px;
+      color: white;
+    }
   }
 }
 
-ion-content {
-  --keyboard-offset: 0px;
-  height: 70vh;
-  contain: layout size style;
-  position: relative;
-
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(239, 63, 90, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(239, 63, 90, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 63, 90, 0);
+  }
 }
 
-.location-search-form {
 
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: white;
+// Subtle floating pulse
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(239, 63, 90, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(239, 63, 90, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 63, 90, 0);
+  }
+}
+
+
+
+
+
+
+// Back Button Bar
+.back-button-bar {
+  background-color: #ff5f7e;
+  padding: 10px 16px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: 0 0 12px 12px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  justify-content: space-between;
+
+  .back-title {
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-left: 8px;
+  }
+}
+
+// Google Autocomplete Dropdown
+.pac-container {
+  z-index: 9999 !important;
+  max-height: 250px !important;
+  overflow-y: auto !important;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
 }

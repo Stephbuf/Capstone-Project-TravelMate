@@ -28,7 +28,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     CommonModule,
     FormsModule]
 })
-export class ItineraryCategoriesPage implements OnInit {
+export class ItinerarycategoriesPage implements OnInit {
   city: string = '';
   categories: { name: string; places: any[] }[] = [];
   expandedCategory: string | null = null;
@@ -49,7 +49,11 @@ getCategoryEmoji(name: string): string {
     'Gallery': '🖼️',
     'Coffee Shop': '☕',
     'Bakery': '🥐',
-    'Landmark': '📍'
+     'Landmark': '📍',
+      'Downtown': '🏙️',
+      'Hiking Trail': '🏔️',
+      'Theatre': '🎭',
+      'National Park': '🏞️'
   };
   return emojiMap[name] || '📍';
 }

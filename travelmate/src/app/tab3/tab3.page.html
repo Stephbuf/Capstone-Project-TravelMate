@@ -1,17 +1,119 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-title class="explore-title">🌍 Explore</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="explore-page" fullscreen>
+  <!-- Search Bar -->
+  <ion-item class="search-bar">
+    <ion-input
+      [(ngModel)]="searchTerm"
+      placeholder="Search pins or reviews..."
+      clearInput>
+    </ion-input>
+  </ion-item>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  <!-- Add Friends Section -->
+  <ion-accordion-group>
+    <ion-accordion value="friends">
+      <ion-item slot="header">
+        <ion-label>
+          👥 Add Friends
+        </ion-label>
+      </ion-item>
+      <div class="accordion-body" slot="content">
+        <ion-item button (click)="openFriendModal()">
+          <ion-avatar slot="start">
+            <img src="assets/avatars/avatar1.png" />
+          </ion-avatar>
+          <ion-label>
+            <h3>Emily Tran</h3>
+            <p class="badge">⭐️ Super Explorer</p>
+          </ion-label>
+        </ion-item>
+        <ion-item lines="none" class="friend-search">
+          <ion-input placeholder="Search by username..."></ion-input>
+        </ion-item>
+        <ion-button expand="block" shape="round" class="add-friend-btn" color="danger" (click)="addFriend()">Add Friend</ion-button>
+      </div>
+    </ion-accordion>
+
+    <!-- Explore Pins Section -->
+    <ion-accordion value="pins">
+      <ion-item slot="header">
+        <ion-label>📌 Discover Pinned Locations</ion-label>
+      </ion-item>
+      <div class="accordion-body" slot="content">
+        <ion-card
+          class="location-card fade-in"
+          *ngFor="let pin of filteredPins(); let i = index">
+          
+          <ion-card-header class="card-header">
+            <ion-avatar slot="start">
+              <img [src]="pin.avatar" />
+            </ion-avatar>
+            <ion-label>
+              <h3>{{ pin.name }}</h3>
+              <p>Shared by <strong>{{ pin.user }}</strong> <span class="badge">{{ pin.badge }}</span></p>
+            </ion-label>
+          </ion-card-header>
+
+          <ion-card-content>
+            <p class="pin-description">{{ pin.description }}</p>
+
+            <!-- Star Rating with Emoji -->
+            <div class="star-rating">
+              <span *ngFor="let s of pin.stars">🌟</span>
+              <span class="rating-emoji">{{ pin.emoji }}</span>
+            </div>
+
+            <ion-button fill="outline" size="small" (click)="addToMyList(pin)">
+              ➕ Add to My List
+            </ion-button>
+
+            <!-- Reviews -->
+            <div class="reviews">
+              <h4>💬 Reviews</h4>
+              <div class="review" *ngFor="let review of pin.reviews">
+                <p><strong>{{ review.user }}</strong>: {{ review.comment }}</p>
+              </div>
+
+              <ion-textarea
+                [(ngModel)]="pin.newReview"
+                placeholder="Write your review..."
+                autoGrow="true">
+              </ion-textarea>
+
+              <ion-button size="small" expand="block" class="submit-review-btn" color="danger" (click)="submitReview(pin, i)">
+                Submit Review
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+
+  <!-- Friend Modal -->
+  <ion-modal [isOpen]="showFriendModal" (didDismiss)="showFriendModal = false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Friend Details</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="showFriendModal = false">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-avatar class="modal-avatar">
+          <img src="assets/avatars/avatar1.png" />
+        </ion-avatar>
+        <h2>Emily Tran</h2>
+        <p>🏅 Super Explorer · 40 shared pins</p>
+        <ion-button expand="block" shape="round">Follow</ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>
