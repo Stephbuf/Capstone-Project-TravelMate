@@ -51,15 +51,6 @@ a:hover {
   opacity: 1;
 }
 
-// h1 {
-//   font-size: 3rem;
-//   font-weight: 700;
-//   color: black;
-//   margin: 0 0 1.5rem;
-//   opacity: 0.8  ;
-//   text-align: center;
-// }
-
 i {
   font-size: 1.3rem;
 }
@@ -128,8 +119,9 @@ a.btn:hover {
 }
 
 .flex-form input[type="submit"] {
-  background: #ff5f7e;
-  border: 1px solid #ff5f7e;
+  background: #e6dac8;
+  border: 1px solid  #e6dac8;
+  opacity: 0.8;
   color: #fff;
   padding: 0 30px;
   cursor: pointer;
@@ -139,8 +131,8 @@ a.btn:hover {
 }
 
 .flex-form input[type="submit"]:hover {
-  background: #ff5f7e;
-  border: 1px solid #ff5f7e;
+  background: #e6dac8;
+  border: 1px solid #e6dac8;
 }
 
 .flex-form {
@@ -160,7 +152,7 @@ a.btn:hover {
   font-size: 1rem;
   border-radius: 0;
   outline: 0;
-//   -webkit-appearance: none;
+
 }
 
 input[type="search"] {

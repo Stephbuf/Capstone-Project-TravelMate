@@ -51,7 +51,7 @@ $shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.12);
   ion-card-title {
     font-size: 1.5rem;
     font-weight: 600;
-    color: $accent-color;
+    color: #a48d78;
     text-align: center;
     margin-bottom: 1.5rem;
   }
@@ -120,13 +120,13 @@ $shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.12);
   padding-bottom: 0.5rem;
 
   ion-button {
-    --background: #ef3f5a;
-    --background-hover: #d93950;
+    --background: #a48d78;;
+    --background-hover: #e6dac8;
     color: #fff;
     font-weight: 600;
     font-size: 1rem;
     border-radius: 30px;
-    box-shadow: 0 6px 18px rgba(239, 63, 90, 0.2);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     height: 48px;
   }
 }

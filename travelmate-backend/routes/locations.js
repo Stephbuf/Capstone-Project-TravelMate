@@ -191,6 +191,53 @@ router.put('/editLocation/:type/:name', async (req, res) => {
   }
 });
 
+// Edit place (location_name)
+router.put('/editLocation/place/:name', async (req, res) => {
+  try {
+    const { newName, userEmail } = req.body;
+    const { name } = req.params;
+
+    if (!newName || !userEmail) {
+      return res.status(400).json({ message: 'Missing required fields: newName or userEmail' });
+    }
+
+    const decodedName = decodeURIComponent(name);
+
+    const location = await Location.findOne({
+      where: { location_name: decodedName, userEmail }
+    });
+
+    if (!location) {
+      return res.status(404).json({ message: 'Place not found' });
+    }
+
+    location.location_name = newName;
+
+    await location.save();
+
+    res.status(200).json({ message: 'Place name updated successfully', location });
+  } catch (err) {
+    console.error('Error updating place:', err);
+    res.status(500).json({ message: 'Error updating place', error: err.message });
+  }
+});
+
+// Delete a specific location by ID
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await Location.destroy({ where: { id } });
+
+    if (!deleted) {
+      return res.status(404).json({ message: 'Location not found' });
+    }
+
+    res.status(200).json({ message: 'Location deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to delete location', error: err.message });
+  }
+});
+
 // Delete city
 router.delete('/city/:city', async (req, res) => {
   const { city } = req.params;

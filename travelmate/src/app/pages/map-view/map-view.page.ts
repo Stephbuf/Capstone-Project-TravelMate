@@ -2,18 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Loader } from '@googlemaps/js-api-loader';
-import {
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonButtons,
-  IonBackButton,
-  IonSearchbar,
-  IonList,
-  IonItem,
-  IonLabel,IonIcon 
-} from "@ionic/angular/standalone";
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton, IonList, IonItem, IonLabel,IonIcon } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 
 type LocationData = {
@@ -36,20 +25,7 @@ let apiLoaded = false;
   templateUrl: './map-view.page.html',
   styleUrls: ['./map-view.page.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonButtons,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonBackButton,
-
-    IonList,
-    IonItem,
-    IonLabel, IonIcon
-  ]
+  imports: [ CommonModule, FormsModule, IonButtons, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonList, IonItem, IonLabel, IonIcon]
 })
 export class MapViewPage implements OnInit {
   lat!: number;

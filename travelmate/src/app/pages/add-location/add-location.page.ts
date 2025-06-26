@@ -2,18 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import {
-  IonContent,
-  IonItem,
-  IonLabel,
-  IonSelect,
-  IonSelectOption,
-  IonButton,
-  IonInput,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardContent, IonApp, IonBackButton, IonButtons } from "@ionic/angular/standalone";
+import { IonContent, IonItem, IonLabel, IonSelect, IonSelectOption, IonButton,IonInput, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonBackButton, IonButtons } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
 import { ToastController } from '@ionic/angular';
 
@@ -23,18 +12,7 @@ import { ToastController } from '@ionic/angular';
   templateUrl: './add-location.page.html',
   styleUrls: ['./add-location.page.scss'],
   standalone: true,
-  imports: [IonButtons, IonBackButton,  
-    IonCardContent, IonCardTitle, IonCardHeader, IonCard,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    IonButton,
-    IonLabel,
-    IonItem,
-    IonInput,
-    IonContent,
-    IonSelect,
-    IonSelectOption, IonBackButton]
+  imports: [IonButtons, IonBackButton, IonCardContent, IonCardTitle, IonCardHeader, IonCard, CommonModule, FormsModule, ReactiveFormsModule, IonButton, IonLabel, IonItem, IonInput, IonContent, IonSelect, IonSelectOption, IonBackButton]
 })
 export class AddLocationPage implements OnInit {
   locationForm!: FormGroup;

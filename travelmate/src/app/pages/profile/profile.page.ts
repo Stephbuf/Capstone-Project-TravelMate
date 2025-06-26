@@ -27,11 +27,7 @@ export class ProfilePage implements OnInit {
     profilePhoto: ''
   };
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private toastController: ToastController
-  ) {}
+  constructor(private http: HttpClient,private router: Router,private toastController: ToastController) {}
 
   ngOnInit() {
     const storedUser = localStorage.getItem('currentUser');
@@ -86,11 +82,12 @@ export class ProfilePage implements OnInit {
     }
   }
 
-  toast(message: string) {
+  toast(message: string, cssClass: string = 'custom-toast') {
     this.toastController.create({
       message,
       duration: 2000,
-      color: 'success'
+      position: 'bottom',
+      cssClass
     }).then(toast => toast.present());
   }
 }

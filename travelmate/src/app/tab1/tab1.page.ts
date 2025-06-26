@@ -3,7 +3,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GoogleMapsLoaderService } from '../services/google-maps-loader.service';
-import { IonContent } from "@ionic/angular/standalone";
+
 
 @Component({
   selector: 'app-tab1',
@@ -17,10 +17,7 @@ export class Tab1Page implements AfterViewInit {
   inputElement!: HTMLInputElement;
   autocomplete!: google.maps.places.Autocomplete;
 
-  constructor(
-    private router: Router,
-    private gmapsLoader: GoogleMapsLoaderService
-  ) {}
+  constructor( private router: Router,private gmapsLoader: GoogleMapsLoaderService) {}
 
   async ngAfterViewInit(): Promise<void> {
     await this.gmapsLoader.load();

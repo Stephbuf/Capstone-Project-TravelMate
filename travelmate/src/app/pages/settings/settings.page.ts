@@ -1,20 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonIcon,
-  IonBackButton,
-  IonButtons,
-  IonToggle,
-  AlertController
-} from '@ionic/angular/standalone';
+import { IonContent, IonItem, IonLabel, IonIcon, IonBackButton, IonButtons, IonToggle, AlertController, ToastController } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
@@ -23,17 +10,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonContent,
-    IonItem,
-    IonLabel,
-    IonIcon,
-    IonBackButton,
-    IonButtons,
-    IonToggle
-]
+  imports: [ CommonModule,FormsModule,IonContent,IonItem, IonLabel, IonIcon, IonBackButton, IonButtons, IonToggle]
 })
 export class SettingsPage implements OnInit {
   userEmail = localStorage.getItem('userEmail') || '';
@@ -44,11 +21,7 @@ export class SettingsPage implements OnInit {
     locationAccess: true
   };
 
-  constructor(
-    private alertCtrl: AlertController,
-    private router: Router,
-    private http: HttpClient
-  ) {}
+  constructor( private alertCtrl: AlertController, private router: Router, private http: HttpClient, private toastController: ToastController ) {}
 
   ngOnInit() {
     this.loadDarkModeSetting();
@@ -111,4 +84,13 @@ export class SettingsPage implements OnInit {
     });
     await alert.present();
   }
+    toast(message: string, cssClass: string = 'custom-toast') {
+    this.toastController.create({
+      message,
+      duration: 2000,
+      position: 'bottom',
+      cssClass
+    }).then(toast => toast.present());
+  }
 }
+

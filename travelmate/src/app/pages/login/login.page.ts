@@ -1,11 +1,10 @@
 import { Component, OnInit,  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { IonContent, IonItem, IonInput, IonButton, IonIcon,} from '@ionic/angular/standalone';
+import { IonContent, IonItem, IonInput, IonButton, IonIcon} from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
-import { eyeOffOutline, eyeOutline, logoFacebook, logoGoogle } from 'ionicons/icons';
+import { eyeOffOutline, eyeOutline, logoFacebook, logoGoogle, closeOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
-import { Keyboard } from '@capacitor/keyboard';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
@@ -21,7 +20,7 @@ export class LoginPage implements OnInit {
     showPlane = false;
 
   constructor(private fb: FormBuilder, private router: Router, private http: HttpClient) {
-    addIcons({ logoGoogle, logoFacebook, eyeOutline, eyeOffOutline });
+    addIcons({closeOutline,eyeOutline,logoGoogle,logoFacebook,eyeOffOutline});
   }
 
   ngOnInit() {

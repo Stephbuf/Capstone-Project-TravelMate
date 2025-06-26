@@ -8,10 +8,7 @@
     </ion-header>
     <ion-content class="ion-padding">
       <ion-list lines="none">
-        <!-- <ion-item button detail="false" class="menu-item" (click)="goToProfile()">
-          <ion-icon slot="start" name="person-circle-outline"></ion-icon>
-          <ion-label>Profile</ion-label>
-        </ion-item> -->
+ 
         <ion-item button detail="false" class="menu-item" (click)="goToSettings()">
           <ion-icon slot="start" name="notifications-outline"></ion-icon>
           <ion-label>Settings</ion-label>
@@ -32,7 +29,7 @@
   <div class="ion-page" id="main-content">
     <ion-header>
       <ion-toolbar class="toolbar-with-plane" style="position: relative;">
-        <!-- Fixed menu button on left -->
+      
         <ion-menu-button autoHide="false" class="custom-menu-button" slot="start">
           <div class="menu-button-content">
             <span class="menu-icon">...</span>
@@ -40,7 +37,7 @@
           </div>
         </ion-menu-button>
 
-        <!-- Absolutely centered dynamic title -->
+
         <div style="
           position: absolute;
             top: 1rem;
@@ -48,7 +45,7 @@
           transform: translateX(-50%);
           font-size: 1.5rem;
           font-weight: 600;
-          color: #ef3f5a;
+          color: #a48d78;
         ">
           {{ currentFilter === 'wishlist' ? 'Wishlist Page' : 'Itinerary Page' }}
         </div>
@@ -84,7 +81,7 @@
           </ion-text>
         </div>
 
-        <!-- Timeline Card Layout -->
+    
         <div class="box" *ngIf="wishlistData.length > 0">
           <div class="cards is-active" #cardsContainer>
             <div
@@ -128,6 +125,11 @@
                       <ion-item-option color="danger" (click)="deleteCity(city)">
                         Delete
                       </ion-item-option>
+                       <ion-item-option
+                    [style.background]="currentFilter === 'wishlist' ? '#337aff70' : '#337aff70'"
+                    (click)="moveCountry(group.country)">
+                    {{ currentFilter === 'wishlist' ? 'Move to Itinerary' : 'Move to Wishlist' }}
+                  </ion-item-option>
                     </ion-item-options>
                   </ion-item-sliding>
                 </ion-list>

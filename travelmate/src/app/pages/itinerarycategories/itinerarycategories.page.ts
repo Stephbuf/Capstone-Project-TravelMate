@@ -1,16 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonIcon, IonButtons, IonBackButton, 
-  IonButton} from '@ionic/angular/standalone';
+import {IonContent,IonItem,IonLabel,IonIcon,IonButtons,IonBackButton,AlertController,ToastController,IonItemSliding,IonItemOptions,IonItemOption} from '@ionic/angular/standalone';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -19,49 +10,22 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './itinerarycategories.page.html',
   styleUrls: ['./itinerarycategories.page.scss'],
   standalone: true,
-  imports: [IonBackButton, IonButtons,
-    IonIcon,
-    IonLabel,
-    IonItem,
-    IonList,
-    IonContent,
-    CommonModule,
-    FormsModule]
+  imports: [ CommonModule,FormsModule,IonContent,IonItem,IonLabel,IonIcon,IonButtons,IonBackButton,IonItemSliding,IonItemOptions,IonItemOption]
 })
 export class ItinerarycategoriesPage implements OnInit {
   city: string = '';
   categories: { name: string; places: any[] }[] = [];
   expandedCategory: string | null = null;
-  animationTiming = 27; // seconds
-animationDelayFraction = this.animationTiming / this.categories.length;
+  animationTiming = 27;
+  animationDelayFraction = this.animationTiming / this.categories.length;
 
-getCategoryEmoji(name: string): string {
-  const emojiMap: { [key: string]: string } = {
-    'Restaurant': '🍽️',
-    'Bar': '🍻',
-    'Shopping': '🛍️',
-    'Museum': '🏛️',
-    'Sightseeing': '📸',
-    'Beach': '🏖️',
-    'Club': '💃',
-    'Airport': '✈️',
-    'Hotel': '🏨',
-    'Gallery': '🖼️',
-    'Coffee Shop': '☕',
-    'Bakery': '🥐',
-     'Landmark': '📍',
-      'Downtown': '🏙️',
-      'Hiking Trail': '🏔️',
-      'Theatre': '🎭',
-      'National Park': '🏞️'
-  };
-  return emojiMap[name] || '📍';
-}
-
-
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {}
+  constructor(private route: ActivatedRoute,private http: HttpClient,private router: Router,private alertController: AlertController,private toastController: ToastController) {}
 
   ngOnInit() {
+    this.fetchData();
+  }
+
+  fetchData() {
     this.route.queryParams.subscribe((params) => {
       this.city = params['city'];
       const userEmail = localStorage.getItem('email');
@@ -95,21 +59,42 @@ getCategoryEmoji(name: string): string {
   }
 
   toggleCategory(categoryName: string): void {
-    this.expandedCategory =
-      this.expandedCategory === categoryName ? null : categoryName;
+    this.expandedCategory = this.expandedCategory === categoryName ? null : categoryName;
+  }
+
+  getCategoryEmoji(name: string): string {
+    const emojiMap: { [key: string]: string } = {
+      'Restaurant': '🍽️',
+      'Bar': '🍻',
+      'Shopping': '🛍️',
+      'Museum': '🏛️',
+      'Sightseeing': '📸',
+      'Beach': '🏖️',
+      'Club': '💃',
+      'Airport': '✈️',
+      'Hotel': '🏨',
+      'Gallery': '🖼️',
+      'Coffee Shop': '☕',
+      'Bakery': '🥐',
+      'Landmark': '📍',
+      'Downtown': '🏙️',
+      'Hiking Trail': '🏔️',
+      'Theatre': '🎭',
+      'National Park': '🏞️'
+    };
+    return emojiMap[name] || '📍';
   }
 
   getLabelFromAddress(address: string): string {
     if (!address) return '';
-    return address.split(',')[0]; 
+    return address.split(',')[0];
   }
 
   goToMap(place: any) {
     const name = place.name;
     const address = place.address;
 
-    // Exclude the current place from the list
-    const allOtherPlaces = this.categories.reduce((acc: any[], cat: { name: string; places: any[] }) => {
+    const allOtherPlaces = this.categories.reduce((acc: any[], cat) => {
       const filtered = cat.places.filter(p => p.name !== name);
       return acc.concat(filtered);
     }, []);
@@ -146,5 +131,66 @@ getCategoryEmoji(name: string): string {
       console.error('No address or coordinates available for this place.');
     }
   }
-}
 
+  async editPlace(place: any) {
+    const alert = await this.alertController.create({
+      header: 'Edit Place Name',
+      inputs: [
+        {
+          name: 'name',
+          type: 'text',
+          placeholder: 'Place Name',
+          value: place.location_name
+        }
+      ],
+      buttons: [
+        { text: 'Cancel', role: 'cancel' },
+        {
+          text: 'Save',
+          handler: (data) => {
+            const userEmail = localStorage.getItem('email');
+            if (!userEmail || !data.name.trim()) return;
+
+            this.http.put(`http://localhost:3000/locations/${place.id}`, {
+              ...place,
+              location_name: data.name.trim(),
+              userEmail
+            }).subscribe({
+              next: () => {
+                this.toast('Place name updated.');
+                this.fetchData();
+              },
+              error: () => {
+                this.toast('Error updating place.');
+              }
+            });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  deletePlace(place: any) {
+    this.http.delete(`http://localhost:3000/locations/${place.id}`)
+      .subscribe({
+        next: () => {
+          this.toast('Place deleted.');
+          this.fetchData();
+        },
+        error: () => {
+          this.toast('Error deleting place.');
+        }
+      });
+  }
+
+   toast(message: string, cssClass: string = 'custom-toast') {
+    this.toastController.create({
+      message,
+      duration: 2000,
+      position: 'bottom',
+      cssClass
+    }).then(toast => toast.present());
+  }
+}

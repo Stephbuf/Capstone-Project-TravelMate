@@ -1,374 +1,247 @@
-// ===========================
-//Toolbar 
-// ===========================
-$primary-color: #ef3f5a;
-$accent-color: #fff5f7;
-$text-color: #ffffff;
-$shadow: 0 8px 20px rgba(239, 63, 90, 0.1);
+$linen: #fdfcfb;
+$champagne: #f7f1ec;
+$almond: #e3d5ca;
+$mocha: #b59e8c;
+$cocoa: #8e7563;
+$blush: #e8d3c6;
 
-ion-toolbar.toolbar-with-plane {
-  background-color: #ffffff;
-  background-image: linear-gradient(to right, #ffffff, #fff0f4);
-  color: $primary-color;
-  border-bottom: 1px solid rgba(239, 63, 90, 0.1);
-  padding: 0 1rem;
-  box-shadow: $shadow;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  padding-left: .3rex;
-
-
-
-ion-menu-button {
-  --padding-start: 0;
-  --padding-end: 0;
-  --border-radius: 0;
-  --background: transparent;
-  --box-shadow: none;
-  --ripple-color: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover {
-    background-color: transparent !important;
-  }
-
-  ion-icon {
-    font-size: 22px;
-    color: $primary-color;
-  }
-}
-
-
-  ion-buttons,
-  ion-menu-button {
-    color: $primary-color;
-    // font-size: 1.4rem;
-    
-    ion-menu-button {
-  --color: #ef3f5a;
-  // font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 0.5rem;
-
-
-  &:hover {
-    background-color: rgba(239, 63, 90, 0.1) !important;
-  }
-
-  ion-icon {
-    color: #ef3f5a;
-    font-size: 24px;
-  }
-}
-
-  }
-
-  .menu-title {
-  text-align: left;
-  justify-content: flex-start;
-  display: flex;
-  width: 100%;
-  padding-left: 1.5rem; 
-}
-
-
-  //Menu style//
-  ion-title {
-    flex: 1;
-    text-align: center;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: $primary-color;
-    letter-spacing: 0.5px;
-  }
-
-  // toolbar underline//
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(to right, transparent, $primary-color 50%, transparent);
-    opacity: 0.4;
-
-  }
-}
-
-// ===========================
-// Toggle
-// ===========================
-$primary-color: #ef3f5a;
-$secondary-color: #0f111a;
-$highlight: #ff5f7e;
-$accent: #f0f2f5;
-$text-color: #1c1c1e;
+$text-dark: #3d3d3d;
+$text-muted: #867a73;
 $text-light: #ffffff;
-$radius: 20px;
-$transition: all 0.3s ease-in-out;
+
+$radius: 24px;
+$shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.05);
+$transition: all 0.3s ease;
 
 body {
-  font-family: 'Maven Pro', sans-serif;
-  background-color: $secondary-color;
-  color: $text-light;
+  font-family: 'Poppins', sans-serif;
+  background-color: $linen;
+  color: $text-dark;
   margin: 0;
-  overflow-x: hidden;
-}
-
-.toggle-switch {
-  display: flex;
-  justify-content: center;
-  background: #2a2d3b;
-  border-radius: 100px;
-  padding: 8px;
-  margin: 2rem auto;
-  gap: 8px;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-  width: fit-content;
-}
-
-.toggle-option {
-  background-color: transparent;
-  color: $text-light;
-  border: none;
-  padding: 0.7rem 1.5rem;
-  border-radius: 100px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: $transition;
-
-  &.active {
-    background-color: $highlight;
-    color: $text-light;
-    box-shadow: 0 0 10px $highlight;
-  }
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-  padding: 2rem;
-}
-.card {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: $radius;
-  padding: 1.5rem;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 300ms ease;
-
-  // Hover pop-up effect
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
-  }
-
-  &.is-active {
-    border: 1px solid $highlight;
-    transform: scale(1.07); 
-    background: rgba(255, 255, 255, 0.1);
-  }
-}
-
-.card__title {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: $highlight;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-
-.city-list {
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: $radius;
-  margin-top: 1rem;
-  padding: 0.5rem;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
-  
-      &:hover {
-    background: rgba(240, 235, 235, 0.596) !important; 
-    box-shadow: 0 4px 10px rgba(239, 63, 90, 0.1);
-  }
-}
-
-.city-item {
-  --background: transparent;
-  --color: $text-light;
-  font-weight: 500;
-  font-size: 1rem;
-  padding-left: 0.5rem;
-  border-radius: 10px;
-  transition: $transition;
-}
-
-.city-icon {
-  color: $highlight;
-  font-size: 1.2rem;
-  margin-right: 0.5rem;
-}
-
-.new-card {
-  display: block;
-  width: 100%;
-  padding: 1rem;
-  background: $highlight;
-  color: $text-light;
-  border: none;
-  border-radius: 100px;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: $transition;
-  margin-top: 2rem;
-
-  &:hover {
-    background-color: lighten($highlight, 5%);
-    box-shadow: 0 0 12px $highlight;
-  }
-}
-
-ion-item::part(native) {
-  --background-hover: rgba(255, 255, 255, 0.06);
-  --background-focused: rgba(255, 255, 255, 0.06);
-  --ripple-color: rgba(255, 255, 255, 0.1);
-}
-
-ion-item:active::part(native),
-ion-item.activated::part(native) {
-  --background: rgba(255, 255, 255, 0.06);
-}
-
-@media (max-width: 768px) {
-  .card__title {
-    font-size: 1rem;
-  }
-
-  .toggle-option {
-    font-size: 1.25rem;
-  }
-
-  .new-card {
-    font-size: 0.9rem;
-  }
-}
-
-.menu-item::part(native) {
-  transition: background-color 0.3s ease-in-out;
-  border-radius: 12px;
-}
-
-.menu-item::part(native):hover {
-  background-color: rgba(239, 63, 90, 0.1);
-       
-}
-
-.menu-item.activated::part(native),
-.menu-item:active::part(native) {
-  background-color: rgba(239, 63, 90, 0.15);
-}
-$btn-size: 70px;
-$primary-color: #ff5f7e;
-
-.social-btns {
-  display: flex;
-  justify-content: center;
-  margin-top: -5px;
-
-
-  .btn {
-    width: $btn-size;
-    height: $btn-size;
-    border-radius: 50%;
-    background-color: #fff;
-    border: none;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    //  --ripple-color: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 100%;
-      left: -110%;
-      width: 120%;
-      height: 120%;
-      background-color: $primary-color;
-      transform: rotate(45deg);
-      z-index: 0;
-      transition: top 0.2s ease-in, left 0.2s ease-in;
-    }
-
-    i {
-      font-size: 25px;
-      color: $primary-color;
-      z-index: 1;
-      transition: color 0.2s ease, transform 0.2s ease;
-    }
-
-    &:hover::before {
-      top: -10%;
-      left: -10%;
-    }
-
-    &:hover i {
-      color: #fff;
-      transform: scale(1.1);
-    }
-  }
-}
-.custom-menu-button {
-  background: transparent !important;
-  box-shadow: none !important;
   padding: 0;
-  border-radius: 0;
-  width: 60px; 
-  height: auto;
-  margin-left: 12px;
+  line-height: 1.7;
+}
 
-  &::part(native) {
-    background: transparent !important;
-    box-shadow: none !important;
+ion-toolbar.toolbar-with-plane {
+  background: linear-gradient(135deg, $linen, $champagne);
+  border-radius: 20px;
+  margin: 0.75rem 1rem;
+  padding: 0.75rem 1.25rem;
+  box-shadow: $shadow-soft;
+  display: flex;
+  align-items: center;
+  height: auto;
+  position: relative;
+
+  ion-title,
+  .menu-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: $mocha;
+    letter-spacing: 0.6px;
   }
+}
+
+.custom-menu-button {
+  background: transparent;
+  padding: 0;
 
   .menu-button-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 100%;
+    gap: 2px;
+
+    .menu-icon {
+      font-size: 1.2rem;
+      color: $mocha;
+    }
+
+    .menu-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: $mocha;
+    }
+  }
+}
+
+.toggle-switch {
+  background: $champagne;
+  border-radius: 100px;
+  display: flex;
+  padding: 5px;
+  gap: 5px;
+  width: max-content;
+  margin: 2rem auto;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.03);
+
+  .toggle-option {
+    font-size: 1rem;
+    padding: 0.6rem 1.6rem;
+    border-radius: 100px;
+    border: none;
+    background: transparent;
+    color: $text-muted;
+    font-weight: 500;
+    transition: $transition;
+
+    &.active {
+      background-color: $mocha;
+      color: $text-light;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  padding: 2rem 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.card {
+  background: rgba(247, 241, 236, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(229, 216, 205, 0.5);
+  border-radius: $radius;
+  padding: 2rem 1.75rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.07);
   }
 
-  .menu-icon {
-    font-size: 20px;
-    color: #ef3f5a;
-    line-height: 1;
+  &.is-active {
+    background: linear-gradient(145deg, $blush, $champagne);
+    border: 1px solid $mocha;
+  }
+
+  .card__title {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: $cocoa;
+    margin-bottom: 1rem;
+    letter-spacing: 0.4px;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.3);
+  }
+
+  .card__subtitle {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #b59e8c;
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .card__content {
+    font-size: 1rem;
+    color: $text-dark;
+    line-height: 1.6;
+  }
+
+  .card__footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+
+    button {
+      background: $mocha;
+      color: $text-light;
+      font-weight: 500;
+      padding: 0.6rem 1.4rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      transition: none;
+      box-shadow: none;
+
+      &:hover {
+        background: $mocha; 
+      }
+    }
+  }
+}
+
+
+.city-list {
+  background: $linen;
+  padding: 1rem;
+  border-radius: $radius;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.03);
+  margin-top: 1rem;
+}
+
+.city-item {
+  --background: transparent;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #b59e8c;
+  border-radius: 14px;
+  transition: $transition;
+}
+
+.city-icon {
+  color: $mocha;
+  font-size: 1.3rem;
+  margin-right: 0.5rem;
+}
+
+.social-btns {
+  display: flex;
+  justify-content: center;
+
+  .btn.add-new {
+    width: 58px;
+    height: 58px;
+    background: $cocoa;
+    color: white;
+    border-radius: 50%;
+    border: none;
+    font-size: 1.5rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: $transition;
+
+    &:hover {
+      background-color: $cocoa;
+      transform: scale(1.05);
+    }
+  }
+}
+
+
+.empty-message p {
+  color: $text-muted;
+  font-size: 1rem;
+  margin-top: 2rem;
+  text-align: center;
+  opacity: 0.8;
+}
+
+
+@media (max-width: 768px) {
+  .card__title {
+    font-size: 1.1rem;
+  }
+
+  .toggle-option {
+    font-size: 0.9rem;
   }
 
   .menu-label {
-    font-size: 14px; 
-    color: #ef3f5a;
-    font-weight: 600;
-    margin-top: 2px;
-    white-space: nowrap; 
-    text-overflow: ellipsis;
+    font-size: 0.65rem;
+  }
+
+  ion-header {
+    padding-left: 20px;
+    padding-right: 50px;
   }
 }

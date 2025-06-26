@@ -79,7 +79,7 @@ export class Tab3Page {
 
   addToMyList(pin: any) {
     console.log(`Added ${pin.name} to your list.`);
-    // Placeholder for actual backend or local storage integration
+
   }
 
   submitReview(pin: any, index: number) {
@@ -93,6 +93,6 @@ export class Tab3Page {
 
   addFriend() {
     console.log('Friend request sent.');
-    // Placeholder for actual add-friend logic
+
   }
 }

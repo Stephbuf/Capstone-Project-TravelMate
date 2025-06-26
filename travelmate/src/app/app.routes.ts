@@ -51,7 +51,7 @@ export const routes: Routes = [
   },
   {
     path: 'wishlistcategories',
-    loadComponent: () => import('./pages/wishlistcategories/wishlistcategories.page').then( m => m.WishlistCategoriesPage)
+    loadComponent: () => import('./pages/wishlistcategories/wishlistcategories.page').then( m => m.WishlistcategoriesPage)
   },
   {
     path: 'map-view',

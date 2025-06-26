@@ -37,7 +37,7 @@ ion-content.no-scroll {
     backdrop-filter: blur(6px);
 
     .search-icon {
-      color: #ff5f7e;
+      color: #e6dac8;
       font-size: 20px;
     }
 
@@ -55,7 +55,7 @@ ion-content.no-scroll {
     }
 
     .search-button {
-      background: #ff5f7e;
+      background: #e6dac8;
       color: white;
       font-size: 0.9rem;
       border: none;
@@ -66,7 +66,7 @@ ion-content.no-scroll {
       transition: background-color 0.2s ease;
 
       &:hover {
-        background-color: darken($primary, 5%);
+        background-color: darken(#cbb9a4c9, 5%);
       }
     }
   }
@@ -74,55 +74,45 @@ ion-content.no-scroll {
 
 // Floating Add Button
 .add-fab {
-  bottom: 24px;
-  right: 20px;
+  bottom: 28px;
+  right: 24px;
   z-index: 1000;
 
   ion-fab-button {
-    --background: linear-gradient(135deg, #ef3f5a, #ff8aa1);
+    --background: linear-gradient(135deg, #cbb9a4c9, #e6dac8);
     --border-radius: 50%;
-    --box-shadow: 0 8px 20px rgba(239, 63, 90, 0.3);
-    width: 48px;
-    height: 48px;
+    --box-shadow: 0 12px 30px #faf1ea, 0 4px 12px #e6dac8;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease-in-out;
+    border: none;
+    backdrop-filter: blur(6px);
+    transition: all 0.25s ease-in-out;
     animation: pulseGlow 2.5s ease-in-out infinite;
 
     &:hover {
-      transform: scale(1.07);
-      --box-shadow: 0 12px 26px rgba(239, 63, 90, 0.4);
+      transform: scale(1.08);
+      --box-shadow: 0 16px 34px #faf1ea, 0 4px 12px #e6dac8;;
     }
 
     &:active {
-      transform: scale(0.95);
+      transform: scale(0.96);
+      --box-shadow: 0 8px 18px #faf1ea, 0 4px 12px #e6dac8;
     }
 
     ion-icon {
-      font-size: 22px;
+      font-size: 28px;
       color: white;
     }
   }
 }
 
-@keyframes pulseGlow {
-  0% {
-    box-shadow: 0 0 0 0 rgba(239, 63, 90, 0.4);
-  }
-  70% {
-    box-shadow: 0 0 0 10px rgba(239, 63, 90, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(239, 63, 90, 0);
-  }
-}
-
-
 // Subtle floating pulse
 @keyframes pulseGlow {
   0% {
-    box-shadow: 0 0 0 0 rgba(239, 63, 90, 0.4);
+    box-shadow: 0 0 0 0 #e6dac8, 0 4px 12px #e6dac8;
   }
   70% {
     box-shadow: 0 0 0 10px rgba(239, 63, 90, 0);

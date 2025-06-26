@@ -18,13 +18,7 @@ export class Tab2Page implements OnInit {
   currentFilter: 'wishlist' | 'itinerary' = 'wishlist';
   isWishlist: boolean = true;
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private toastController: ToastController,
-    private alertController: AlertController,
-    private menuCtrl: MenuController
-  ) {}
+  constructor( private http: HttpClient, private router: Router, private toastController: ToastController, private alertController: AlertController, private menuCtrl: MenuController) {}
 
   ngOnInit() {
     this.fetchData();
@@ -139,16 +133,16 @@ export class Tab2Page implements OnInit {
                 this.http.put(`http://localhost:3000/locations/editLocation/${type}/${encodeURIComponent(name)}`, { newName, userEmail })
                   .subscribe({
                     next: () => {
-                      this.presentToast(`${type === 'city' ? 'City' : 'Country'} name updated.`);
+                      this.toast(`${type === 'city' ? 'City' : 'Country'} name updated.`);
                       this.fetchData();
                     },
                     error: (err) => {
                       console.error(`Error updating ${type}:`, err);
-                      this.presentToast(`Error updating ${type}`);
+                      this.toast(`Error updating ${type}`);
                     }
                   });
               } else {
-                this.presentToast('Error: User email not found');
+                this.toast('Error: User email not found');
               }
             }
           }
@@ -163,12 +157,12 @@ export class Tab2Page implements OnInit {
     this.http.delete(`http://localhost:3000/locations/city/${city}`)
       .subscribe({
         next: () => {
-          this.presentToast('City deleted.');
+          this.toast('City deleted.');
           this.fetchData();
         },
         error: (err) => {
           console.error('Error deleting city:', err);
-          this.presentToast('Error deleting city');
+          this.toast('Error deleting city');
         }
       });
   }
@@ -177,12 +171,12 @@ export class Tab2Page implements OnInit {
     this.http.delete(`http://localhost:3000/locations/country/${country}`)
       .subscribe({
         next: () => {
-          this.presentToast(`Deleted all entries for ${country}`);
+          this.toast(`Deleted all entries for ${country}`);
           this.fetchData();
         },
         error: (err) => {
           console.error('Error deleting country:', err);
-          this.presentToast(`Error deleting ${country}`);
+          this.toast(`Error deleting ${country}`);
         }
       });
   }
@@ -196,24 +190,25 @@ export class Tab2Page implements OnInit {
     }).subscribe({
       next: () => {
         const newTag = this.currentFilter === 'wishlist' ? 'itinerary' : 'wishlist';
-        this.presentToast(`${country} moved to ${newTag}`);
+        this.toast(`${country} moved to ${newTag}`);
         this.fetchData();
       },
       error: (err) => {
         console.error('Error moving country:', err);
-        this.presentToast('Error moving country');
+        this.toast('Error moving country');
       }
     });
   }
 
-  async presentToast(message: string) {
-    const toast = await this.toastController.create({
+ toast(message: string, cssClass: string = 'custom-toast') {
+    this.toastController.create({
       message,
-      duration: 1500,
-      position: 'bottom'
-    });
-    toast.present();
+      duration: 2000,
+      position: 'bottom',
+      cssClass
+    }).then(toast => toast.present());
   }
+  
 
   goToProfile() {
     console.log('Navigating to Profile...');

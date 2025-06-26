@@ -97,22 +97,31 @@ ion-tab-button, ion-header, ion-footer {
   font-family: 'Red Hat Display', 'Maven Pro', 'Quicksand', sans-serif !important;
 }
 
-ion-toast.custom-toast .toast-wrapper {
-  --background: #ef3f5a;
+ion-toast.custom-toast {
+  --background: #A48D78 !important;
   --color: #ffffff;
-  font-weight: 600;
-  font-family: 'Maven Pro', sans-serif;
-  text-align: center;
+
+  .toast-message {
+    font-weight: 600;
+    font-family: 'Maven Pro', sans-serif;
+    text-align: center;
+  }
 }
 
-ion-toast.custom-toast-danger .toast-wrapper {
+ion-toast.custom-toast-danger {
   --background: #b00020;
   --color: #ffffff;
+
+  .toast-message {
+    font-weight: 600;
+    font-family: 'Maven Pro', sans-serif;
+    text-align: center;
+  }
 }
 
 
 .back-button-bar {
-  background-color: #ff5f7e;
+  background-color: #e6dac8 !important;
   padding: 10px 16px;
   height: 50px;
   display: flex;

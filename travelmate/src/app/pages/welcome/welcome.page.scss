@@ -200,18 +200,26 @@ $krit-green: #95C76D;
 // --------------------------------------------
 // Base Styles
 // --------------------------------------------
-body {
+html, body {
   margin: 0;
   padding: 0;
   height: 100%;
 }
 
+ion-content.full-page-content {
+  --background: none;
+  padding: 0;
+  height: 100vh;
+}
+
 .wrapper {
-  width: 800px;
-  height: 600px;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   position: relative;
   background: $bg-blue;
+  display: flex;
+  flex-direction: column;
 }
 
 // --------------------------------------------
@@ -223,7 +231,7 @@ body {
   position: absolute;
   top: 35%;
   left: 300px;
-  animation: move 15s linear infinite;
+  animation: move 13s linear infinite;
 
   .shuttle {
     width: 90px;
@@ -332,36 +340,27 @@ body {
     }
   }
 
-.banner {
-  position: absolute;
-  top: 22px;
-  left: 160px;
-  width: 200px;
-  height: 44px;
-  background: #ffffff;
-  font-family: 'Segoe UI', sans-serif;
-  font-size: 18px;
-  font-weight: 600;
-  color: $krit-red;
-  border: 2px solid white;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-right: 20px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  border-radius: 0 0 0 0; // keep it flat if you want
-
-  // Create inward notch on right
-  clip-path: polygon(
-    0 0,
-    100% 0,
-    calc(100% - 22px) 50%,
-    100% 100%,
-    0 100%
-  );
-}
+  .banner {
+    position: absolute;
+    top: 22px;
+    left: 160px;
+    width: 200px;
+    height: 44px;
+    background: #ffffff;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: $krit-red;
+    border: 2px solid white;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 22px) 50%, 100% 100%, 0 100%);
+  }
 }
 
 .rope {
@@ -399,20 +398,17 @@ body {
   }
 }
 
-
-
-
 // --------------------------------------------
 // Hill
 // --------------------------------------------
 .hill {
-  width: 1600px;
-  height: 800px;
+  width: 300vw;
+  height: 100vw;
   border-radius: 100%;
   background: $krit-green;
-  position: relative;
-  left: -400px;
-  bottom: -400px;
+  position: absolute;
+  bottom: -50vw;
+  left: -100vw;
   z-index: 2;
 }
 

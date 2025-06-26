@@ -12,8 +12,7 @@ import { Router } from '@angular/router';
   imports: [CommonModule, FormsModule, IonContent]
 })
 export class WelcomePage implements OnInit {
-  // texts = ['W', 'e', 'l', 'c', 'o', 'm', 'e', ''];
-  // particleArray = Array.from({ length: 12 }, (_, i) => i);
+
 
   constructor(private router: Router) {}
 

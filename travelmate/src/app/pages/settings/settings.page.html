@@ -8,7 +8,7 @@
 
     <ion-item class="settings-item">
       <ion-label>Dark Mode</ion-label>
-      <ion-toggle [(ngModel)]="settings.darkMode" (ionChange)="toggleDarkMode()"></ion-toggle>
+      <ion-toggle [(ngModel)]="settings.darkMode"  class="custom-toggle" (ionChange)="toggleDarkMode()"></ion-toggle>
     </ion-item>
 
     <ion-item class="settings-item" button (click)="navigateToProfile()">
@@ -22,12 +22,12 @@
 
     <ion-item class="settings-item">
       <ion-label>Notifications</ion-label>
-      <ion-toggle [(ngModel)]="settings.notificationsEnabled"></ion-toggle>
+      <ion-toggle [(ngModel)]="settings.notificationsEnabled"  class="custom-toggle"></ion-toggle>
     </ion-item>
 
     <ion-item class="settings-item">
       <ion-label>Location Access</ion-label>
-      <ion-toggle [(ngModel)]="settings.locationAccess"></ion-toggle>
+      <ion-toggle [(ngModel)]="settings.locationAccess"  class="custom-toggle"></ion-toggle>
     </ion-item>
   </div>
 

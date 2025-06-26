@@ -1,4 +1,4 @@
-$primary: #ff5f7e;
+$primary: #a48d78;
 $bg-light: #fdfdfc;
 $text-dark: #1c1c1e;
 $shadow-color: rgba(0, 0, 0, 0.08);
@@ -108,14 +108,14 @@ $shadow-color: rgba(0, 0, 0, 0.08);
   .save-btn {
     margin-top: 1.5rem;
     padding: 0.5rem;
-    background:  #ff5f7e;
+
     color: #fff;
     font-weight: 400;
     font-size: 1rem;
     border-radius: 24px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    box-shadow: 0 4px 10px rgba(255, 95, 126, 0.35);
+
     border: none;
     outline: none;
     display: flex;
@@ -125,7 +125,7 @@ $shadow-color: rgba(0, 0, 0, 0.08);
 margin-right: 3rem;
 
     &::part(native) {
-      background-color: $primary !important;
+      background-color: #a48d78a6 !important;
       box-shadow: none !important;
       border: none !important;
       font-weight: 400;

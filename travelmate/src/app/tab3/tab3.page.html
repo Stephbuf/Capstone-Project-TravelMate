@@ -1,119 +1,97 @@
 <ion-header>
-  <ion-toolbar color="light">
-    <ion-title class="explore-title">🌍 Explore</ion-title>
+  <ion-toolbar>
+    <ion-title>Explore</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="explore-page" fullscreen>
-  <!-- Search Bar -->
-  <ion-item class="search-bar">
-    <ion-input
-      [(ngModel)]="searchTerm"
-      placeholder="Search pins or reviews..."
-      clearInput>
-    </ion-input>
-  </ion-item>
+<ion-content class="explore-page" fullscreen scroll-y="true">
+  <div class="content-container">
+    <h2>Where would you spend your holiday?</h2>
 
-  <!-- Add Friends Section -->
-  <ion-accordion-group>
-    <ion-accordion value="friends">
-      <ion-item slot="header">
-        <ion-label>
-          👥 Add Friends
-        </ion-label>
+    <!-- Search Section -->
+    <div class="search-section">
+      <div class="search-title">🔍 Search</div>
+
+      <!-- Search Friends -->
+      <ion-item lines="none">
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-input placeholder="Search friends..." clearInput></ion-input>
       </ion-item>
-      <div class="accordion-body" slot="content">
-        <ion-item button (click)="openFriendModal()">
-          <ion-avatar slot="start">
-            <img src="assets/avatars/avatar1.png" />
-          </ion-avatar>
-          <ion-label>
-            <h3>Emily Tran</h3>
-            <p class="badge">⭐️ Super Explorer</p>
-          </ion-label>
-        </ion-item>
-        <ion-item lines="none" class="friend-search">
-          <ion-input placeholder="Search by username..."></ion-input>
-        </ion-item>
-        <ion-button expand="block" shape="round" class="add-friend-btn" color="danger" (click)="addFriend()">Add Friend</ion-button>
-      </div>
-    </ion-accordion>
+    </div>
 
-    <!-- Explore Pins Section -->
-    <ion-accordion value="pins">
-      <ion-item slot="header">
-        <ion-label>📌 Discover Pinned Locations</ion-label>
-      </ion-item>
-      <div class="accordion-body" slot="content">
-        <ion-card
-          class="location-card fade-in"
-          *ngFor="let pin of filteredPins(); let i = index">
-          
-          <ion-card-header class="card-header">
-            <ion-avatar slot="start">
-              <img [src]="pin.avatar" />
-            </ion-avatar>
-            <ion-label>
-              <h3>{{ pin.name }}</h3>
-              <p>Shared by <strong>{{ pin.user }}</strong> <span class="badge">{{ pin.badge }}</span></p>
-            </ion-label>
-          </ion-card-header>
+    <!-- Add Friend Section -->
+    <div class="add-friend-section">
+      <h3>Suggested Friends</h3>
 
-          <ion-card-content>
-            <p class="pin-description">{{ pin.description }}</p>
-
-            <!-- Star Rating with Emoji -->
-            <div class="star-rating">
-              <span *ngFor="let s of pin.stars">🌟</span>
-              <span class="rating-emoji">{{ pin.emoji }}</span>
-            </div>
-
-            <ion-button fill="outline" size="small" (click)="addToMyList(pin)">
-              ➕ Add to My List
-            </ion-button>
-
-            <!-- Reviews -->
-            <div class="reviews">
-              <h4>💬 Reviews</h4>
-              <div class="review" *ngFor="let review of pin.reviews">
-                <p><strong>{{ review.user }}</strong>: {{ review.comment }}</p>
-              </div>
-
-              <ion-textarea
-                [(ngModel)]="pin.newReview"
-                placeholder="Write your review..."
-                autoGrow="true">
-              </ion-textarea>
-
-              <ion-button size="small" expand="block" class="submit-review-btn" color="danger" (click)="submitReview(pin, i)">
-                Submit Review
-              </ion-button>
-            </div>
-          </ion-card-content>
-        </ion-card>
-      </div>
-    </ion-accordion>
-  </ion-accordion-group>
-
-  <!-- Friend Modal -->
-  <ion-modal [isOpen]="showFriendModal" (didDismiss)="showFriendModal = false">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Friend Details</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="showFriendModal = false">Close</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <ion-avatar class="modal-avatar">
-          <img src="assets/avatars/avatar1.png" />
+      <ion-item lines="none">
+        <ion-avatar slot="start">
+          <img src="assets/images/luna.jpg" />
         </ion-avatar>
-        <h2>Emily Tran</h2>
-        <p>🏅 Super Explorer · 40 shared pins</p>
-        <ion-button expand="block" shape="round">Follow</ion-button>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
+        <ion-label>
+          <div class="name">Luna Buffotot</div>
+          <div class="tag">⭐ Super Explorer</div>
+        </ion-label>
+        <ion-button slot="end" fill="clear" size="small" color="danger">Add</ion-button>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-avatar slot="start">
+          <img src="assets/images/whiskey.jpg" />
+        </ion-avatar>
+        <ion-label>
+          <div class="name">Whiskey Buffotot</div>
+          <div class="tag">🌍 30 shared locations</div>
+        </ion-label>
+        <ion-button slot="end" fill="clear" size="small" color="danger">Add</ion-button>
+      </ion-item>
+    </div>
+
+
+        <!-- Search Section -->
+    <div class="search-section">
+      <div class="search-title">🔍 Search</div>
+
+      <!-- Search Places -->
+      <ion-item lines="none">
+        <ion-icon name="location-outline" slot="start"></ion-icon>
+        <ion-input placeholder="Search places..." clearInput></ion-input>
+      </ion-item>
+    </div>
+    <!--  Category Icons -->
+    <div class="category-icons">
+      <div class="category-icon">✈️</div>
+      <div class="category-icon">🚗</div>
+      <div class="category-icon">🏨</div>
+      <div class="category-icon">🍽️</div>
+      <div class="category-icon">🎭</div>
+    </div>
+
+    <!-- Top Destinations -->
+    <div class="section">
+      <div class="section-heading">
+        <div>Top Destinations</div>
+        <span>See All</span>
+      </div>
+
+      <div class="horizontal-scroll">
+        <div class="location-card">
+          <img class="card-image" src="assets/images/santorini.jpg" />
+          <div class="card-body">
+            <h3>Santorini</h3>
+            <div class="meta">Greece</div>
+            <div class="subtext">89 activities · Best prices</div>
+          </div>
+        </div>
+
+        <div class="location-card">
+          <img class="card-image" src="assets/images/paris.webp" />
+          <div class="card-body">
+            <h3>Paris</h3>
+            <div class="meta">France</div>
+            <div class="subtext">97 activities · Travel deals</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>

@@ -1,16 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  IonContent,
-  IonFab,
-  IonFabButton,
-  IonIcon,
-  IonBackButton,
-  IonButtons,
-  IonItem,
-  IonButton
-} from '@ionic/angular/standalone';
+import { IonContent, IonFab, IonFabButton, IonIcon, IonBackButton, IonButtons,} from '@ionic/angular/standalone';
 import { ActivatedRoute, Router } from '@angular/router';
 import { add, search, searchOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
@@ -22,16 +13,7 @@ import { Capacitor } from '@capacitor/core';
   templateUrl: './search-location.page.html',
   styleUrls: ['./search-location.page.scss'],
   standalone: true,
-  imports: [
-    IonButtons,
-    IonBackButton,
-    IonContent,
-    CommonModule,
-    FormsModule,
-    IonFab,
-    IonFabButton,
-    IonIcon
-]
+  imports: [IonButtons, IonBackButton, IonContent, CommonModule, FormsModule, IonFab, IonFabButton, IonIcon]
 })
 export class SearchLocationPage implements AfterViewInit {
   map!: google.maps.Map;

@@ -3,13 +3,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
   IonContent,
-  IonList,
   IonItem,
   IonLabel,
   IonIcon,
   IonButtons,
-  IonBackButton, IonFooter, 
-  IonToolbar} from '@ionic/angular/standalone';
+  IonBackButton,
+  AlertController,
+  ToastController,
+  IonItemSliding,
+  IonItemOptions,
+  IonItemOption
+} from '@ionic/angular/standalone';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -19,6 +23,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./wishlistcategories.page.scss'],
   standalone: true,
   imports: [
+    IonItemOption,
+    IonItemOptions,
+    IonItemSliding,
     IonBackButton,
     IonButtons,
     IonIcon,
@@ -26,9 +33,10 @@ import { ActivatedRoute, Router } from '@angular/router';
     IonItem,
     CommonModule,
     FormsModule,
-    IonContent]
+    IonContent
+  ]
 })
-export class WishlistCategoriesPage implements OnInit {
+export class WishlistcategoriesPage implements OnInit {
   city: string = '';
   categories: { name: string; places: any[] }[] = [];
   expandedCategory: string | null = null;
@@ -37,47 +45,53 @@ export class WishlistCategoriesPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private alertController: AlertController,
+    private toastController: ToastController
   ) {}
 
-  ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
-      this.city = params['city'];
-      const userEmail = localStorage.getItem('email');
+ ngOnInit() {
+  this.route.queryParams.subscribe((params) => {
+    this.city = params['city'];
+    this.fetchData(); 
+  });
+}
 
-      if (!userEmail || !this.city) return;
+fetchData() {
+  const userEmail = localStorage.getItem('email');
+  if (!userEmail || !this.city) return;
 
-      this.http
-        .get<any[]>(`http://localhost:3000/locations/user/${userEmail}?tag=wishlist`)
-        .subscribe((data) => {
-          const filtered = data.filter((entry) => entry.city === this.city);
-          const categoryMap = new Map<string, any[]>();
-          const allEntries: any[] = [];
+  this.http
+    .get<any[]>(`http://localhost:3000/locations/user/${userEmail}?tag=wishlist`)
+    .subscribe((data) => {
+      const filtered = data.filter((entry) => entry.city === this.city);
+      const categoryMap = new Map<string, any[]>();
+      const allEntries: any[] = [];
 
-          filtered.forEach((entry) => {
-            const displayName = entry.location_name?.trim()
-              ? entry.location_name
-              : this.getLabelFromAddress(entry.address);
+      filtered.forEach((entry) => {
+        const displayName = entry.location_name?.trim()
+          ? entry.location_name
+          : this.getLabelFromAddress(entry.address);
 
-            const entryWithName = { ...entry, name: displayName };
-            allEntries.push(entryWithName);
+        const entryWithName = { ...entry, name: displayName };
+        allEntries.push(entryWithName);
 
-            if (!categoryMap.has(entry.category)) {
-              categoryMap.set(entry.category, []);
-            }
+        if (!categoryMap.has(entry.category)) {
+          categoryMap.set(entry.category, []);
+        }
 
-            categoryMap.get(entry.category)!.push(entryWithName);
-          });
+        categoryMap.get(entry.category)!.push(entryWithName);
+      });
 
-          this.categories = Array.from(categoryMap.entries()).map(([name, places]) => ({
-            name,
-            places
-          }));
+      this.categories = Array.from(categoryMap.entries()).map(([name, places]) => ({
+        name,
+        places,
+      }));
 
-          this.allPlaces = allEntries;
-        });
+      this.allPlaces = allEntries;
     });
-  }
+}
+
 
   getCategoryEmoji(name: string): string {
     const emojiMap: { [key: string]: string } = {
@@ -98,7 +112,6 @@ export class WishlistCategoriesPage implements OnInit {
       'Hiking Trail': '🏔️',
       'Theatre': '🎭',
       'National Park': '🏞️'
-
     };
     return emojiMap[name] || '📍';
   }
@@ -115,7 +128,7 @@ export class WishlistCategoriesPage implements OnInit {
     const name = place.name;
     const address = place.address;
 
-    const allOtherPlaces = this.categories.reduce((acc: any[], cat: { name: string; places: any[] }) => {
+    const allOtherPlaces = this.categories.reduce((acc: any[], cat) => {
       const filtered = cat.places.filter(p => p.name !== name);
       return acc.concat(filtered);
     }, []);
@@ -142,14 +155,73 @@ export class WishlistCategoriesPage implements OnInit {
               }
             });
           } else {
-            console.error('Geocoding failed:', data.status, data.error_message || '');
+            console.error('Geocoding failed:', data.status);
           }
         })
-        .catch(err => {
-          console.error('Geocoding request error:', err);
-        });
-    } else {
-      console.error('No address or coordinates available for this place.');
+        .catch(err => console.error('Geocoding request error:', err));
     }
+  }
+
+    async editPlace(place: any) {
+  const alert = await this.alertController.create({
+    header: 'Edit Location Name',
+    inputs: [
+      {
+        name: 'location_name',
+        type: 'text',
+        placeholder: 'New Location Name',
+        value: place.location_name
+      }
+    ],
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel'
+      },
+      {
+        text: 'Save',
+        handler: (data) => {
+          if (data.location_name && data.location_name.trim() !== '') {
+            const updatedName = data.location_name.trim();
+            const userEmail = localStorage.getItem('email');
+            const payload = { ...place, location_name: updatedName, userEmail };
+
+            this.http.put(`http://localhost:3000/locations/${place.id}`, payload).subscribe({
+              next: () => {
+                this.toast('Location name updated.');
+                this.fetchData();
+              },
+              error: () => {
+                this.toast('Error updating location.');
+              }
+            });
+          }
+        }
+      }
+    ]
+  });
+
+  await alert.present();
+}
+
+deletePlace(place: any) {
+  this.http.delete(`http://localhost:3000/locations/${place.id}`).subscribe({
+    next: () => {
+      this.toast('Location deleted.');
+      this.fetchData();
+    },
+    error: () => {
+      this.toast('Error deleting location.');
+    }
+  });
+}
+
+  toast(message: string, cssClass: string = 'custom-toast') {
+    this.toastController.create({
+      message,
+      duration: 2000,
+      position: 'bottom',
+      cssClass
+    }).then(toast => toast.present());
   }
 }
