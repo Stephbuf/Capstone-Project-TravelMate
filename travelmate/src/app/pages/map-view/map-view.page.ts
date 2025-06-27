@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Loader } from '@googlemaps/js-api-loader';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton, IonList, IonItem, IonLabel,IonIcon } from "@ionic/angular/standalone";
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonButtons, IonBackButton, IonList, IonItem, IonLabel, IonIcon } from "@ionic/angular/standalone";
 import { CommonModule } from '@angular/common';
+import { GoogleMapsLoaderService } from 'src/app/services/google-maps-loader.service';
 
 type LocationData = {
   name?: string;
@@ -13,19 +13,12 @@ type LocationData = {
   address?: string;
 };
 
-const loader = new Loader({
-  apiKey: 'AIzaSyC1h8HyptSYlslcFi6bYYzEqE1FI-7qe1g',
-  version: 'weekly'
-});
-
-let apiLoaded = false;
-
 @Component({
   selector: 'app-map-view',
   templateUrl: './map-view.page.html',
   styleUrls: ['./map-view.page.scss'],
   standalone: true,
-  imports: [ CommonModule, FormsModule, IonButtons, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonList, IonItem, IonLabel, IonIcon]
+  imports: [CommonModule, FormsModule, IonButtons, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonList, IonItem, IonLabel, IonIcon]
 })
 export class MapViewPage implements OnInit {
   lat!: number;
@@ -38,7 +31,10 @@ export class MapViewPage implements OnInit {
   allLocations: LocationData[] = [];
   filteredLocations: LocationData[] = [];
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private googleMapsLoader: GoogleMapsLoaderService
+  ) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -57,19 +53,12 @@ export class MapViewPage implements OnInit {
       }
 
       this.filteredLocations = [...this.allLocations];
-      this.loadMap(this.lat, this.lng, this.locationName);
-    });
-  }
 
-  loadMap(lat: number, lng: number, name: string) {
-    if (apiLoaded) {
-      this.initMap(lat, lng, name);
-    } else {
-      loader.load().then(() => {
-        apiLoaded = true;
-        this.initMap(lat, lng, name);
-      });
-    }
+   
+      this.googleMapsLoader.load()
+        .then(() => this.initMap(this.lat, this.lng, this.locationName))
+        .catch(err => console.error('Google Maps failed to load:', err));
+    });
   }
 
   initMap(lat: number, lng: number, name: string) {
@@ -88,14 +77,12 @@ export class MapViewPage implements OnInit {
   toggleMarker(location: LocationData) {
     const displayName = this.getDisplayName(location);
 
-    // Remove if marker already exists
     if (this.markers.has(displayName)) {
       this.markers.get(displayName)!.setMap(null);
       this.markers.delete(displayName);
       return;
     }
 
-    // Else, add marker
     if (location.lat && location.lng) {
       this.placeMarker(location.lat, location.lng, displayName);
     } else if (location.address) {

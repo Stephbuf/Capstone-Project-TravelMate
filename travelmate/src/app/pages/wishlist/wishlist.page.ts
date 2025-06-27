@@ -9,7 +9,7 @@ import { LocationData } from 'src/app/interfaces/locationdata';
   templateUrl: './wishlist.page.html',
   styleUrls: ['./wishlist.page.scss'],
   standalone: true,
-  imports: [ IonContent, CommonModule, IonCard, IonCardHeader, IonCardTitle, IonCardContent]
+  imports: [ CommonModule]
 })
 export class WishlistPage implements OnInit {
   wishlistItems: LocationData[] = [];

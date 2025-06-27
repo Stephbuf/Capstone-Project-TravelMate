@@ -7,6 +7,7 @@ import { add, search, searchOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { Keyboard } from '@capacitor/keyboard';
 import { Capacitor } from '@capacitor/core';
+import { GoogleMapsLoaderService } from 'src/app/services/google-maps-loader.service';
 
 @Component({
   selector: 'app-search-location',
@@ -21,17 +22,14 @@ export class SearchLocationPage implements AfterViewInit {
   inputElement!: HTMLInputElement;
   searchQuery: string = '';
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private googleMapsLoader: GoogleMapsLoaderService) {
     addIcons({search,add,searchOutline});
   }
 
-  ngOnInit() {
-    if (Capacitor.isNativePlatform()) {
-      Keyboard.setScroll({ isDisabled: true });
-    }
-  }
+async ngAfterViewInit(): Promise<void> {
+  try {
+    await this.googleMapsLoader.load();
 
-  async ngAfterViewInit(): Promise<void> {
     setTimeout(() => {
       this.inputElement = document.getElementById('search-input-location') as HTMLInputElement;
       this.initializeAutocomplete();
@@ -43,7 +41,11 @@ export class SearchLocationPage implements AfterViewInit {
         this.loadMap();
       }
     });
+
+  } catch (error) {
+    console.error('Google Maps failed to load', error);
   }
+}
 
   initializeAutocomplete(): void {
     if (!this.inputElement) return;
